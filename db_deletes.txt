@@ -1,0 +1,14 @@
+?season=2019-regular&rosterstatus=assigned-to-injury-list,assigned-to-roster&position=P,C,1B,2B,3B,SS,LF,CF,RF,DH,OF
+
+DELETE FROM `hrs_february`;
+DELETE FROM `hrs_march`;
+DELETE FROM `hrs_april`;
+DELETE FROM `hrs_may`;
+DELETE FROM `hrs_june`;
+DELETE FROM `hrs_july`;
+DELETE FROM `hrs_august`;
+DELETE FROM `hrs_september`;
+DELETE FROM `hrs_october`;
+DELETE FROM `hrs_november`;
+
+DELETE FROM `players`;

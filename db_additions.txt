@@ -1,0 +1,5 @@
+Add id field as primary key and auto inc
+Add total field as int(11) default (0)
+Add season_id as int(11)
+
+ALTER TABLE `hrs_february` ADD UNIQUE `unique_index`(`player_id`,`season_id`)
