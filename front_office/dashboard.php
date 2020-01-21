@@ -2,7 +2,12 @@
 	/**
 	 * Include Header
 	 */
-	include('_includes/header.php');
+	try {
+		$configs = include('../_config/config.php');
+		include("../_includes/header.php");
+	} catch (PDOException $e) {
+		echo 'Connection failed: ' . $e->getMessage();
+	}
 
 ?>
 
@@ -68,7 +73,7 @@ Super Admin Access
 	/**
 	 * Include Footer
 	 */
-	include('_includes/footer.php');
+	include('../_includes/footer.php');
 
 
 ?>

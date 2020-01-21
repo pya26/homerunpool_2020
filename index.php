@@ -1,37 +1,197 @@
-<?php
-	/**
-	 * Include Header
-	 */
-	include('_includes/header.php');
+<?php 
 
-?>	
+  try {
+    $configs = include('_config/config.php');
+    include("_includes/header.php");
+    include("_includes/functions.php");
+  } catch (PDOException $e) {
+    echo 'Connection failed: ' . $e->getMessage();
+  }
+?>   
 
-<a href='admin_dashboard.php'>Back to admin dashboard</a><br /><br />
-Home page <br /><br />
+<!-- ------- FORGOT FORM ------- -->
+<div class="modal fade" id="ForgotModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-primary">
+      <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+      </div>
+      <div class="modal-body">
+        <form id="forgot_form">
+          <!-- Form Title -->
+          <div class="form-heading text-center">
+            <div class="title">Forgot Password?</div>
+            <p class="title-description">We'll email you a link to reset it.</p>
+          </div>
 
-Date: <input id="date" type="text"/>
-
- <script type="text/javascript">
-	$(document).ready(function(){
-		//$("#date").datepicker();
-		//$("#date").datepicker("setDate", new Date());
-		$("#date").datepicker({			
-			dateFormat: 'yymmdd',
-			minDate: new Date()
-		});
-		
-	    $("#date").datepicker( "option", "showAnim", "slideDown" );
-	    
-	});
-</script>
+          <div class="form-group">                        
+            <input type="text" class="form-control" placeholder="Your E-mail Address" required />
+          </div>
+          <div class="form-group text-center">
+            <button class="btn btn-md btn-primary">Send Mail</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ------- FORGOT FORM ends ------- -->
 
 
-<?php
+<!-- ------- LOGIN ------- -->
+<div class="modal fade" id="LogInModal" tabindex="-1" role="dialog" aria-labelledby="loginModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-primary">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginModalLongTitle">Please Sign-in</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="login_form">
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="email1">Email address</label>
+              <input type="email" class="form-control" id="email_uname" aria-describedby="emailHelp" placeholder="Enter email" required />
+            </div>
+            <div class="form-group">
+              <label for="password1">Password</label>
+              <input type="password" class="form-control" id="password1" placeholder="Password" required />
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                  <!--<input type="checkbox" />
+                  <label>Remember Me</label>-->
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="customCheck1" checked="">
+                    <label class="custom-control-label" for="customCheck1">Remember Me</label>
+                  </div>
+              </div>
+              <div class="col-md-6 col-md-offset-1">
+                  <label><a href="#" class="text-muted" data-toggle="modal" data-target="#ForgotModal" data-dismiss="modal">Forgot Password?</a></label>
+              </div>
+          </div>
+          </div>
+          <div class="modal-footer border-top-0 d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary">Sign-in</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ------- LOGIN Ends ------- -->
 
-	/**
-	 * Include Footer
-	 */
-	include('_includes/footer.php');
 
 
-?>
+<nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+    <!--<a class="navbar-brand" href="#">Navbar</a>-->
+    <!--<div></div>-->
+      <img src="images/swing_transparent_right_sm.png">&nbsp;&nbsp;&nbsp;
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item"><!--active-->
+          <a class="nav-link" href="#">About <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">FAQs</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Pricing</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <?php           
+          if(is_logged_in()){         
+            print '<li class="nav-item"><a class="nav-link" href="#">Hello ' . $_SESSION['first_name'] . '!</a></li>' .'<li class="nav-item"><a class="nav-link" href="logout.php"><i class="fas fa-sign-out-alt"></i>Sign-out</a></li>';
+          } else {
+            print '<li class="nav-item"><a class="nav-link" href="#" data-toggle="modal" data-target="#LogInModal"><i class="fas fa-sign-in-alt"></i> Sign-in</a></li>';
+          }
+        ?>  
+        <li class="nav-item"><a class="nav-link" href="#">Front Office</a></li>      
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container-fluid">
+    <div class="row text-center">
+      <div class="col-sm-12">
+        <h1>HomeRunPool.com</h1>
+      </div>
+    </div>
+  </div>
+
+
+    <div class="jumbotron">
+      <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-4">
+          <img src="images/mlb_dk_logo.png">
+          <!--
+          <h3>Column 1</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+          <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
+        -->
+        </div>
+        <div class="col-sm-8">
+          <p>
+          <!--<h2>Welcome to the fantasy league for lazy managers. All management of your team is handled prior to, and during the draft. You'll draft six players per team. There are no in-season substitutions.</h2>-->
+          <h2>Ultricies nimis quis tincidunt iustum class tamen multo. Taciti vereor premo te at elementum. Torquent ultricies ridiculus lucidus orci. Nutus eros acsi dolore cum autem melior pellentesque sagittis minim.</h2>
+          </p>
+          <!--<h2>Once the draft is finalized your management duties are complete.&nbsp;&nbsp;&nbsp;<a class="btn btn-outline-primary btn-sm" href="#" role="button">Read more</a></h2>-->
+          <h2>Inhibeo exerci pretium venio jus accumsan valde. Nulla suscipere acsi dictum est class.&nbsp;&nbsp;&nbsp;<a class="btn btn-outline-primary btn-sm" href="#" role="button">Read more</a></h2>
+        </p>
+          <p class="lead">
+            <br />
+            <a class="btn btn-primary btn-lg" href="#" role="button"><i class="fas fa-user-plus"></i> Create Account</a>
+          </p>
+        </div>
+      </div>
+    </div>
+    </div>
+
+<!-- Footer -->
+<footer class="page-footer font-small special-color-dark pt-4">
+
+  <!-- Footer Elements -->
+  <div class="container">
+
+    <!-- Social buttons -->
+    <ul class="list-unstyled list-inline text-center">
+      <li class="list-inline-item">
+        <a class="btn-floating btn-fb mx-1">
+          <i class="fab fa-facebook-f"> </i>
+        </a>
+      </li>
+      <li class="list-inline-item">
+        <a class="btn-floating btn-tw mx-1">
+          <i class="fab fa-twitter"> </i>
+        </a>
+      </li>
+      <li class="list-inline-item">
+        <a class="btn-floating mx-1">
+          <i class="fas fa-baseball-ball"></i>
+        </a>
+      </li>
+    </ul>
+    <!-- Social buttons -->
+
+  </div>
+  <!-- Footer Elements -->
+
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-3">© 2020 Copyright:
+    <a href="http://www.homerunpool.com"> homerunpool.com</a>
+  </div>
+  <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
+
+  </body>
+</html>

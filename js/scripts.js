@@ -1,4 +1,40 @@
 $(function() {
+
+	/*$('#login_form').on('submit', function(e){
+		$('#exampleModalCenter').modal('show');
+		console.log('stay open');
+			e.preventDefault();
+		});*/
+
+
+	$("#login_form").submit(function(event){
+		
+		$('#LogInModal').modal('show');
+		
+		event.preventDefault();
+
+		var email = $('#email_uname').val();
+		var pwd = $('#password1').val();
+			
+		$.ajax(
+			'login_process.php?email=' + email + '&pwd=' + pwd,
+			{
+				success: function(data) {						
+					var jsonData = JSON.parse(data);
+
+					$('#LogInModal').modal('hide');
+					location.reload();
+					console.log(data);
+				},
+				error: function() {
+					alert('There was some error performing the AJAX call to get the season!');
+				}
+			}
+		);
+
+	});
+
+
 	
 	/* 
 	 * Set date format and max date to select for jquery datepicker widget
