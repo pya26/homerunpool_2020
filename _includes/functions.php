@@ -884,7 +884,7 @@
 
 		session_start();
 
-		try {
+		/*try {
 			$configs = include("_config/config.php");
 			include("_config/db_connect.php");
 		} catch (PDOException $e) {
@@ -898,7 +898,8 @@
         $query->bindParam("email", $email, PDO::PARAM_STR);
         $query->execute();
 
-        $result = $query->fetch(PDO::FETCH_ASSOC);
+        $result = $query->fetch(PDO::FETCH_ASSOC);*/
+         $result = check_active_email($email);
 
 		if (!$result) {
 
@@ -959,6 +960,52 @@
 
 
 
+	
+
+
+
+	function forgot_password($email){
+
+		$to       = $email;
+		$subject  = 'Testing forgot email';
+		$message  = 'Hi, you just received an email using sendmail!';
+		/*$headers  = 'From: jumpinjerryjehova@gmail.com' . "\r\n" .
+		            'MIME-Version: 1.0' . "\r\n" .
+		            'Content-type: text/html; charset=utf-8';*/
+		$headers = "MIME-Version: 1.0" . "\r\n";
+		$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+		$headers .= 'From: test@test.com' . "\r\n";
+
+		$result = check_active_email($email);
+
+		if (!$result) {
+			$forgot_password_array = array('msg_code' => 0, 'msg' => 'The email you entered is not an active email in our system. Try a different email, or create an account.');
+			return $forgot_password_array;
+		} else {
+
+			if(mail($to, $subject, $message, $headers)){
+				$forgot_password_array = array('msg_code' => 1, 'msg' => 'Email was successfully sent. Please follow the instructions in the email to reset your password.');
+				return $forgot_password_array;
+			} else {
+				$forgot_password_array = array('msg_code' => 2, 'msg' => 'Error occurred while trying to send the email. Contact us.');
+				return $forgot_password_array;
+			}
+		}
+
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
 	function is_logged_in(){
 
 		if(isset($_SESSION['reg_id']) && !empty($_SESSION['reg_id'])){
@@ -966,6 +1013,29 @@
 		} else {
 			return 0;
 		}
+
+	}
+
+
+	function check_active_email($email){
+
+		try {
+			$configs = include("_config/config.php");
+			include("_config/db_connect.php");
+		} catch (PDOException $e) {
+			echo 'Connection failed: ' . $e->getMessage();
+		}
+
+		$email = $email;
+
+        $query = $dbh->prepare("SELECT * FROM registered_users WHERE email=:email AND status_id = 'A'");
+        $query->bindParam("email", $email, PDO::PARAM_STR);
+        $query->execute();
+
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+
+        return $result;
+
 
 	}
 

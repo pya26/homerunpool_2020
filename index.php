@@ -11,27 +11,31 @@
 
 <!-- ------- FORGOT FORM ------- -->
 <div class="modal fade" id="ForgotModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content border-primary">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-primary">      
       <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+          <h5 class="modal-title" id="loginModalLongTitle">Forgot your password?</h5>          
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
       </div>
       <div class="modal-body">
+        <div id="error_msg"></div>
         <form id="forgot_form">
           <!-- Form Title -->
           <div class="form-heading text-center">
-            <div class="title">Forgot Password?</div>
             <p class="title-description">We'll email you a link to reset it.</p>
           </div>
 
           <div class="form-group">                        
-            <input type="text" class="form-control" placeholder="Your E-mail Address" required />
+            <input type="text" id="email" class="form-control" placeholder="Your E-mail Address" required />
           </div>
           <div class="form-group text-center">
-            <button class="btn btn-md btn-primary">Send Mail</button>
+            <button type="submit" class="btn btn-md btn-primary">Send Mail</button>
           </div>
-        </form>
+        </form>        
       </div>
+
     </div>
   </div>
 </div>
@@ -62,8 +66,6 @@
             </div>
             <div class="row">
               <div class="col-md-6">
-                  <!--<input type="checkbox" />
-                  <label>Remember Me</label>-->
                   <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" id="customCheck1" checked="">
                     <label class="custom-control-label" for="customCheck1">Remember Me</label>
@@ -81,7 +83,7 @@
               </div>
             </div>
           </div>
-          <div class="modal-footer border-top-0 d-flex">
+          <div class="modal-footer border-top-0 d-flex text-center">
             <button type="submit" class="btn btn-primary">Sign-in</button>
           </div>
         </form>

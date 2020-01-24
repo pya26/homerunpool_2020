@@ -47,6 +47,66 @@ $(function() {
 	});
 
 
+	$("#forgot_form").submit(function(event){
+
+		$('#ForgotModal').modal('show');
+
+		event.preventDefault();
+
+		var email = $('#email').val();
+
+		$.ajax(
+			'forgot_password_process.php?email=' + email,
+			{
+				success: function(data) {						
+					var jsonData = JSON.parse(data);
+
+					console.log(jsonData.msg);
+										
+					
+					if(jsonData.msg_code == 0){
+						$display_html_error_msg = '<div class="alert alert-dismissible alert-danger">';
+						$display_html_error_msg += '<button type="button" class="close" data-dismiss="alert">×</button>';
+						$display_html_error_msg += jsonData.msg;
+						$display_html_error_msg += '</div>';
+						$('#error_msg').html($display_html_error_msg);
+					} else if(jsonData.msg_code == 1) {
+						$display_html_error_msg = '<div class="alert alert-dismissible alert-success">';
+						$display_html_error_msg += '<button type="button" class="close" data-dismiss="alert">×</button>';
+						$display_html_error_msg += jsonData.msg;
+						$display_html_error_msg += '</div>';
+						$('#error_msg').html($display_html_error_msg);	
+						//$('#LogInModal').modal('hide');
+						//location.reload();
+					} else if(jsonData.msg_code == 2) {
+						$display_html_error_msg = '<div class="alert alert-dismissible alert-danger">';
+						$display_html_error_msg += '<button type="button" class="close" data-dismiss="alert">×</button>';
+						$display_html_error_msg += jsonData.msg;
+						$display_html_error_msg += '</div>';
+						$('#error_msg').html($display_html_error_msg);
+						console.log(jsonData.msg);	
+						//$('#LogInModal').modal('hide');
+						//location.reload();
+					}
+
+				},
+				error: function() {
+					
+				}
+
+
+			}
+
+		);
+
+
+
+
+		//console.log(email);
+
+	});
+
+
 	
 	/* 
 	 * Set date format and max date to select for jquery datepicker widget
