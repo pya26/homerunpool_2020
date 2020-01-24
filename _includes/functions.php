@@ -900,16 +900,15 @@
 
         $result = $query->fetch(PDO::FETCH_ASSOC);
 
-		//$user_login_array = array('userid_login' => $email, 'user_password' => $pwd);
-
 		if (!$result) {
 
-            //echo '<p class="error">Username password combination is wrong!</p>';
+			$login_error = array('reg_id' => 0, 'msg' => 'The email you entered is not associated with an active user account.');
+
+            return $login_error;
 
         } else {
 
-            if (password_verify($password, $result['password'])) {
-                
+            if (password_verify($password, $result['password'])) {                
                 
                 //Check if logged in user is an administrator.  If so set a "Super User" session to 1
                 if($result['role_id'] == 4){
@@ -922,21 +921,19 @@
                 $reg_id = $_SESSION['reg_id'];
                 $_SESSION['first_name'] = $result['first_name'];
                 $_SESSION['last_name'] = $result['last_name'];
-                //echo '<p class="success">Congratulations, you are logged in!</p>';        
 
+				/*
                 $query = $dbh->prepare("SELECT * FROM teams WHERE reg_id=:regid AND status_id = 'A'");
                 $query->bindParam("regid", $reg_id, PDO::PARAM_STR);
                 $query->execute();
 
-                /*if ($query->rowCount() > 1) {
+                if ($query->rowCount() > 1) {
 
                     if($_POST['redirect'] == ''){
                         header("Location: front_office.php");
                     } else {
                         header("Location: " . $_POST['redirect']);
-                    }
-
-                    
+                    }                    
 
                 } else {
                   
@@ -948,7 +945,8 @@
             	return $login_session_array;
 
             } else {
-                //echo '<p class="error">Username password combination is wrong!</p>';
+            	$login_error = array('reg_id' => 0, 'msg' => 'The password you entered is invalid.');
+            	return $login_error;
             }
 
             

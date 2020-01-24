@@ -51,6 +51,7 @@
       <div class="modal-body">
         <form id="login_form">
           <div class="modal-body">
+            <div id="error_msg"></div>
             <div class="form-group">
               <label for="email1">Email address</label>
               <input type="email" class="form-control" id="email_uname" aria-describedby="emailHelp" placeholder="Enter email" required />
@@ -67,14 +68,66 @@
                     <input type="checkbox" class="custom-control-input" id="customCheck1" checked="">
                     <label class="custom-control-label" for="customCheck1">Remember Me</label>
                   </div>
-              </div>
-              <div class="col-md-6 col-md-offset-1">
+              </div>              
+            </div>
+            <div class="row justify-content-center">
+              <div>
                   <label><a href="#" class="text-muted" data-toggle="modal" data-target="#ForgotModal" data-dismiss="modal">Forgot Password?</a></label>
               </div>
+            </div>
+            <div class="row justify-content-center">
+              <div>
+                  <label><a href="#" class="text-muted" data-toggle="modal" data-target="#CreateAccountModal" data-dismiss="modal">Create an Account</a></label>
+              </div>
+            </div>
           </div>
-          </div>
-          <div class="modal-footer border-top-0 d-flex justify-content-center">
+          <div class="modal-footer border-top-0 d-flex">
             <button type="submit" class="btn btn-primary">Sign-in</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ------- LOGIN Ends ------- -->
+
+
+<!-- ------- Create Account ------- -->
+<div class="modal fade" id="CreateAccountModal" tabindex="-1" role="dialog" aria-labelledby="CreateAccountModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-primary">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginModalLongTitle">Create an Account</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="login_form">
+          <div class="modal-body">
+            <div id="error_msg"></div>
+            <div class="form-group">
+              <label for="first_name">First Name</label>
+              <input type="text" class="form-control" id="first_name" placeholder="Enter First Name" required />
+            </div>
+            <div class="form-group">
+              <label for="last_name">Last Name</label>
+              <input type="text" class="form-control" id="last_name" placeholder="Enter Last Name" required />
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="emai" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" required />
+            </div>
+            <div class="form-group">
+              <label for="password1">Password</label>
+              <input type="password" class="form-control" id="password1" placeholder="Enter Password" required />
+            </div>
+            
+            
+            
+          </div>
+          <div class="modal-footer border-top-0 d-flex">
+            <button type="submit" class="btn btn-primary">Create Account</button>
           </div>
         </form>
       </div>

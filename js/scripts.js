@@ -21,13 +21,25 @@ $(function() {
 			{
 				success: function(data) {						
 					var jsonData = JSON.parse(data);
+					
+					console.log(jsonData);
+					if(jsonData.reg_id == 0){						
+						$display_html_error_msg = '<div class="alert alert-dismissible alert-danger">';
+						$display_html_error_msg += '<button type="button" class="close" data-dismiss="alert">×</button>';
+						$display_html_error_msg += jsonData.msg;
+						$display_html_error_msg += '</div>';
+						$('#error_msg').html($display_html_error_msg);
+					} else {
+						$('#LogInModal').modal('hide');
+						location.reload();
+					}
 
-					$('#LogInModal').modal('hide');
-					location.reload();
-					console.log(data);
 				},
 				error: function() {
-					alert('There was some error performing the AJAX call to get the season!');
+					//alert('There was some error performing the AJAX call to get the season!');
+					//error_msg
+					 //$('<div id="errors"/>').html(errors).appendTo('.modal-body');
+					 //$('#errorModal').modal('show');
 				}
 			}
 		);
@@ -41,7 +53,6 @@ $(function() {
 	 */
 	$("#date").datepicker({			
 		dateFormat: 'yymmdd',
-		/*maxDate: new Date()*/
 	});
 
 	$("#date_for_season").datepicker({			
