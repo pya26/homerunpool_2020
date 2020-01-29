@@ -909,7 +909,7 @@
 
         } else {
 
-            if (password_verify($password, $result['password'])) {                
+            if (password_verify($pwd, $result['password'])) {                
                 
                 //Check if logged in user is an administrator.  If so set a "Super User" session to 1
                 if($result['role_id'] == 4){

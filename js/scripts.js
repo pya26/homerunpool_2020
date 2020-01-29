@@ -6,10 +6,13 @@ $(function() {
 			e.preventDefault();
 		});*/
 
+$('#error_msg').html("html error");
+
 
 	$("#login_form").submit(function(event){
 		
 		$('#LogInModal').modal('show');
+		$('#error_msg').html('hello');
 		
 		event.preventDefault();
 
@@ -20,15 +23,15 @@ $(function() {
 			'login_process.php?email=' + email + '&pwd=' + pwd,
 			{
 				success: function(data) {						
-					var jsonData = JSON.parse(data);
+					var jsonData = JSON.parse(data);					
 					
-					console.log(jsonData);
 					if(jsonData.reg_id == 0){						
 						$display_html_error_msg = '<div class="alert alert-dismissible alert-danger">';
 						$display_html_error_msg += '<button type="button" class="close" data-dismiss="alert">×</button>';
 						$display_html_error_msg += jsonData.msg;
 						$display_html_error_msg += '</div>';
-						$('#error_msg').html($display_html_error_msg);
+						$('div#error_msg').html($display_html_error_msg);
+						console.log(jsonData.reg_id);
 					} else {
 						$('#LogInModal').modal('hide');
 						location.reload();
@@ -36,6 +39,11 @@ $(function() {
 
 				},
 				error: function() {
+					$display_html_error_msg = '<div class="alert alert-dismissible alert-danger">';
+					$display_html_error_msg += '<button type="button" class="close" data-dismiss="alert">×</button>';
+					$display_html_error_msg += 'An error ocurred during your login process. Please try logging in again';
+					$display_html_error_msg += '</div>';
+					$('#error_msg').html($display_html_error_msg);
 					//alert('There was some error performing the AJAX call to get the season!');
 					//error_msg
 					 //$('<div id="errors"/>').html(errors).appendTo('.modal-body');
@@ -69,13 +77,13 @@ $(function() {
 						$display_html_error_msg += '<button type="button" class="close" data-dismiss="alert">×</button>';
 						$display_html_error_msg += jsonData.msg;
 						$display_html_error_msg += '</div>';
-						$('#error_msg').html($display_html_error_msg);
+						$('div#error_msg').html($display_html_error_msg);
 					} else if(jsonData.msg_code == 1) {
 						$display_html_error_msg = '<div class="alert alert-dismissible alert-success">';
 						$display_html_error_msg += '<button type="button" class="close" data-dismiss="alert">×</button>';
 						$display_html_error_msg += jsonData.msg;
 						$display_html_error_msg += '</div>';
-						$('#error_msg').html($display_html_error_msg);	
+						$('div#error_msg').html($display_html_error_msg);	
 						//$('#LogInModal').modal('hide');
 						//location.reload();
 					} else if(jsonData.msg_code == 2) {
@@ -83,7 +91,7 @@ $(function() {
 						$display_html_error_msg += '<button type="button" class="close" data-dismiss="alert">×</button>';
 						$display_html_error_msg += jsonData.msg;
 						$display_html_error_msg += '</div>';
-						$('#error_msg').html($display_html_error_msg);
+						$('div#error_msg').html($display_html_error_msg);
 						console.log(jsonData.msg);	
 						//$('#LogInModal').modal('hide');
 						//location.reload();

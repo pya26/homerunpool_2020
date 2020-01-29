@@ -9,6 +9,12 @@
   }
 ?>   
 
+<script>
+$(function() {
+  $('div#error_msg').html("html error");
+  });
+</script>
+
 <!-- ------- FORGOT FORM ------- -->
 <div class="modal fade" id="ForgotModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
