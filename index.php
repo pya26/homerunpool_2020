@@ -250,16 +250,20 @@
 
 
 <!-- START Bootstrap-Cookie-Alert -->
+<!--
 <div class="alert text-center cookiealert" role="alert">
-    <b>Do you like cookies?</b> &#x1F36A; We use cookies to ensure you get the best experience on our website. <a href="https://cookiesandyou.com/" target="_blank">Learn more</a>
+    This site uses cookies to provide you with a great user experience. By continuing to use this website, you consent to the use of cookies in accordance with our <a href="#">Cookie Policy</a>
 
     <button type="button" class="btn btn-primary btn-sm acceptcookies" aria-label="Close">
         I agree
     </button>
 </div>
+-->
 
 <!-- Include cookiealert script -->
+<!--
 <script src="https://cdn.jsdelivr.net/gh/Wruczek/Bootstrap-Cookie-Alert@gh-pages/cookiealert.js"></script>
+-->
 
   </body>
 </html>
