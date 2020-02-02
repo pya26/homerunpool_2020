@@ -26,7 +26,7 @@
 	    for ($i = 0; $i < count($the_array); $i++) {
 	    	$menu .= '<option value="'.$the_array[$i]['api_id'].'"';
 	        if ($the_array[$i]['api_id'] == $curr_val) $menu .= ' selected="selected"';
-	        $menu .= '>'.$the_array[$i]['api_name'].'</option>';	
+	        $menu .= '>'.$the_array[$i]['api_name'].'</option>';
 	    }
 	    $menu .= '
 	    	</select>';
@@ -52,7 +52,7 @@
 		$seasons_array = array();
 		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 			$seasons_array[] = $row;
-		}		
+		}
 
 		return $seasons_array;
 	}
@@ -65,7 +65,7 @@
 		$seasons = list_of_seasons();
 
 		$season_select_menu = '<select type="select_season" name="select_season" id="select_season">';
-		$season_select_menu .= '<option selected=""></option>';  
+		$season_select_menu .= '<option selected=""></option>';
 		foreach($seasons as $season) {
 			$season_select_menu .= '<option value="'.$season['id'].'">'.$season['slug'].'</option>';
 		}
@@ -122,28 +122,28 @@
     		include("_config/db_connect.php");
 		} catch (PDOException $e) {
 			echo 'Connection failed: ' . $e->getMessage();
-		}		
-		
+		}
+
 		$stmt = $dbh->prepare('CALL sp_get_api_url(?)');
 		$stmt->bindParam(1, $api_id, PDO::PARAM_INT, 11);
 		$stmt->execute();
 
-		$format = 'json';		
+		$format = 'json';
 
 		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
 			$url = $row['api_url'];
-			$url = str_replace("{format}",$format,$url);			
+			$url = str_replace("{format}",$format,$url);
 
 			$api_url_array = array('api_url' => $url);
-		}		
-		
+		}
+
 		if(isset($api_url_array)){
-			return $api_url_array['api_url'];	
+			return $api_url_array['api_url'];
 		} else {
 			return 'error';
 		}
-	
+
 	}
 
 
@@ -158,19 +158,19 @@
 			echo 'Connection failed: ' . $e->getMessage();
 			die();
 		}
-		
-		$ch = curl_init();	
-		curl_setopt($ch, CURLOPT_URL, $url);	
-		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');	
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);	
+
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_ENCODING, "gzip");
 		$headers = array(
 		    'Content-type: application/json; charset=UTF-8',
 		    "Authorization: Basic " . base64_encode($configs['msf_apikey_token'] . ":" . $configs['msf_password']),
 		);
-		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);		
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-		
+
 		// Send the request & save response to $resp
 		$resp = curl_exec($ch);
 		$response = json_decode($resp);
@@ -189,7 +189,7 @@
 		$current_date =  date('Ymd');
 		$url = get_api_url(1) . '?date=' . $current_date;
 
-		$current_season = mysportsfeeds_api_request($url);	
+		$current_season = mysportsfeeds_api_request($url);
 
 		if(isset($current_season->seasons[0]->slug)){
 			$season = $current_season->seasons[0]->slug;
@@ -233,13 +233,13 @@
     		include("_config/db_connect.php");
 		} catch (PDOException $e) {
 			echo 'Connection failed: ' . $e->getMessage();
-		}		
-		
+		}
+
 		$stmt = $dbh->prepare("CALL sp_get_all_roster_statuses");
 		$stmt->execute();
 
 		$status_array = array();
-		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {		 
+		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 		  $status_array[$row['roster_status_id']] = $row['roster_status_name'];
 		  //$status_array[$row['roster_status_desc']] = $row['roster_status_desc'];*/
 		}
@@ -257,8 +257,8 @@
     		include("_config/db_connect.php");
 		} catch (PDOException $e) {
 			echo 'Connection failed: ' . $e->getMessage();
-		}		
-		
+		}
+
 		$stmt = $dbh->prepare('CALL sp_get_all_hitter_positions');
 		$stmt->execute();
 
@@ -281,13 +281,13 @@
     		include("_config/db_connect.php");
 		} catch (PDOException $e) {
 			echo 'Connection failed: ' . $e->getMessage();
-		}		
-		
+		}
+
 		$stmt = $dbh->prepare('CALL sp_get_season_id_by_name(?)');
 		$stmt->bindParam(1, $season, PDO::PARAM_STR, 15);
-		$stmt->execute();				
+		$stmt->execute();
 
-		
+
 		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 			$id = $row['id'];
 		}
@@ -313,7 +313,7 @@
 		}
 
 		// loop through $player_info_response and insert into players database
-	    foreach($player_info_response->players as $key => $value) {  
+	    foreach($player_info_response->players as $key => $value) {
 
 	      $stmt = $dbh->prepare("INSERT INTO players (PlayerID,FirstName,LastName,PrimaryPosition,JerseyNumber,TeamID,TeamAbbr,Height,Weight,DOB,Age,BirthCity,BirthCountry,HighSchool,College,Bats,Throws,MLBImage,MLBID,status_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 	      $stmt->bindParam(1, $player_id, PDO::PARAM_INT);
@@ -341,10 +341,10 @@
 	      $first_name = $value->player->firstName;
 	      $last_name = $value->player->lastName;
 	      $position = $value->player->primaryPosition;
-	      $jersey_num = $value->player->jerseyNumber;    
+	      $jersey_num = $value->player->jerseyNumber;
 
 	      if(isset($value->player->currentTeam->id)){
-	        $team_id = $value->player->currentTeam->id;  
+	        $team_id = $value->player->currentTeam->id;
 	      } else {
 	        $team_id = 0;
 	      }
@@ -364,11 +364,11 @@
 	      $college = $value->player->college;
 	      $bats = $value->player->handedness->bats;
 	      $throws = $value->player->handedness->throws;
-	      
+
 	      if(isset($value->player->officialImageSrc)){
 	        $split_url = explode('//', $value->player->officialImageSrc);
 	        $pieces = explode('/', $split_url[1]);
-	        $num = (count($pieces) - 1);    
+	        $num = (count($pieces) - 1);
 	        $mlb_image = $pieces[$num];
 	      } else {
 	        $mlb_image = '';
@@ -400,19 +400,19 @@
 		}
 
 		foreach($player_ids_array as $value) {
-			
+
     		$stmt = $dbh->prepare('CALL insert_hrs_february_stub_records(?,?)');
 		    $player_id = $value;
 
 		    $stmt->bindParam(1, $player_id, PDO::PARAM_INT, 11);
-			$stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);	
+			$stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);
 
-			$stmt->execute();			
-		}			
+			$stmt->execute();
+		}
 	}
 
-		
-	
+
+
 
 
 	function insert_hrs_march_stub_records($player_ids_array,$season_id){
@@ -429,9 +429,9 @@
 		    $player_id = $value;
 
 		    $stmt->bindParam(1, $player_id, PDO::PARAM_INT, 11);
-			$stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);	
+			$stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);
 
-			$stmt->execute();					
+			$stmt->execute();
 		}
 	}
 
@@ -450,9 +450,9 @@
 		    $player_id = $value;
 
 		    $stmt->bindParam(1, $player_id, PDO::PARAM_INT, 11);
-			$stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);	
+			$stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);
 
-			$stmt->execute();					
+			$stmt->execute();
 		}
 	}
 
@@ -471,9 +471,9 @@
 		    $player_id = $value;
 
 		    $stmt->bindParam(1, $player_id, PDO::PARAM_INT, 11);
-			$stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);	
+			$stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);
 
-			$stmt->execute();					
+			$stmt->execute();
 		}
 	}
 
@@ -492,9 +492,9 @@
 		    $player_id = $value;
 
 		    $stmt->bindParam(1, $player_id, PDO::PARAM_INT, 11);
-			$stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);	
+			$stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);
 
-			$stmt->execute();					
+			$stmt->execute();
 		}
 	}
 
@@ -513,9 +513,9 @@
 		    $player_id = $value;
 
 		    $stmt->bindParam(1, $player_id, PDO::PARAM_INT, 11);
-			$stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);	
+			$stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);
 
-			$stmt->execute();					
+			$stmt->execute();
 		}
 	}
 
@@ -534,9 +534,9 @@
 		    $player_id = $value;
 
 		    $stmt->bindParam(1, $player_id, PDO::PARAM_INT, 11);
-			$stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);	
+			$stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);
 
-			$stmt->execute();					
+			$stmt->execute();
 		}
 	}
 
@@ -555,9 +555,9 @@
 		    $player_id = $value;
 
 		    $stmt->bindParam(1, $player_id, PDO::PARAM_INT, 11);
-			$stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);	
+			$stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);
 
-			$stmt->execute();					
+			$stmt->execute();
 		}
 	}
 
@@ -576,9 +576,9 @@
 		    $player_id = $value;
 
 		    $stmt->bindParam(1, $player_id, PDO::PARAM_INT, 11);
-			$stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);	
+			$stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);
 
-			$stmt->execute();					
+			$stmt->execute();
 		}
 	}
 
@@ -597,9 +597,9 @@
 		    $player_id = $value;
 
 		    $stmt->bindParam(1, $player_id, PDO::PARAM_INT, 11);
-			$stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);	
+			$stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);
 
-			$stmt->execute();					
+			$stmt->execute();
 		}
 	}
 
@@ -671,7 +671,7 @@
 		} catch (PDOException $e) {
 			echo 'Connection failed: ' . $e->getMessage();
 		}
-		
+
 	    $stmt = $dbh->prepare("SELECT player_id FROM {$tablename} WHERE season_id = {$season_id}");
 	    $stmt->execute();
 	    $record_count = $stmt->rowCount();
@@ -686,7 +686,7 @@
 
 		} else {
 			return 0;
-		}	    
+		}
 
 	}
 
@@ -725,17 +725,17 @@
 
 	        $league_id = $get_leagues[$x]['league_id'];
 	        $league_name = $get_leagues[$x]['league_name'];
-	        
+
 	        $league_select .= '<option value="';
 	        $league_select .= $league_id;
 	        $league_select .= '">';
 	        $league_select .= $league_name;
-	        $league_select .= '</option>';        
-	        
+	        $league_select .= '</option>';
+
 	    }
 
 	    $league_select .= '</select>';
-	    
+
 	    return $league_select;
 
 	}
@@ -755,7 +755,7 @@
 		$query->execute();
 
 		$teams_array = array();
-		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {		
+		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
 			$teams_array[] = ['team_id' => $row['team_id'], 'team_name' => $row['team_name'], 'status_id' => $row['status_id'], 'date_created' => date_format_table($row['date_created']), 'date_updated' => date_format_table($row['date_updated'])];
 		}
 
@@ -777,11 +777,11 @@
 		$query->execute();
 
 		$leagues_array = array();
-		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {		
+		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
 			$leagues_array[] = ['league_id' => $row['league_id'], 'league_name' => $row['league_name'], 'status_id' => $row['status_id'], 'role_id' => $row['role_id']];
 		}
 
-		return $leagues_array;		
+		return $leagues_array;
 	}
 
 
@@ -909,8 +909,8 @@
 
         } else {
 
-            if (password_verify($pwd, $result['password'])) {                
-                
+            if (password_verify($pwd, $result['password'])) {
+
                 //Check if logged in user is an administrator.  If so set a "Super User" session to 1
                 if($result['role_id'] == 4){
                     $_SESSION['super_user'] = 1;
@@ -934,10 +934,10 @@
                         header("Location: front_office.php");
                     } else {
                         header("Location: " . $_POST['redirect']);
-                    }                    
+                    }
 
                 } else {
-                  
+
                     header("Location: leader_board.php");
 
                 }*/
@@ -950,7 +950,7 @@
             	return $login_error;
             }
 
-            
+
         }
 
 		return $user_login_array;
@@ -960,7 +960,7 @@
 
 
 
-	
+
 
 
 

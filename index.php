@@ -1,4 +1,4 @@
-<?php 
+<?php
 
   try {
     $configs = include('_config/config.php');
@@ -7,20 +7,14 @@
   } catch (PDOException $e) {
     echo 'Connection failed: ' . $e->getMessage();
   }
-?>   
-
-<script>
-$(function() {
-  $('div#error_msg').html("html error");
-  });
-</script>
+?>
 
 <!-- ------- FORGOT FORM ------- -->
 <div class="modal fade" id="ForgotModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content border-primary">      
+    <div class="modal-content border-primary">
       <div class="modal-header">
-          <h5 class="modal-title" id="loginModalLongTitle">Forgot your password?</h5>          
+          <h5 class="modal-title" id="loginModalLongTitle">Forgot your password?</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -33,13 +27,13 @@ $(function() {
             <p class="title-description">We'll email you a link to reset it.</p>
           </div>
 
-          <div class="form-group">                        
+          <div class="form-group">
             <input type="text" id="email" class="form-control" placeholder="Your E-mail Address" required />
           </div>
           <div class="form-group text-center">
             <button type="submit" class="btn btn-md btn-primary">Send Mail</button>
           </div>
-        </form>        
+        </form>
       </div>
 
     </div>
@@ -76,7 +70,7 @@ $(function() {
                     <input type="checkbox" class="custom-control-input" id="customCheck1" checked="">
                     <label class="custom-control-label" for="customCheck1">Remember Me</label>
                   </div>
-              </div>              
+              </div>
             </div>
             <div class="row justify-content-center">
               <div>
@@ -130,9 +124,9 @@ $(function() {
               <label for="password1">Password</label>
               <input type="password" class="form-control" id="password1" placeholder="Enter Password" required />
             </div>
-            
-            
-            
+
+
+
           </div>
           <div class="modal-footer border-top-0 d-flex">
             <button type="submit" class="btn btn-primary">Create Account</button>
@@ -167,14 +161,14 @@ $(function() {
         </li>
       </ul>
       <ul class="navbar-nav ml-auto">
-        <?php           
-          if(is_logged_in()){         
+        <?php
+          if(is_logged_in()){
             print '<li class="nav-item"><a class="nav-link" href="#">Hello ' . $_SESSION['first_name'] . '!</a></li>' .'<li class="nav-item"><a class="nav-link" href="logout.php"><i class="fas fa-sign-out-alt"></i>Sign-out</a></li>';
           } else {
             print '<li class="nav-item"><a class="nav-link" href="#" data-toggle="modal" data-target="#LogInModal"><i class="fas fa-sign-in-alt"></i> Sign-in</a></li>';
           }
-        ?>  
-        <li class="nav-item"><a class="nav-link" href="#">Front Office</a></li>      
+        ?>
+        <li class="nav-item"><a class="nav-link" href="#">Front Office</a></li>
       </ul>
     </div>
   </nav>
