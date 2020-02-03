@@ -6,26 +6,26 @@ $(function() {
 			e.preventDefault();
 		});*/
 
-$('#error_msg').html("html error");
-
 
 	$("#login_form").submit(function(event){
-		
+
+		$('#error_msg').html("");
+
 		$('#LogInModal').modal('show');
 		$('#error_msg').html('hello');
-		
+
 		event.preventDefault();
 
 		var email = $('#email_uname').val();
 		var pwd = $('#password1').val();
-			
+
 		$.ajax(
 			'login_process.php?email=' + email + '&pwd=' + pwd,
 			{
-				success: function(data) {						
-					var jsonData = JSON.parse(data);					
-					
-					if(jsonData.reg_id == 0){						
+				success: function(data) {
+					var jsonData = JSON.parse(data);
+
+					if(jsonData.reg_id == 0){
 						$display_html_error_msg = '<div class="alert alert-dismissible alert-danger">';
 						$display_html_error_msg += '<button type="button" class="close" data-dismiss="alert">×</button>';
 						$display_html_error_msg += jsonData.msg;
@@ -66,12 +66,12 @@ $('#error_msg').html("html error");
 		$.ajax(
 			'forgot_password_process.php?email=' + email,
 			{
-				success: function(data) {						
+				success: function(data) {
 					var jsonData = JSON.parse(data);
 
 					console.log(jsonData.msg);
-										
-					
+
+
 					if(jsonData.msg_code == 0){
 						$display_html_error_msg = '<div class="alert alert-dismissible alert-danger">';
 						$display_html_error_msg += '<button type="button" class="close" data-dismiss="alert">×</button>';
@@ -83,7 +83,7 @@ $('#error_msg').html("html error");
 						$display_html_error_msg += '<button type="button" class="close" data-dismiss="alert">×</button>';
 						$display_html_error_msg += jsonData.msg;
 						$display_html_error_msg += '</div>';
-						$('div#error_msg').html($display_html_error_msg);	
+						$('div#error_msg').html($display_html_error_msg);
 						//$('#LogInModal').modal('hide');
 						//location.reload();
 					} else if(jsonData.msg_code == 2) {
@@ -92,14 +92,14 @@ $('#error_msg').html("html error");
 						$display_html_error_msg += jsonData.msg;
 						$display_html_error_msg += '</div>';
 						$('div#error_msg').html($display_html_error_msg);
-						console.log(jsonData.msg);	
+						console.log(jsonData.msg);
 						//$('#LogInModal').modal('hide');
 						//location.reload();
 					}
 
 				},
 				error: function() {
-					
+
 				}
 
 
@@ -115,15 +115,15 @@ $('#error_msg').html("html error");
 	});
 
 
-	
-	/* 
+
+	/*
 	 * Set date format and max date to select for jquery datepicker widget
 	 */
-	$("#date").datepicker({			
+	$("#date").datepicker({
 		dateFormat: 'yymmdd',
 	});
 
-	$("#date_for_season").datepicker({			
+	$("#date_for_season").datepicker({
 		dateFormat: 'yymmdd',
 		/*maxDate: new Date()*/
 	});
@@ -137,17 +137,17 @@ $('#error_msg').html("html error");
 	 * use ajax to dynamically display api parameters for each api name when selected from the select menu on 'get_apis_params.php'
 	 */
 	$( "#api_menu" ).change(function(e) {
-		
+
 		event.preventDefault();
-				
+
 		$api_id = $( "#api_menu" ).val();
-		
+
 		$.ajax(
 			'get_api_description.php?api_id=' + $api_id,
 			{
-				
+
 				success: function(data) {
-					
+
 					var jsonData = JSON.parse(data);
 
 					var api_info = jsonData.api_name + "<br />";
@@ -159,13 +159,13 @@ $('#error_msg').html("html error");
 						if(value.api_param_name){
 							api_info += '<input type="checkbox" id="api_param_filter" name="api_param_filter" value="' + value.api_param_id + '">' + value.api_param_name + ' -- ' + value.api_param_filter + '<br />';
 						}
-					    
-					});						
+
+					});
 
 					api_info_form += api_info + '<input type="submit" value="A submit button">';
-					
-					$('.result').html(api_info_form);						
-					
+
+					$('.result').html(api_info_form);
+
 				},
 				error: function() {
 					alert('There was some error performing the AJAX call!');
@@ -178,7 +178,7 @@ $('#error_msg').html("html error");
 	 * select_daily_homeruns.php
 	 */
 
-	 
+
 	 $("#daily_hr_form").validate({
 		//debug: true,
 		rules: {
@@ -200,7 +200,7 @@ $('#error_msg').html("html error");
 
 
 			$.ajax(
-			'update_daily_homeruns_process.php?date=' + date,			
+			'update_daily_homeruns_process.php?date=' + date,
 			{
 				success: function(data) {
 
@@ -208,17 +208,17 @@ $('#error_msg').html("html error");
 
 					console.log(valid_json_data);
 					console.log(data);
-					
+
 					if(valid_json_data){
-						
+
 						var jsonData = JSON.parse(data);
-						//var jsonData = data;						
-						
+						//var jsonData = data;
+
 						var display_daily_hrs = '';
 
 						$.each(jsonData.gamelogs, function( index, value ){
 
-							var player_id = value.player.id;													
+							var player_id = value.player.id;
 							var player_firstname = value.player.firstName;
 							var player_lastname = value.player.lastName;
 							var homeruns = value.stats.batting.homeruns;
@@ -229,19 +229,19 @@ $('#error_msg').html("html error");
 						});
 
 						$('#daily_hr_form_results').html(display_daily_hrs);
-							
+
 					 	$("#Preloader").hide();
 
 					} else {
-						
+
 
 						$('#daily_hr_form_results').html('No data to display');
 
 
 						$("#Preloader").hide();
 					}
-					
-					
+
+
 
 				},
 
@@ -250,7 +250,7 @@ $('#error_msg').html("html error");
 					alert('There was some error performing the AJAX call to get daily homeruns!');
 					$("#Preloader").hide();
 				}
-			});	
+			});
 
         }
 	});
@@ -268,7 +268,7 @@ $('#error_msg').html("html error");
 		$("#Preloader").show();
 		$.ajax(
 			'update_daily_homeruns_process.php?date=' + date,
-			
+
 			{
 				success: function(data) {
 
@@ -276,17 +276,17 @@ $('#error_msg').html("html error");
 
 					console.log(valid_json_data);
 					console.log(data);
-					
+
 					if(valid_json_data){
-						
+
 						var jsonData = JSON.parse(data);
-						//var jsonData = data;						
-						
+						//var jsonData = data;
+
 						var display_daily_hrs = '';
 
 						$.each(jsonData.gamelogs, function( index, value ){
 
-							var player_id = value.player.id;													
+							var player_id = value.player.id;
 							var player_firstname = value.player.firstName;
 							var player_lastname = value.player.lastName;
 							var homeruns = value.stats.batting.homeruns;
@@ -297,19 +297,19 @@ $('#error_msg').html("html error");
 						});
 
 						$('#daily_hr_form_results').html(display_daily_hrs);
-							
+
 					 	$("#Preloader").hide();
 
 					} else {
-						
+
 
 						$('#daily_hr_form_results').html('No data to display');
 
 
 						$("#Preloader").hide();
 					}
-					
-					
+
+
 
 				},
 
@@ -319,7 +319,7 @@ $('#error_msg').html("html error");
 					$("#Preloader").hide();
 				}
 			}
-		);		
+		);
 	});
 */
 
@@ -339,19 +339,19 @@ $('#error_msg').html("html error");
 		//console.log(date);
 		//console.log(url);
 
-		
+
 		$.ajax(
 			'get_season.php?url=' + url,
 			{
-				success: function(data) {						
+				success: function(data) {
 					var jsonData = JSON.parse(data);
 					if(jsonData && jsonData.seasons[0]){
-						//console.log(jsonData.seasons[0].slug);	
+						//console.log(jsonData.seasons[0].slug);
 						$('#display_season').html(jsonData.seasons[0].slug);
 					} else {
 						//console.log('Season not defined for this date yet.');
 						$('#display_season').html('Season not defined for this date.');
-					}												
+					}
 				},
 				error: function() {
 					alert('There was some error performing the AJAX call to get the season!');
@@ -379,7 +379,7 @@ $('#error_msg').html("html error");
 	/**
 	 * select_daily_homeruns.php
 	 */
-	
+
 
 	$("#check_all_roster_status").click(function () {
         $(".rosterStatusCheckBoxClass").prop('checked', $(this).prop('checked'));
@@ -387,8 +387,8 @@ $('#error_msg').html("html error");
     $("#check_all_positions").click(function () {
         $(".positionCheckBoxClass").prop('checked', $(this).prop('checked'));
     });
-    
-    
+
+
 
     $("#seed_players_form").validate({
 		//debug: true,
@@ -401,7 +401,7 @@ $('#error_msg').html("html error");
 			'position[]':{
 				required: true,
 				minlength: 1
-			}				
+			}
 		},
 		messages: {
 			select_season: "  Select a season",
@@ -415,7 +415,7 @@ $('#error_msg').html("html error");
         	$('#player_seed_display_msg').html('');
 
 			var url_string = '?';
-			
+
 			var season = $("#select_season option:selected" ).text();
 			if(season !== 'Choose one'){
 				url_string += 'season=' + season + '&';
@@ -448,17 +448,17 @@ $('#error_msg').html("html error");
 
         	$.ajax(
 			'seed_players_table_process.php' + url_string,
-			
+
 				{
 					success: function(data) {
 
 						var jsonData = JSON.parse(data);
 
-						//console.log(jsonData);	
+						//console.log(jsonData);
 
-						$("#Preloader").hide();	
+						$("#Preloader").hide();
 
-						$('#player_seed_display_msg').html(jsonData);		
+						$('#player_seed_display_msg').html(jsonData);
 
 					},
 
@@ -483,7 +483,7 @@ $('#error_msg').html("html error");
 		$('#player_seed_display_msg').html('');
 
 		var url_string = '?';
-		
+
 		var season = $("#select_season option:selected" ).text();
 		if(season !== 'Choose one'){
 			url_string += 'season=' + season + '&';
@@ -513,22 +513,22 @@ $('#error_msg').html("html error");
 
 
 
-        
+
         $("#Preloader").show();
         console.log(url_string);
         $.ajax(
 			'seed_players_table_process.php' + url_string,
-			
+
 			{
 				success: function(data) {
 
 					var jsonData = JSON.parse(data);
 
-					console.log(jsonData);	
+					console.log(jsonData);
 
-					$("#Preloader").hide();	
+					$("#Preloader").hide();
 
-					$('#player_seed_display_msg').html(jsonData);		
+					$('#player_seed_display_msg').html(jsonData);
 
 				},
 
@@ -540,7 +540,7 @@ $('#error_msg').html("html error");
 				}
 			}
 		);
-		
+
 	});
 	*/
 
@@ -558,7 +558,7 @@ $('#error_msg').html("html error");
 
 
 			var url_string = '?';
-		
+
 			var season = $("#select_season option:selected" ).text();
 			if(season !== 'Choose one'){
 				url_string += 'season=' + season;
@@ -570,15 +570,15 @@ $('#error_msg').html("html error");
 
 	        $.ajax(
 				'seed_hr_tables_process.php' + url_string,
-				
+
 				{
 					success: function(data) {
 
 						var jsonData = JSON.parse(data);
 
-						$("#Preloader").hide();	
+						$("#Preloader").hide();
 
-						$('#hr_seed_display_msg').html(jsonData);		
+						$('#hr_seed_display_msg').html(jsonData);
 
 					},
 
@@ -604,7 +604,7 @@ $('#error_msg').html("html error");
 		event.preventDefault();
 
 		var url_string = '?';
-		
+
 		var season = $("#select_season option:selected" ).text();
 		if(season !== 'Choose one'){
 			url_string += 'season=' + season;
@@ -616,15 +616,15 @@ $('#error_msg').html("html error");
 
         $.ajax(
 			'seed_hr_tables_process.php' + url_string,
-			
+
 			{
 				success: function(data) {
 
 					var jsonData = JSON.parse(data);
 
-					$("#Preloader").hide();	
+					$("#Preloader").hide();
 
-					$('#hr_seed_display_msg').html(jsonData);		
+					$('#hr_seed_display_msg').html(jsonData);
 
 				},
 
@@ -639,9 +639,9 @@ $('#error_msg').html("html error");
 
     });
 */
-	
 
-	
+
+
 
 
 
@@ -664,6 +664,6 @@ $('#error_msg').html("html error");
 	    });
 	});
 
-    
+
 
 });
