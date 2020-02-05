@@ -14,7 +14,16 @@ $header .= '<link href="https://fonts.googleapis.com/css?family=Roboto&display=s
 $header .= '<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">';
 $header .= '<link rel="stylesheet" href="'.$configs['base_url'].'css/styles.css">';
 $header .= '<link rel="icon" type="image/png" href="'.$configs['base_url'].'images/favicons/favicon.ico">';
-//$header .= '<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Wruczek/Bootstrap-Cookie-Alert@gh-pages/cookiealert.css">';
+
+$header .= '<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>';
+$header .= '<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />';
+$header .= '<link rel="stylesheet" href="'.$configs['base_url'].'css/date_picker_bootstrap4.css">';
+
+
+ 
+
+  /*$header .= '<link rel="stylesheet" href="'.$configs['base_url'].'date_picker_bootstrap4.css" rel="stylesheet" type="text/css">';*/
+$header .= '<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Wruczek/Bootstrap-Cookie-Alert@gh-pages/cookiealert.css">';
 $header .= '</head>';
 $header .= '<body>';
 
