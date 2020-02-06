@@ -9,24 +9,13 @@
   }
 
 
-  print_r($configs);
-
 
 ?>
 
 
 <!--<input id="datepicker" width="276" data-date-format="yymmdd" />-->
 <input type="text" id="datepicker">
-    <!--<script>
-        $('#datepicker').datepicker({
-            uiLibrary: 'bootstrap4'
-        });
-      </script>-->
-<script type="text/javascript">
-    $(function () {
-        $('#datepicker').datepicker({uiLibrary: 'bootstrap4'});
-    });
-</script>
+   
 
 
     </body>

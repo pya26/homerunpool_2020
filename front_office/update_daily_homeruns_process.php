@@ -13,12 +13,17 @@
 		echo 'Connection failed: ' . $e->getMessage();
 		die();
 	}*/
+
 include("../_includes/functions.php");
 $configs = include("../_config/config.php");
 include("../_config/db_connect.php");
 
+
 $url = $configs['msf_api_v2_base_url'] . 'current_season.json?date=' . $date;
 $season = mysportsfeeds_api_request($url);
+
+
+
 $season_slug = $season->seasons[0]->slug;
 
 $seasonid = get_season_id($season_slug);

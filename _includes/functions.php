@@ -153,7 +153,7 @@
 	function mysportsfeeds_api_request($url){
 
 		try {
-			$configs = include("_config/config.php");
+			$configs = include("../_config/config.php");
 		} catch (PDOException $e) {
 			echo 'Connection failed: ' . $e->getMessage();
 			die();
@@ -277,8 +277,8 @@
 	function get_season_id($season){
 
 		try {
-			$configs = include("_config/config.php");
-    		include("_config/db_connect.php");
+			$configs = include("../_config/config.php");
+    		include("../_config/db_connect.php");
 		} catch (PDOException $e) {
 			echo 'Connection failed: ' . $e->getMessage();
 		}
