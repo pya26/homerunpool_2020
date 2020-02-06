@@ -1,15 +1,16 @@
 <?php
 
 	try {
-		include("_includes/header.php");
-		include("_includes/functions.php");
+		$configs = include('../_config/config.php');
+		include("../_includes/header.php");
+		include("../_includes/functions.php");
 	} catch (PDOException $e) {
 		echo 'Connection failed: ' . $e->getMessage();
 		die();
 	}
 
 	//$api_id = $_GET['id'];
-	
+
 
 	print "<a href='admin_dashboard.php'>Back to admin dashboard</a><br /><br />";
 
@@ -17,9 +18,9 @@
 
 	$daily_hr_form = '<form id="daily_hr_form">';
 	$daily_hr_form .= '<label for="date">Enter date of game to update homeruns (YYYYMMDD)</label> ';
-	$daily_hr_form .= '<input id="date" name="date" type="text"/> ';		
+	$daily_hr_form .= '<input id="date" name="date" type="text"/> ';
 	//$daily_hr_form .= '<input id="url" type="hidden" value="'.$url.'" />';
-	$daily_hr_form .= '<input id="daily_hr_form_submit" type="submit" value="Get HRs" />';	
+	$daily_hr_form .= '<input id="daily_hr_form_submit" type="submit" value="Get HRs" />';
 	$daily_hr_form .= '</form><br />';
 	print $daily_hr_form;
 
@@ -33,12 +34,12 @@
 	$daily_hr_form .= 'Date: <input id="date" type="text"/> ';*/
 	/*https://api.mysportsfeeds.com/v2.1/pull/mlb/2019-regular/date/20190920/player_gamelogs.json?stats=HR
 	https://api.mysportsfeeds.com/v2.1/pull/mlb/{season}/date/{date}/player_gamelogs.{format}*/
-	/*$daily_hr_form .= '<input id="season" type="hidden" value="2019-regular" />';	
+	/*$daily_hr_form .= '<input id="season" type="hidden" value="2019-regular" />';
 	$daily_hr_form .= '<input id="daily_hr_form_submit" type="submit" value="Submit" />';
 	$daily_hr_form .= '</form><br />';
 	print $daily_hr_form;*/
 	$preload_image = '<div style="max-width: 200px">';
-	$preload_image .= '<img src="images/baseball_loading_2.gif" id="Preloader" style="max-width:100%;display:none;"/>';
+	$preload_image .= '<img src="../images/baseball_loading_2.gif" id="Preloader" style="max-width:100%;display:none;"/>';
 	$preload_image .= '</div>';
 	print $preload_image;
 	//print '<img src="images/griffey1.gif" id="Preloader" style="display:none;" />';
@@ -84,11 +85,11 @@
 		$player_firstname = $value->player->firstName;
 		$player_lastname = $value->player->lastName;
 		$homeruns = $value->stats->batting->homeruns;
-		
+
 		if($homeruns > 0){
 			print $player_id . ' -- ' . $player_firstname . ' ' . $player_lastname . ' -- ' .$homeruns . '<br />';
 		}
-		
+
 	}
 
 

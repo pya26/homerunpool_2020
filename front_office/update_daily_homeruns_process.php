@@ -2,20 +2,20 @@
 //20190901
 	$date = $_GET['date'];
 
- 
+
 	//$url = $_GET['url'];
 
 	/* Connect to a MySQL database using driver invocation */
-	/*try { 
+	/*try {
 		include("_includes/header.php");
-		include("_includes/functions.php");   
+		include("_includes/functions.php");
 	} catch (PDOException $e) {
 		echo 'Connection failed: ' . $e->getMessage();
 		die();
 	}*/
-include("_includes/functions.php");
-$configs = include("_config/config.php");
-include("_config/db_connect.php"); 
+include("../_includes/functions.php");
+$configs = include("../_config/config.php");
+include("../_config/db_connect.php");
 
 $url = $configs['msf_api_v2_base_url'] . 'current_season.json?date=' . $date;
 $season = mysportsfeeds_api_request($url);
@@ -122,21 +122,21 @@ foreach ($hr_response->gamelogs as $key => $value) {
 	    $stmt->bindParam(2, $seasonid, PDO::PARAM_INT, 11);
 	    $stmt->execute();
 	}
-	
+
 }
 
 
 
-	
+
 
 	//print $url . '<br />';
-	
+
 	/**
 	 * get the season based on the date passed in the url
 	 */
 	/*
 	if (strpos($url, '{season}') !== false) {
-		$api_id = 1;	$configs['current_season_api_id']	
+		$api_id = 1;	$configs['current_season_api_id']
 		$current_season_api_url = get_api_url($api_id);
 		$current_season_api_url .= '?date=' . $date;
 
@@ -149,14 +149,14 @@ foreach ($hr_response->gamelogs as $key => $value) {
 	}
 	*/
 
-	
+
 
 	/*if(strpos($url, '{date}') !== false){
 		$url = str_replace("{date}",$date,$url);
 	}
-	
+
 	if(strpos($url, '$game') !== false){
-		$url = str_replace("{game}",'<input id="game" type="text"/>',$url);		
+		$url = str_replace("{game}",'<input id="game" type="text"/>',$url);
 	}
 
 	*/
@@ -172,14 +172,14 @@ foreach ($hr_response->gamelogs as $key => $value) {
 	foreach ($response->gamelogs as $key => $value) {
 		print $value->player->id . '<br />';
 
-		$player_id = $value->player->id;													
+		$player_id = $value->player->id;
 		$player_firstname = $value->player->firstName;
 		$player_lastname = $value->player->lastName;
 		$homeruns =$value->stats->batting->homeruns;
 
 		if($homeruns > 0){
 			print $player_id . ' - '. $player_firstname . ' - '. $player_lastname . ' - '. $homeruns . ' - season ID = ' . $season_id . '<br />';
-			
+
 			$player_hrs = array(
 				'player_id' => $player_id,
 				'player_firstname' => $player_firstname,
@@ -199,7 +199,7 @@ foreach ($hr_response->gamelogs as $key => $value) {
 
 	//echo json_encode($player_hr_array);
 	echo json_encode($hr_response);
-	
- 
+
+
 
 ?>

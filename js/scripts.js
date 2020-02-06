@@ -6,6 +6,26 @@ $(function() {
 			e.preventDefault();
 		});*/
 
+/*
+	 * Set date format and max date to select for jquery datepicker widget
+	 */
+$( "#datepicker" ).datepicker({
+		dateFormat: 'yymmdd'
+	});
+
+
+
+$("#date").datepicker({
+		dateFormat: 'yymmdd',
+	});
+/*
+	$("#date_for_season").datepicker({
+		dateFormat: 'yymmdd',
+		maxDate: new Date()
+	});
+*/
+
+
 
 	$("#login_form").submit(function(event){
 
@@ -116,17 +136,7 @@ $(function() {
 
 
 
-	/*
-	 * Set date format and max date to select for jquery datepicker widget
-	 */
-	$("#date").datepicker({
-		dateFormat: 'yymmdd',
-	});
 
-	$("#date_for_season").datepicker({
-		dateFormat: 'yymmdd',
-		/*maxDate: new Date()*/
-	});
 
 	/*
 	 * reset display results on 'get_apis_params.php' when page is refreshed
@@ -200,7 +210,7 @@ $(function() {
 
 
 			$.ajax(
-			'update_daily_homeruns_process.php?date=' + date,
+			'/sandbox/homerunpool_2020/front_office/update_daily_homeruns_process.php?date=' + date,
 			{
 				success: function(data) {
 

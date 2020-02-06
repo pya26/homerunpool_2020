@@ -15,12 +15,18 @@
 ?>
 
 
-<input id="datepicker" width="276" />
-    <script>
+<!--<input id="datepicker" width="276" data-date-format="yymmdd" />-->
+<input type="text" id="datepicker">
+    <!--<script>
         $('#datepicker').datepicker({
             uiLibrary: 'bootstrap4'
         });
-    </script>
+      </script>-->
+<script type="text/javascript">
+    $(function () {
+        $('#datepicker').datepicker({uiLibrary: 'bootstrap4'});
+    });
+</script>
 
 
     </body>
