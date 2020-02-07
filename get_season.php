@@ -1,4 +1,6 @@
 <?php 
+
+include("_config/config.php");
 	
 /*
 	try {
@@ -33,8 +35,8 @@
 	print 'Date: <input id="date" type="text"/>';
 
 */
-	$url = $_GET['url'];
-
+	//$url = $_GET['url'];
+	$url = 'https://api.mysportsfeeds.com/v2.1/pull/mlb/current_season.json';
 	/* Connect to a MySQL database using driver invocation */
 	try { 
 		include("_includes/functions.php");   

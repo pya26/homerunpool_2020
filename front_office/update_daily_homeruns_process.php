@@ -1,25 +1,14 @@
 <?php
-//20190901
+
 	$date = $_GET['date'];
 
 
-	//$url = $_GET['url'];
-
-	/* Connect to a MySQL database using driver invocation */
-	/*try {
-		include("_includes/header.php");
-		include("_includes/functions.php");
-	} catch (PDOException $e) {
-		echo 'Connection failed: ' . $e->getMessage();
-		die();
-	}*/
-
-include("../_includes/functions.php");
-$configs = include("../_config/config.php");
+include("../_config/config.php");
 include("../_config/db_connect.php");
+include("../_includes/functions.php");
 
 
-$url = $configs['msf_api_v2_base_url'] . 'current_season.json?date=' . $date;
+$url = $GLOBALS['msf_api_v2_base_url'] . 'current_season.json?date=' . $date;
 $season = mysportsfeeds_api_request($url);
 
 
@@ -28,7 +17,7 @@ $season_slug = $season->seasons[0]->slug;
 
 $seasonid = get_season_id($season_slug);
 
-$url_hrs = $configs['msf_api_v2_base_url'] . $season_slug .'/date/' . $date . '/player_gamelogs.json';
+$url_hrs = $GLOBALS['msf_api_v2_base_url'] . $season_slug .'/date/' . $date . '/player_gamelogs.json';
 
 $year = substr($date, 0, 4);
 $month = substr($date, 4, 2);
@@ -105,10 +94,10 @@ switch ($month) {
 
 
 
-//echo json_encode('hello');
-
 
 $hr_response = mysportsfeeds_api_request($url_hrs);
+
+
 
 foreach ($hr_response->gamelogs as $key => $value) {
 	$playerid =  $value->player->id;
@@ -117,8 +106,7 @@ foreach ($hr_response->gamelogs as $key => $value) {
 	$homeruns = $value->stats->batting->homeruns;
 
 	if($homeruns > 0){
-		//print $playerid . ' -- ' . $seasonid . ' -- ' . $first_name . ' ' . $last_name . ' -- ' . $homeruns . '<br />';
-
+		
 		$stmt = $dbh->prepare("UPDATE " . $table_string . " SET " . $column_name  . " = " .$homeruns ." WHERE player_id = ". $playerid ." AND season_id = " . $seasonid . "");
 	    $stmt->execute();
 
@@ -126,11 +114,10 @@ foreach ($hr_response->gamelogs as $key => $value) {
 	    $stmt->bindParam(1, $playerid, PDO::PARAM_INT, 11);
 	    $stmt->bindParam(2, $seasonid, PDO::PARAM_INT, 11);
 	    $stmt->execute();
+	   
 	}
 
 }
-
-
 
 
 

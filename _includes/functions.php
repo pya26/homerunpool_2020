@@ -1,6 +1,7 @@
 <?php
 
 
+
 	function dynamic_select($the_array, $element_name, $label = '', $init_value = '') {
 	    $menu = '';
 	    if ($label != '') $menu .= '
@@ -38,13 +39,14 @@
 
 	function list_of_seasons(){
 
-		try {
+		/*try {
 			$configs = include("_config/config.php");
     		include("_config/db_connect.php");
 		} catch (PDOException $e) {
 			echo 'Connection failed: ' . $e->getMessage();
 			die();
-		}
+		}*/
+		$dbh = $GLOBALS['dbh'];
 
 		$stmt = $dbh->prepare('CALL sp_get_all_seasons');
 		$stmt->execute();
@@ -117,12 +119,13 @@
 
 	function get_api_url($api_id){
 
-		try {
+		/*try {
 			$configs = include("_config/config.php");
     		include("_config/db_connect.php");
 		} catch (PDOException $e) {
 			echo 'Connection failed: ' . $e->getMessage();
-		}
+		}*/
+		$dbh = $GLOBALS['dbh'];
 
 		$stmt = $dbh->prepare('CALL sp_get_api_url(?)');
 		$stmt->bindParam(1, $api_id, PDO::PARAM_INT, 11);
@@ -152,12 +155,12 @@
 
 	function mysportsfeeds_api_request($url){
 
-		try {
+		/*try {
 			$configs = include("../_config/config.php");
 		} catch (PDOException $e) {
 			echo 'Connection failed: ' . $e->getMessage();
 			die();
-		}
+		}*/
 
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
@@ -166,7 +169,7 @@
 		curl_setopt($ch, CURLOPT_ENCODING, "gzip");
 		$headers = array(
 		    'Content-type: application/json; charset=UTF-8',
-		    "Authorization: Basic " . base64_encode($configs['msf_apikey_token'] . ":" . $configs['msf_password']),
+		    "Authorization: Basic " . base64_encode($GLOBALS['msf_apikey_token'] . ":" . $GLOBALS['msf_password']),
 		);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -197,6 +200,8 @@
 			$season = 'Season not defined';
 		}
 
+		$season = $current_season;
+
 		return $season;
 	}
 
@@ -204,13 +209,14 @@
 
 
 	function get_all_players(){
-
+/*
 		try {
 			$configs = include("_config/config.php");
     		include("_config/db_connect.php");
 		} catch (PDOException $e) {
 			echo 'Connection failed: ' . $e->getMessage();
-		}
+		}*/
+		$dbh = $GLOBALS['dbh'];
 
 		$stmt = $dbh->prepare("CALL sp_get_all_players");
 		$stmt->execute();
@@ -227,13 +233,14 @@
 
 
 	function get_all_roster_statuses(){
-
+/*
 		try {
 			$configs = include("_config/config.php");
     		include("_config/db_connect.php");
 		} catch (PDOException $e) {
 			echo 'Connection failed: ' . $e->getMessage();
-		}
+		}*/
+		$dbh = $GLOBALS['dbh'];
 
 		$stmt = $dbh->prepare("CALL sp_get_all_roster_statuses");
 		$stmt->execute();
@@ -251,13 +258,14 @@
 
 
 	function get_all_hitter_positions(){
-
+/*
 		try {
 			$configs = include("_config/config.php");
     		include("_config/db_connect.php");
 		} catch (PDOException $e) {
 			echo 'Connection failed: ' . $e->getMessage();
-		}
+		}*/
+		$dbh = $GLOBALS['dbh'];
 
 		$stmt = $dbh->prepare('CALL sp_get_all_hitter_positions');
 		$stmt->execute();
@@ -275,13 +283,14 @@
 
 
 	function get_season_id($season){
-
+/*
 		try {
 			$configs = include("../_config/config.php");
     		include("../_config/db_connect.php");
 		} catch (PDOException $e) {
 			echo 'Connection failed: ' . $e->getMessage();
-		}
+		}*/
+		$dbh = $GLOBALS['dbh'];
 
 		$stmt = $dbh->prepare('CALL sp_get_season_id_by_name(?)');
 		$stmt->bindParam(1, $season, PDO::PARAM_STR, 15);
@@ -305,12 +314,14 @@
 
 	function insert_players($player_info_response){
 
-		try {
+		/*try {
 			$configs = include("_config/config.php");
 			include("_config/db_connect.php");
 		} catch (PDOException $e) {
 			echo 'Connection failed: ' . $e->getMessage();
-		}
+		}*/
+
+		$dbh = $GLOBALS['dbh'];
 
 		// loop through $player_info_response and insert into players database
 	    foreach($player_info_response->players as $key => $value) {

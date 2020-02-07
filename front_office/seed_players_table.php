@@ -1,10 +1,10 @@
 <?php
 
   try {
-    include("_includes/header.php");
-    include("_includes/functions.php");
-    $configs = include("_config/config.php");
-    include("_config/db_connect.php");
+    include("../_config/config.php"); 
+    include("../_includes/header.php");
+    include("../_config/db_connect.php");
+    include("../_includes/functions.php");    
   } catch (PDOException $e) {
     echo 'Connection failed: ' . $e->getMessage();
     die();
@@ -22,7 +22,7 @@
   $seed_players_form .= '<label for="roster_status[]" class="error"></label><br />';
   $seed_players_form .= '<input type="checkbox" id="check_all_roster_status">Check all<br />';
   foreach($status_array as $roster_status_name ){
-    $seed_players_form .= '<input type="checkbox" class="rosterStatusCheckBoxClass" id="roster_status" name="roster_status[]" value="'.$roster_status_name.'">'.$roster_status_name.'<br />';
+    $seed_players_form .= '<input type="checkbox" class="rosterStatusCheckBoxClass" id="roster_status" name="roster_status" value="'.$roster_status_name.'">'.$roster_status_name.'<br />';
   }
 
   $seed_players_form .= '<br />Select which player positions should be seeded into the database:';
@@ -30,14 +30,14 @@
   $seed_players_form .= '<label for="position[]" class="error"></label><br />';
   $seed_players_form .= '<input type="checkbox" id="check_all_positions">Check all<br />';
   foreach($position_array as $key => $value ){
-    $seed_players_form .= '<input type="checkbox" class="positionCheckBoxClass" id="position" name="position[]" value="'.$key.'">'.$value.'<br />';
+    $seed_players_form .= '<input type="checkbox" class="positionCheckBoxClass" id="position" name="position" value="'.$key.'">'.$value.'<br />';
   }
   $seed_players_form .= '<br /><input id="seed_players_form_submit" type="submit" value="Seed Players DB" /></form>';
 
   print $seed_players_form;
 
   $preload_image = '<div style="max-width: 200px">';
-  $preload_image .= '<img src="images/baseball_loading_2.gif" id="Preloader" style="max-width:100%;display:none;"/>';
+  $preload_image .= '<img src="'.$GLOBALS['base_path'].'images/baseball_loading_2.gif" id="Preloader" style="max-width:100%;display:none;"/>';
   $preload_image .= '</div>';
   print $preload_image;
 
