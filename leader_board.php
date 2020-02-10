@@ -1,5 +1,6 @@
 <?php
   try {
+      include("_config/config.php");
       include("_includes/header.php");
       include("_includes/functions.php");
       include("_config/db_connect.php");
@@ -8,6 +9,8 @@
       die();
     }
 
+
+/*
     print isset($_SESSION['reg_id']) . '<br />';
     print isset($_SESSION['lid']) . '<br />';
 
@@ -23,6 +26,7 @@
     	$redirect_url = "login.php?redirect=" . $_SERVER['REQUEST_URI'];
       header("Location: ".$redirect_url);
     }
+    */
 
     /*
     if(!isset($_GET['lid'])){
