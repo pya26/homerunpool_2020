@@ -37,4 +37,15 @@ label.error{
 	width: 65px;
 }*/
 
+#leaderboard {
+  border-radius: 25px !important;
+  border-width: 2px !important;
+  border-style: solid !important;
+  /*border-color: rgba(0, 128, 255, 0.9) !important;
+  width: 90%;
+  padding-top: 1%;
+  margin: 0px auto;
+  float: none;*/
+}
+
 
