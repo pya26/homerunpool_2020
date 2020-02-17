@@ -1,6 +1,7 @@
 <?php
-  try {
-      include("_includes/header.php");
+    try {
+        include("../_config/config.php");
+        include("../_includes/header.php");
     } catch (PDOException $e) {}
 ?>
 
@@ -18,10 +19,12 @@
         <label>Last Name</label>
         <input type="text" name="lastname" required />
     </div>
+    <!--
     <div class="form-element">
         <label>Username</label>
         <input type="text" name="username" pattern="[a-zA-Z0-9]+" required />
     </div>
+-->
     <div class="form-element">
         <label>Email</label>
         <input type="email" name="email" required />

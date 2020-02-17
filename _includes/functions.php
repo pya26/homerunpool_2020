@@ -39,14 +39,14 @@
 
 	function list_of_seasons(){
 
-		/*try {
-			$configs = include("_config/config.php");
-    		include("_config/db_connect.php");
+		try {
+			  include("../_config/config.php");
+    		include("../_config/db_connect.php");
 		} catch (PDOException $e) {
 			echo 'Connection failed: ' . $e->getMessage();
 			die();
-		}*/
-		$dbh = $GLOBALS['dbh'];
+		}
+		//$dbh = $GLOBALS['dbh'];
 
 		$stmt = $dbh->prepare('CALL sp_get_all_seasons');
 		$stmt->execute();
@@ -209,20 +209,24 @@
 
 
 	function get_all_players(){
-/*
+
 		try {
-			$configs = include("_config/config.php");
-    		include("_config/db_connect.php");
+			$configs = include("../_config/config.php");
+    		include("../_config/db_connect.php");
 		} catch (PDOException $e) {
 			echo 'Connection failed: ' . $e->getMessage();
-		}*/
-		$dbh = $GLOBALS['dbh'];
+		}
+		//$dbh = $GLOBALS['dbh'];
 
 		$stmt = $dbh->prepare("CALL sp_get_all_players");
 		$stmt->execute();
 		$player_db_ids = array();
 		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-			$player_db_ids[] = $row['PlayerID'];
+			/**
+			 * added first name and last name for 'add_league_team_players.php'
+			 */
+			//$player_db_ids[] = $row['PlayerID'];
+			$player_db_ids[$row['PlayerID']] = $row['FirstName'] . ' ' . $row['LastName'];
 		}
 
 		return $player_db_ids;
@@ -673,6 +677,27 @@
 	}
 	*/
 
+	function get_registered_users(){
+
+		try {
+			include("../_config/db_connect.php");
+		} catch (PDOException $e) {
+			echo 'Connection failed: ' . $e->getMessage();
+		}
+
+		 $stmt = $dbh->prepare("SELECT * FROM registered_users WHERE status_id = 'A' ORDER BY last_name");
+	   $stmt->execute();
+
+		$reg_users_array = array();
+		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+			$reg_users_array[] = ['reg_id' => $row['reg_id'], 'first_name' => $row['first_name'], 'last_name' => $row['last_name']];
+		}
+
+		return $reg_users_array;
+
+	}
+
+
 
 	function get_monthly_hrs_for_season($tablename,$season_id){
 
@@ -705,8 +730,8 @@
 	function get_leagues(){
 
 		try {
-			$configs = include("_config/config.php");
-			include("_config/db_connect.php");
+			$configs = include("../_config/config.php");
+			include("../_config/db_connect.php");
 		} catch (PDOException $e) {
 			echo 'Connection failed: ' . $e->getMessage();
 		}
@@ -768,6 +793,27 @@
 		$teams_array = array();
 		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
 			$teams_array[] = ['team_id' => $row['team_id'], 'team_name' => $row['team_name'], 'status_id' => $row['status_id'], 'date_created' => date_format_table($row['date_created']), 'date_updated' => date_format_table($row['date_updated'])];
+		}
+
+		return $teams_array;
+	}
+
+	function get_all_teams(){
+
+		try {
+			$configs = include("../_config/config.php");
+			include("../_config/db_connect.php");
+		} catch (PDOException $e) {
+			echo 'Connection failed: ' . $e->getMessage();
+		}
+
+		$query = $dbh->prepare("SELECT * FROM teams WHERE status_id = 'A'");
+		$query->bindParam(1, $reg_id, PDO::PARAM_INT);
+		$query->execute();
+
+		$teams_array = array();
+		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+			$teams_array[] = ['team_id' => $row['team_id'], 'team_name' => $row['team_name']];
 		}
 
 		return $teams_array;
@@ -1047,6 +1093,32 @@
 
         return $result;
 
+
+	}
+
+
+
+	function get_player_league_teams_by_id($league_id,$team_id,$season_id){
+
+		try {
+			include("../_config/config.php");
+			include("../_config/db_connect.php");
+		} catch (PDOException $e) {
+			echo 'Connection failed: ' . $e->getMessage();
+		}
+
+		$stmt = $dbh->prepare("SELECT ltp.player_id, p.FirstName, p.LastName FROM league_team_players ltp JOIN Players p ON p.PlayerID = ltp.player_id WHERE ltp.league_id = ? AND ltp.team_id = ? AND ltp.season_id = ?");
+    $stmt->bindParam(1, $league_id, PDO::PARAM_INT);
+    $stmt->bindParam(2, $team_id, PDO::PARAM_INT);
+    $stmt->bindParam(3, $season_id, PDO::PARAM_INT);
+
+    if ($stmt->execute()) {
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        	$league_team_players[] =  ['player_id' => $row['player_id'], 'first_name' => $row['FirstName'], 'last_name' => $row['LastName']];
+        }
+
+        return $league_team_players;
+    }
 
 	}
 

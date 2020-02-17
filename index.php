@@ -13,10 +13,10 @@
 
 <script>
   $(document).ready(function() {
-    
+
     $('#leaderboard').DataTable({
-      searching: false, 
-      paging: false, 
+      searching: false,
+      paging: false,
       info: false
     });
 
@@ -119,7 +119,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form id="login_form">
+        <form id="create_account">
           <div class="modal-body">
             <div id="error_msg"></div>
             <div class="form-group">
@@ -224,10 +224,12 @@
     </div>
     </div>
 
-  <div class="container table-responsive-sm"><!--table-responsive-sm-->
+    <?php include("leader_board.php"); ?>
+    <!--
+  <div class="container table-responsive-sm">
     <h2>Dark Striped Table</h2>
-    <p>Combine .table-dark and .table-striped to create a dark, striped table:</p> <!--table-sm-->          
-    <table id="leaderboard" class="table table-striped table-hover table-bordered border-primary" style="width:100%">
+    <p>Combine .table-dark and .table-striped to create a dark, striped table:</p>
+    <table id="leaderboard" class="table table-sm table-striped table-hover table-bordered border-primary" style="width:100%">
           <thead>
               <tr>
                   <th>Player</th>
@@ -386,7 +388,7 @@
                   <td>2</td>
                   <td>1</td>
                   <td>45</td>
-              </tr>            
+              </tr>
           </tbody>
           <tfoot>
               <tr>
@@ -404,11 +406,12 @@
           </tfoot>
       </table>
   </div>
+-->
 
 
   <div class="container-fluid">
 
-    <?php 
+    <?php
       $numOfCols = 3;
       $rowCount = 0;
       $teams = 12
@@ -419,7 +422,7 @@
       <?php
         //foreach ($rows as $row){
         for ($x = $rowCount; $x <= $teams - 1; $x++) {
-      ?> 
+      ?>
         <div class="col-md-4">
           <?php include("team_table.php"); ?>
         </div>
@@ -430,7 +433,7 @@
         }
       ?>
     </div>
-   
+
   </div>
 
 <!-- Footer -->

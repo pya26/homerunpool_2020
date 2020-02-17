@@ -1,5 +1,16 @@
 $(function() {
 
+	/*
+	var obj = [];
+	$('#add_league_team_form').submit(function(event){
+  	obj.push($('#player_ids').val());
+
+    console.log(obj);
+
+    event.preventDefault();
+  });
+*/
+
 	/*$('#login_form').on('submit', function(e){
 		$('#exampleModalCenter').modal('show');
 		console.log('stay open');
@@ -24,7 +35,22 @@ $("#date").datepicker({
 		maxDate: new Date()
 	});
 */
+	$("#create_account").submit(function(event){
 
+		$('#error_msg').html("");
+		$('#CreateAccountModal').modal('show');
+
+		event.preventDefault();
+
+		var $first_name = $('#first_name').val();
+		var $last_name = $('#last_name').val();
+		var $email = $('#email').val();
+		var $pwd = $('#password1').val();
+
+		console.log('');
+
+
+	});
 
 
 	$("#login_form").submit(function(event){
@@ -32,7 +58,6 @@ $("#date").datepicker({
 		$('#error_msg').html("");
 
 		$('#LogInModal').modal('show');
-		$('#error_msg').html('hello');
 
 		event.preventDefault();
 
@@ -426,7 +451,7 @@ $("#date").datepicker({
         	url_string += '';
         }
 
-        
+
 	    var positions = new Array();
         $("input:checkbox[name=position]:checked").each(function(){
             positions.push($(this).val());
@@ -439,7 +464,7 @@ $("#date").datepicker({
 
         $("#Preloader").show();
         //console.log(url_string);
-        
+
         $.ajax(
 			'/sandbox/homerunpool_2020/front_office/seed_players_table_process.php' + url_string,
 			{
@@ -452,7 +477,7 @@ $("#date").datepicker({
 
 					$('#player_seed_display_msg').html(jsonData);
 
-					
+
 
 				},
 				error: function() {
@@ -460,16 +485,16 @@ $("#date").datepicker({
 				}
 			}
 		);
-		
 
-       	
-        
+
+
+
 
 	});
 
 /*
     $("#seed_players_form").validate({
-		
+
 		rules: {
 			select_season: "required",
 			'roster_status[]':{
@@ -503,10 +528,10 @@ $("#date").datepicker({
 
 
 			var roster_statuses = [];
-					
+
 	        $.each($("input[name='roster_status']:checked"), function(){
 	            roster_statuses.push($(this).val());
-	        });	       
+	        });
 
 	        if(roster_statuses != ''){
 	        	url_string += 'rosterstatus=' + roster_statuses.join(",") + '&';
@@ -525,7 +550,7 @@ $("#date").datepicker({
 	        }
 
 	        $("#Preloader").show();
-        	
+
         	$.ajax(
 			'http://localhost/sandbox/homerunpool_2020/front_office/seed_players_table_process.php' + url_string,
 

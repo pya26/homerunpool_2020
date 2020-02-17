@@ -1,11 +1,12 @@
 <?php
   try {
-      include("_includes/header.php");
-      include("_includes/functions.php");
+      include("../_config/config.php");
+      include("../_includes/header.php");
+      include("../_includes/functions.php");
     } catch (PDOException $e) {}
 
     if(!isset($_SESSION['reg_id'])){
-      $redirect_url = "login.php?redirect=" . $_SERVER['REQUEST_URI'];
+      $redirect_url = "../login.php?redirect=" . $_SERVER['REQUEST_URI'];
       header("Location: ".$redirect_url);
     }
 ?>
@@ -47,6 +48,6 @@
         <input type="file" name="team_logo" />
     </div>
     -->
-    
+
     <button type="submit" name="create-league" value="Create League">Create League</button>
 </form>

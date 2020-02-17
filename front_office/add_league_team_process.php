@@ -1,0 +1,68 @@
+
+<?php
+
+  try {
+    include("../_config/config.php");
+    include("../_includes/header.php");
+    include("../_config/db_connect.php");
+    include("../_includes/functions.php");
+  } catch (PDOException $e) {}
+
+
+  $league_id = $_POST['league_id'];
+  $team_id = $_POST['team_id'];
+  $season_id = $_POST['season_id'];
+  $status_id = 'A';
+
+  /*
+  print '<pre>';
+  print_r($_POST['player_ids']);
+  print '</pre>';
+
+  exit();
+*/
+  $sort_order = 1;
+  foreach($_POST['player_ids'] as $value){
+
+    $player_id = $value;
+    //print $player_id . '<br />';
+
+    $stmt = $dbh->prepare("INSERT INTO league_team_players (league_id, team_id, player_id, season_id, status_id, sort) VALUES (?,?,?,?,?,?)");
+
+    $stmt->bindParam(1, $league_id, PDO::PARAM_INT, 11);
+    $stmt->bindParam(2, $team_id, PDO::PARAM_INT, 11);
+    $stmt->bindParam(3, $player_id, PDO::PARAM_INT, 11);
+    $stmt->bindParam(4, $season_id, PDO::PARAM_INT, 11);
+    $stmt->bindParam(5, $status_id, PDO::PARAM_STR, 1);
+    $stmt->bindParam(6, $sort_order, PDO::PARAM_INT);
+    //$stmt->execute();
+
+    if($stmt->execute()){
+      $insert_success = 1;
+    } else {
+      $insert_success = 0;
+    }
+
+    $sort_order++;
+
+  }
+
+
+  if($insert_success == 1){
+
+    $get_player_league_teams = get_player_league_teams_by_id($league_id,$team_id,$season_id);
+
+    print "<pre>";
+    print_r($get_player_league_teams);
+    print "</pre>";
+
+  }
+
+
+
+
+
+
+
+?>
+

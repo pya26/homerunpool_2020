@@ -30,6 +30,13 @@ $header .= '<link rel="stylesheet" href="'.$configs['base_url'].'css/date_picker
 $header .= '<link rel="stylesheet" href="'.$configs['base_url'].'date_picker_bootstrap4.css" rel="stylesheet" type="text/css">';*/
 
 $header .= '<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Wruczek/Bootstrap-Cookie-Alert@gh-pages/cookiealert.css">';
+
+$header .= '<link href="'.$GLOBALS['base_url'].'css/fSelect.css" rel="stylesheet">';
+//$header .= '<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>';
+$header .= '<script src="'.$GLOBALS['base_url'].'js/fSelect.js"></script>';
+
+
+
 $header .= '</head>';
 $header .= '<body>';
 
