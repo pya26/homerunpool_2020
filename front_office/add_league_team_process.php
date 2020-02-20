@@ -27,14 +27,14 @@
     $player_id = $value;
     //print $player_id . '<br />';
 
-    $stmt = $dbh->prepare("INSERT INTO league_team_players (league_id, team_id, player_id, season_id, status_id, sort) VALUES (?,?,?,?,?,?)");
+    $stmt = $dbh->prepare("INSERT INTO league_team_players (league_id, team_id, player_id, season_id, status_id) VALUES (?,?,?,?,?)");
 
     $stmt->bindParam(1, $league_id, PDO::PARAM_INT, 11);
     $stmt->bindParam(2, $team_id, PDO::PARAM_INT, 11);
     $stmt->bindParam(3, $player_id, PDO::PARAM_INT, 11);
     $stmt->bindParam(4, $season_id, PDO::PARAM_INT, 11);
     $stmt->bindParam(5, $status_id, PDO::PARAM_STR, 1);
-    $stmt->bindParam(6, $sort_order, PDO::PARAM_INT);
+    //$stmt->bindParam(6, $sort_order, PDO::PARAM_INT);
     //$stmt->execute();
 
     if($stmt->execute()){
@@ -56,6 +56,23 @@
     print_r($get_player_league_teams);
     print "</pre>";
 
+
+
+
+
+
+
+    $league_team_player_sort_form = '<form method="post" id="add_league_team_player_sort_form" action="add_league_team_player_sort_form_process.php" name="add_league_team_player_sort_form">';
+    $league_team_player_sort_form .= '<div class="form-group">';
+    foreach($get_player_league_teams as $value){
+      $fieldname = 'sort~'.$value['player_id'];
+      $league_team_player_sort_form .= '<label class="col-form-label" for="inputDefault">'.$value['first_name'].' '.$value['last_name'].'</label>';
+      $league_team_player_sort_form .= '<input type="text" class="form-control" name="'.$fieldname.'">';
+    }
+    $league_team_player_sort_form .= '</div>';
+    $league_team_player_sort_form .= '<button type="submit" value="Sort Players">Sort Players</button>';
+    $league_team_player_sort_form .= '</form>';
+    print $league_team_player_sort_form;
   }
 
 
