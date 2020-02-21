@@ -1,12 +1,12 @@
 <?php
 
     $new_array = array(
-        'sort~10609' => '5',
-        'sort~10726' => '4',
-        'sort~10734' => '1',
-        'sort~10756' => '3',
-        'sort~10966' => '6',
-        'sort~12233' => '2'
+        'playerid~10609~leagueid~10~seasonid~10' => '5',
+        'playerid~10726~leagueid~10~seasonid~10' => '4',
+        'playerid~10734~leagueid~10~seasonid~10' => '1',
+        'playerid~10756~leagueid~10~seasonid~10' => '3',
+        'playerid~10966~leagueid~10~seasonid~10' => '6',
+        'playerid~12233~leagueid~10~seasonid~10' => '2'
     );
 
     print '<pre>';
@@ -14,8 +14,18 @@
     print '<pre>';
 
     foreach($new_array as $key => $value){
-        print substr($key,5).' = '.$value .'<br />';
+        $plt_array = explode("~", $key);
+        $playerid = $plt_array[1];
+        $leagueid = $plt_array[3];
+        $seasonid = $plt_array[5];
+
+        print $playerid.'<br />';
+        print $leagueid.'<br />';
+        print $seasonid.'<br />';
+        print $value.'<br /><br />';
+
     }
+
 
 
 ?>
