@@ -1,5 +1,13 @@
 <?php
 
+try {
+        include("_config/config.php");
+        include("_config/db_connect.php");
+    } catch (PDOException $e) {
+        echo 'Connection failed: ' . $e->getMessage();
+        die();
+    }
+
 /*
     print isset($_SESSION['reg_id']) . '<br />';
     print isset($_SESSION['lid']) . '<br />';
@@ -22,6 +30,14 @@
     if(!isset($_GET['lid'])){
       header("Location: login.php");
     }*/
+
+
+    $stmt = $dbh->prepare("SELECT t.team_id, t.team_name FROM teams t LEFT JOIN league_teams lt ON lt.team_id = t.team_id WHERE t.status_id = 'A' AND lt.league_id = 10 AND lt.season_id = 10 AND lt.status_id = 'A'");
+    $stmt->execute();
+
+
+
+    //print_r($team_names);
 
 ?>
 
@@ -53,7 +69,7 @@ print $league_info_data;
     <table id="leaderboard" class="table table-sm table-striped table-hover table-bordered border-primary" style="width:100%">
           <thead>
               <tr>
-                  <th>Player</th>
+                  <th>Team</th>
                   <th>March</th>
                   <th>April</th>
                   <th>May</th>
@@ -66,18 +82,52 @@ print $league_info_data;
               </tr>
           </thead>
           <tbody>
-              <tr>
-                  <td>Tiger Nixon</td>
-                  <td>1</td>
-                  <td>2</td>
-                  <td>3</td>
-                  <td>4</td>
-                  <td>5</td>
-                  <td>6</td>
-                  <td>7</td>
-                  <td>8</td>
-                  <td>50</td>
-              </tr>
+            <?php
+
+              while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $teamid = $row['team_id'];
+                $seasonid = 10;
+
+                $team_row = '<tr>';
+                $team_row .= '<td>'.$row['team_name'].'</td>';
+                $team_row .= '<td>';
+
+                  $march_query = $dbh->prepare('CALL get_team_march_total(?,?)');
+                  $march_query->bindParam(1, $teamid, PDO::PARAM_INT, 11);
+                  $march_query->bindParam(2, $seasonid, PDO::PARAM_INT, 11);
+                  $march_query->execute();
+                  /*
+                  $march_query = $dbh->prepare("SELECT SUM(march.total) AS march_total FROM hrs_march march WHERE march.player_id IN ( SELECT ltp.player_id FROM league_team_players ltp WHERE ltp.team_id = $teamid AND ltp.season_id = 10 AND ltp.status_id = 'A') AND march.season_id = 10");
+                  $march_query->execute();
+                  */
+                  while ($row2 = $march_query->fetch(PDO::FETCH_ASSOC)) {
+                    $team_row .= $row2['march_total'];
+                  }
+                  unset($march_query);
+
+                $team_row .='</td>';
+                $team_row .= '<td>';
+                  $april_query = $dbh->prepare('CALL get_team_april_total(?,?)');
+                  $april_query->bindParam(1, $teamid, PDO::PARAM_INT, 11);
+                  $april_query->bindParam(2, $seasonid, PDO::PARAM_INT, 11);
+                  $april_query->execute();
+                  while ($row3 = $april_query->fetch(PDO::FETCH_ASSOC)) {
+                    $team_row .=$row3['april_total'];
+                  }
+                  unset($april_query);
+
+                $team_row .= '</td>';
+                $team_row .= '<td>3</td>';
+                $team_row .= '<td>4</td>';
+                $team_row .= '<td>5</td>';
+                $team_row .= '<td>6</td>';
+                $team_row .= '<td>7</td>';
+                $team_row .= '<td>8</td>';
+                $team_row .= '<td>50</td>';
+                $team_row .= '</tr>';
+                print $team_row;
+              }
+            ?>
           </tbody>
         </table>
   </div>
