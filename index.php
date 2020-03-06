@@ -17,7 +17,8 @@
     $('#leaderboard').DataTable({
       searching: false,
       paging: false,
-      info: false
+      info: false,
+      order: [[ 9, "desc" ]]
     });
 
   });
