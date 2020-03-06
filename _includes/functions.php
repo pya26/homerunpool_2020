@@ -1108,9 +1108,9 @@
 		}
 
 		$stmt = $dbh->prepare("SELECT ltp.player_id, p.FirstName, p.LastName FROM league_team_players ltp JOIN Players p ON p.PlayerID = ltp.player_id WHERE ltp.league_id = ? AND ltp.team_id = ? AND ltp.season_id = ?");
-    $stmt->bindParam(1, $league_id, PDO::PARAM_INT);
-    $stmt->bindParam(2, $team_id, PDO::PARAM_INT);
-    $stmt->bindParam(3, $season_id, PDO::PARAM_INT);
+	    $stmt->bindParam(1, $league_id, PDO::PARAM_INT);
+	    $stmt->bindParam(2, $team_id, PDO::PARAM_INT);
+	    $stmt->bindParam(3, $season_id, PDO::PARAM_INT);
 
     if ($stmt->execute()) {
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {

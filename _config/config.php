@@ -22,5 +22,7 @@ $GLOBALS['msf_api_v2_base_url'] = 'https://api.mysportsfeeds.com/v2.1/pull/mlb/'
 $GLOBALS['base_url'] = 'http://localhost/sandbox/homerunpool_2020/';
 $GLOBALS['base_path'] = '/sandbox/homerunpool_2020/';
 $GLOBALS['config_base_path'] = 'C:\laragon\www\sandbox\homerunpool_2020';
+$GLOBALS['league_id'] = 10;
+$GLOBALS['season_id'] = 10;
 
 	//$GLOBALS['Alex'] = 'Trebek';

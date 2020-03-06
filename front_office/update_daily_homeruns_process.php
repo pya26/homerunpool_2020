@@ -1,7 +1,6 @@
 <?php
 
-	$date = $_GET['date'];
-
+$date = $_GET['date'];
 
 include("../_config/config.php");
 include("../_config/db_connect.php");
@@ -10,8 +9,6 @@ include("../_includes/functions.php");
 
 $url = $GLOBALS['msf_api_v2_base_url'] . 'current_season.json?date=' . $date;
 $season = mysportsfeeds_api_request($url);
-
-
 
 $season_slug = $season->seasons[0]->slug;
 
@@ -24,7 +21,6 @@ $month = substr($date, 4, 2);
 $day = substr($date, 6, 2);
 
 $column_name = "day" . ltrim($day, '0');
-//exit(123);
 
 //print $year . '<br />';
 //print $month . '<br />';
@@ -99,25 +95,37 @@ $hr_response = mysportsfeeds_api_request($url_hrs);
 
 
 
+
+
 foreach ($hr_response->gamelogs as $key => $value) {
 	$playerid =  $value->player->id;
 	$first_name = $value->player->firstName;
 	$last_name = $value->player->lastName;
 	$homeruns = $value->stats->batting->homeruns;
+	
 
 	if($homeruns > 0){
 		
 		$stmt = $dbh->prepare("UPDATE " . $table_string . " SET " . $column_name  . " = " .$homeruns ." WHERE player_id = ". $playerid ." AND season_id = " . $seasonid . "");
 	    $stmt->execute();
 
-	    $stmt = $dbh->prepare("CALL ". $hr_totals_stored_proc . "(?,?)");
+	    unset($stmt);
+
+	    
+	    $sp_statement = "CALL ". $hr_totals_stored_proc . "(?,?)";
+
+	    $stmt = $dbh->prepare($sp_statement);
 	    $stmt->bindParam(1, $playerid, PDO::PARAM_INT, 11);
 	    $stmt->bindParam(2, $seasonid, PDO::PARAM_INT, 11);
 	    $stmt->execute();
+
+	    unset($stmt);
 	   
 	}
 
+
 }
+
 
 
 

@@ -8,6 +8,9 @@ try {
         die();
     }
 
+    $leagueid = $GLOBALS['league_id'];
+    $seasonid = $GLOBALS['season_id'];
+
 /*
     print isset($_SESSION['reg_id']) . '<br />';
     print isset($_SESSION['lid']) . '<br />';
@@ -32,7 +35,7 @@ try {
     }*/
 
 
-    $stmt = $dbh->prepare("SELECT t.team_id, t.team_name FROM teams t LEFT JOIN league_teams lt ON lt.team_id = t.team_id WHERE t.status_id = 'A' AND lt.league_id = 10 AND lt.season_id = 10 AND lt.status_id = 'A'");
+    $stmt = $dbh->prepare("SELECT t.team_id, t.team_name FROM teams t LEFT JOIN league_teams lt ON lt.team_id = t.team_id WHERE t.status_id = 'A' AND lt.league_id = $leagueid  AND lt.season_id = $seasonid AND lt.status_id = 'A'");
     $stmt->execute();
 
 
@@ -41,9 +44,7 @@ try {
 
 ?>
 
-<a href='admin_dashboard.php'>Back to admin dashboard</a><br /><br />
 
-<h1>Leader Board</h1>
 
 <?php
 /*
@@ -64,8 +65,7 @@ print $league_info_data;
 */
 ?>
 <div class="container table-responsive-sm">
-    <h2>Dark Striped Table</h2>
-    <p>Combine .table-dark and .table-striped to create a dark, striped table:</p>
+    <h2>Leader Board</h2>
     <table id="leaderboard" class="table table-sm table-striped table-hover table-bordered border-primary" style="width:100%">
           <thead>
               <tr>
@@ -84,28 +84,25 @@ print $league_info_data;
           <tbody>
             <?php
 
+              $team_cumulative_month_total = 0;
+
               while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $teamid = $row['team_id'];
-                $seasonid = 10;
+                
 
                 $team_row = '<tr>';
                 $team_row .= '<td>'.$row['team_name'].'</td>';
                 $team_row .= '<td>';
-
                   $march_query = $dbh->prepare('CALL get_team_march_total(?,?)');
                   $march_query->bindParam(1, $teamid, PDO::PARAM_INT, 11);
                   $march_query->bindParam(2, $seasonid, PDO::PARAM_INT, 11);
-                  $march_query->execute();
-                  /*
-                  $march_query = $dbh->prepare("SELECT SUM(march.total) AS march_total FROM hrs_march march WHERE march.player_id IN ( SELECT ltp.player_id FROM league_team_players ltp WHERE ltp.team_id = $teamid AND ltp.season_id = 10 AND ltp.status_id = 'A') AND march.season_id = 10");
-                  $march_query->execute();
-                  */
+                  $march_query->execute();                  
                   while ($row2 = $march_query->fetch(PDO::FETCH_ASSOC)) {
                     $team_row .= $row2['march_total'];
                   }
                   unset($march_query);
-
                 $team_row .='</td>';
+
                 $team_row .= '<td>';
                   $april_query = $dbh->prepare('CALL get_team_april_total(?,?)');
                   $april_query->bindParam(1, $teamid, PDO::PARAM_INT, 11);
@@ -115,15 +112,87 @@ print $league_info_data;
                     $team_row .=$row3['april_total'];
                   }
                   unset($april_query);
-
                 $team_row .= '</td>';
-                $team_row .= '<td>3</td>';
-                $team_row .= '<td>4</td>';
-                $team_row .= '<td>5</td>';
-                $team_row .= '<td>6</td>';
-                $team_row .= '<td>7</td>';
-                $team_row .= '<td>8</td>';
-                $team_row .= '<td>50</td>';
+
+                $team_row .= '<td>';
+                  $may_query = $dbh->prepare('CALL get_team_may_total(?,?)');
+                  $may_query->bindParam(1, $teamid, PDO::PARAM_INT, 11);
+                  $may_query->bindParam(2, $seasonid, PDO::PARAM_INT, 11);
+                  $may_query->execute();
+                  while ($row4 = $may_query->fetch(PDO::FETCH_ASSOC)) {
+                    $team_row .=$row4['may_total'];
+                  }
+                  unset($may_query);
+                $team_row .= '</td>';
+
+                $team_row .= '<td>';
+                  $june_query = $dbh->prepare('CALL get_team_june_total(?,?)');
+                  $june_query->bindParam(1, $teamid, PDO::PARAM_INT, 11);
+                  $june_query->bindParam(2, $seasonid, PDO::PARAM_INT, 11);
+                  $june_query->execute();
+                  while ($row5 = $june_query->fetch(PDO::FETCH_ASSOC)) {
+                    $team_row .=$row5['june_total'];
+                  }
+                  unset($june_query);
+                $team_row .= '</td>';
+
+                $team_row .= '<td>';
+                  $july_query = $dbh->prepare('CALL get_team_july_total(?,?)');
+                  $july_query->bindParam(1, $teamid, PDO::PARAM_INT, 11);
+                  $july_query->bindParam(2, $seasonid, PDO::PARAM_INT, 11);
+                  $july_query->execute();
+                  while ($row6 = $july_query->fetch(PDO::FETCH_ASSOC)) {
+                    $team_row .=$row6['july_total'];
+                  }
+                  unset($july_query);
+                $team_row .= '</td>';
+
+                $team_row .= '<td>';
+                  $august_query = $dbh->prepare('CALL get_team_august_total(?,?)');
+                  $august_query->bindParam(1, $teamid, PDO::PARAM_INT, 11);
+                  $august_query->bindParam(2, $seasonid, PDO::PARAM_INT, 11);
+                  $august_query->execute();
+                  while ($row7 = $august_query->fetch(PDO::FETCH_ASSOC)) {
+                    $team_row .=$row7['august_total'];
+                  }
+                  unset($august_query);
+                $team_row .= '</td>';
+
+                $team_row .= '<td>';
+                  $september_query = $dbh->prepare('CALL get_team_september_total(?,?)');
+                  $september_query->bindParam(1, $teamid, PDO::PARAM_INT, 11);
+                  $september_query->bindParam(2, $seasonid, PDO::PARAM_INT, 11);
+                  $september_query->execute();
+                  while ($row8 = $september_query->fetch(PDO::FETCH_ASSOC)) {
+                    $team_row .=$row8['september_total'];
+                  }
+                  unset($september_query);
+                $team_row .= '</td>';
+
+                $team_row .= '<td>';
+                  $october_query = $dbh->prepare('CALL get_team_october_total(?,?)');
+                  $october_query->bindParam(1, $teamid, PDO::PARAM_INT, 11);
+                  $october_query->bindParam(2, $seasonid, PDO::PARAM_INT, 11);
+                  $october_query->execute();
+                  while ($row9 = $october_query->fetch(PDO::FETCH_ASSOC)) {
+                    $team_row .=$row9['october_total'];
+                  }
+                  unset($october_query);
+                $team_row .= '</td>';
+
+                $team_row .= '<td>';
+                $leagueid = 10;
+                  $total_query = $dbh->prepare('CALL get_team_cumulative_month_total(?,?,?)');
+                  $total_query->bindParam(1, $teamid, PDO::PARAM_INT, 11);
+                  $total_query->bindParam(2, $seasonid, PDO::PARAM_INT, 11);
+                  $total_query->bindParam(3, $leagueid, PDO::PARAM_INT, 11);
+                  $total_query->execute();
+                  while ($row10 = $total_query->fetch(PDO::FETCH_ASSOC)) {
+                    $team_row .= $row10['team_total'];
+                  }                 
+                  unset($total_query);
+                $team_row .= '</td>';
+
                 $team_row .= '</tr>';
                 print $team_row;
               }
@@ -132,185 +201,3 @@ print $league_info_data;
         </table>
   </div>
 
-
-
-<div class="container table-responsive-sm">
-    <h2>Dark Striped Table</h2>
-    <p>Combine .table-dark and .table-striped to create a dark, striped table:</p>
-    <table id="leaderboard" class="table table-sm table-striped table-hover table-bordered border-primary" style="width:100%">
-          <thead>
-              <tr>
-                  <th>Player</th>
-                  <th>March</th>
-                  <th>April</th>
-                  <th>May</th>
-                  <th>June</th>
-                  <th>July</th>
-                  <th>August</th>
-                  <th>September</th>
-                  <th>October</th>
-                  <th>Total</th>
-              </tr>
-          </thead>
-          <tbody>
-              <tr>
-                  <td>Tiger Nixon</td>
-                  <td>1</td>
-                  <td>2</td>
-                  <td>3</td>
-                  <td>4</td>
-                  <td>5</td>
-                  <td>6</td>
-                  <td>7</td>
-                  <td>8</td>
-                  <td>50</td>
-              </tr>
-              <tr>
-                  <td>Garrett Winters</td>
-                  <td>8</td>
-                  <td>7</td>
-                  <td>6</td>
-                  <td>5</td>
-                  <td>4</td>
-                  <td>3</td>
-                  <td>2</td>
-                  <td>1</td>
-                  <td>40</td>
-              </tr>
-              <tr>
-                  <td>Ashton Cox</td>
-                  <td>1</td>
-                  <td>2</td>
-                  <td>3</td>
-                  <td>4</td>
-                  <td>5</td>
-                  <td>6</td>
-                  <td>7</td>
-                  <td>8</td>
-                  <td>30</td>
-              </tr>
-              <tr>
-                  <td>Cedric Kelly</td>
-                  <td>8</td>
-                  <td>7</td>
-                  <td>6</td>
-                  <td>5</td>
-                  <td>4</td>
-                  <td>3</td>
-                  <td>2</td>
-                  <td>1</td>
-                  <td>20</td>
-              </tr>
-              <tr>
-                  <td>Airi Satou</td>
-                  <td>1</td>
-                  <td>2</td>
-                  <td>3</td>
-                  <td>4</td>
-                  <td>5</td>
-                  <td>6</td>
-                  <td>7</td>
-                  <td>8</td>
-                  <td>10</td>
-              </tr>
-              <tr>
-                  <td>Brielle Williamson</td>
-                  <td>8</td>
-                  <td>7</td>
-                  <td>6</td>
-                  <td>5</td>
-                  <td>4</td>
-                  <td>3</td>
-                  <td>2</td>
-                  <td>1</td>
-                  <td>90</td>
-              </tr>
-              <tr>
-                  <td>Herrod Chandler</td>
-                  <td>8</td>
-                  <td>7</td>
-                  <td>6</td>
-                  <td>5</td>
-                  <td>4</td>
-                  <td>3</td>
-                  <td>2</td>
-                  <td>1</td>
-                  <td>95</td>
-              </tr>
-              <tr>
-                  <td>Rhona Davidson</td>
-                  <td>8</td>
-                  <td>7</td>
-                  <td>6</td>
-                  <td>5</td>
-                  <td>4</td>
-                  <td>3</td>
-                  <td>2</td>
-                  <td>1</td>
-                  <td>85</td>
-              </tr>
-              <tr>
-                  <td>Colleen Hurst</td>
-                  <td>1</td>
-                  <td>2</td>
-                  <td>3</td>
-                  <td>4</td>
-                  <td>5</td>
-                  <td>6</td>
-                  <td>7</td>
-                  <td>8</td>
-                  <td>75</td>
-              </tr>
-              <tr>
-                  <td>Sonya Frost</td>
-                  <td>8</td>
-                  <td>7</td>
-                  <td>6</td>
-                  <td>5</td>
-                  <td>4</td>
-                  <td>3</td>
-                  <td>2</td>
-                  <td>1</td>
-                  <td>65</td>
-              </tr>
-              <tr>
-                  <td>Jena Gaines</td>
-                  <td>1</td>
-                  <td>2</td>
-                  <td>3</td>
-                  <td>4</td>
-                  <td>5</td>
-                  <td>6</td>
-                  <td>7</td>
-                  <td>8</td>
-                  <td>55</td>
-              </tr>
-              <tr>
-                  <td>Quinn Flynn</td>
-                  <td>8</td>
-                  <td>7</td>
-                  <td>6</td>
-                  <td>5</td>
-                  <td>4</td>
-                  <td>3</td>
-                  <td>2</td>
-                  <td>1</td>
-                  <td>45</td>
-              </tr>
-          </tbody>
-          <tfoot>
-              <tr>
-                  <th>Player</th>
-                  <th>March</th>
-                  <th>April</th>
-                  <th>May</th>
-                  <th>June</th>
-                  <th>July</th>
-                  <th>August</th>
-                  <th>September</th>
-                  <th>October</th>
-                  <th>Total</th>
-              </tr>
-          </tfoot>
-      </table>
-  </div>
