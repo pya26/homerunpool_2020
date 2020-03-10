@@ -1,15 +1,13 @@
 <?php
 
   try {
-    $configs = include('_config/config.php');
+    include('_config/config.php');
     include("_includes/header.php");
     include("_includes/functions.php");
   } catch (PDOException $e) {
     echo 'Connection failed: ' . $e->getMessage();
   }
 ?>
-
-
 
 <script>
   $(document).ready(function() {
@@ -231,25 +229,64 @@
   <div class="container-fluid">
 
     <?php
+
+      include("_config/db_connect.php");
+
+      $league_teams = $dbh->prepare("SELECT lt.team_id, t.team_name FROM `league_teams` lt LEFT JOIN Teams t ON t.team_id = lt.team_id WHERE lt.league_id = 10 AND lt.season_id = 10 AND lt.status_id = 'A' ORDER BY lt.sort ASC");
+      $league_teams->execute();
+      $league_team_count = $league_teams->rowCount();
+
+      //unset($teams_count);
+
       $numOfCols = 3;
       $rowCount = 0;
-      $teams = 12
+      $teams = $league_team_count;
     ?>
 
     <div class="row">
 
       <?php
-        //foreach ($rows as $row){
-        for ($x = $rowCount; $x <= $teams - 1; $x++) {
+        
+        while ($row = $league_teams->fetch(PDO::FETCH_ASSOC)) {
+          print '<div class="col-md-4">';
+            print '<div class="container table-responsive-sm">';
+              print '<h2>'.$row['team_name'].'</h2>';
+              include('team_table.php');
+            print '</div>';
+          print '</div>';
+          
+          $rowCount++;
+
+          if($rowCount % $numOfCols == 0) {
+            print '</div><div class="row">';
+          }
+
+        }
+      
+
+
       ?>
-        <div class="col-md-4">
-          <?php include("team_table.php"); ?>
-        </div>
+
 
       <?php
-        $rowCount++;
-        if($rowCount % $numOfCols == 0) echo '</div><div class="row">';
-        }
+        
+        //for ($x = $rowCount; $x <= $teams - 1; $x++) {
+          
+      ?>
+
+      <!--
+        <div class="col-md-4">
+
+          <div class="container table-responsive-sm">
+            <h2>Team Name</h2>
+          </div>          
+
+        </div>
+      -->
+      <?php
+        //$rowCount++;
+        //if($rowCount % $numOfCols == 0) echo '</div><div class="row">';
+        //}
       ?>
     </div>
 
