@@ -189,7 +189,8 @@
   <div class="container-fluid">
     <div class="row text-center">
       <div class="col-sm-12">
-        <h1>HomeRunPool.com</h1>
+        <!--<h1>HomeRunPool.com</h1>-->
+        <img src="images/HomeRunPool-02.png" style="max-width:100%;max-height:100%;">        
       </div>
     </div>
   </div>
@@ -199,7 +200,7 @@
       <div class="container-fluid">
       <div class="row">
         <div class="col-sm-4">
-          <img src="images/mlb_dk_logo.png">
+          <img src="images/HomeRunPool-01.png" style="max-width:100%;max-height:100%;">
           <!--
           <h3>Column 1</h3>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
@@ -207,23 +208,24 @@
         -->
         </div>
         <div class="col-sm-8">
-          <p>
-          <!--<h2>Welcome to the fantasy league for lazy managers. All management of your team is handled prior to, and during the draft. You'll draft six players per team. There are no in-season substitutions.</h2>-->
-          <h2>Ultricies nimis quis tincidunt iustum class tamen multo. Taciti vereor premo te at elementum. Torquent ultricies ridiculus lucidus orci. Nutus eros acsi dolore cum autem melior pellentesque sagittis minim.</h2>
-          </p>
-          <!--<h2>Once the draft is finalized your management duties are complete.&nbsp;&nbsp;&nbsp;<a class="btn btn-outline-primary btn-sm" href="#" role="button">Read more</a></h2>-->
+          <?php include("leader_board.php"); ?>
+          <!--<p>
+          <h2>Welcome to the fantasy league for lazy managers. All management of your team is handled prior to, and during the draft. You'll draft six players per team. There are no in-season substitutions.</h2>-->
+          <!--<h2>Ultricies nimis quis tincidunt iustum class tamen multo. Taciti vereor premo te at elementum. Torquent ultricies ridiculus lucidus orci. Nutus eros acsi dolore cum autem melior pellentesque sagittis minim.</h2>
+          </p>-->
+          <!--<h2>Once the draft is finalized your management duties are complete.&nbsp;&nbsp;&nbsp;<a class="btn btn-outline-primary btn-sm" href="#" role="button">Read more</a></h2>
           <h2>Inhibeo exerci pretium venio jus accumsan valde. Nulla suscipere acsi dictum est class.&nbsp;&nbsp;&nbsp;<a class="btn btn-outline-primary btn-sm" href="#" role="button">Read more</a></h2>
         </p>
           <p class="lead">
             <br />
             <a class="btn btn-primary btn-lg" href="#" role="button"><i class="fas fa-user-plus"></i> Create Account</a>
-          </p>
+          </p>-->
         </div>
       </div>
     </div>
     </div>
 
-    <?php include("leader_board.php"); ?>
+    
     
 
   <div class="container-fluid">

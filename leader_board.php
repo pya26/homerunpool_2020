@@ -65,19 +65,19 @@ print $league_info_data;
 */
 ?>
 <div class="container table-responsive-sm">
-    <h2>Leader Board</h2>
+    <!--<h2>Leader Board</h2>-->
     <table id="leaderboard" class="table table-sm table-striped table-hover table-bordered border-primary" style="width:100%">
           <thead>
               <tr>
                   <th>Team</th>
-                  <th>March</th>
+                  <!--<th>March</th>-->
                   <th>April</th>
                   <th>May</th>
                   <th>June</th>
                   <th>July</th>
                   <th>August</th>
                   <th>September</th>
-                  <th>October</th>
+                  <!--<th>October</th>-->
                   <th>Total</th>
               </tr>
           </thead>
@@ -90,8 +90,10 @@ print $league_info_data;
                 $teamid = $row['team_id'];
                 
 
-                $team_row = '<tr>';
+                $team_row = '<tr>';                
                 $team_row .= '<td>'.$row['team_name'].'</td>';
+                
+                /*
                 $team_row .= '<td>';
                   $march_query = $dbh->prepare('CALL get_team_march_total(?,?)');
                   $march_query->bindParam(1, $teamid, PDO::PARAM_INT, 11);
@@ -102,6 +104,7 @@ print $league_info_data;
                   }
                   unset($march_query);
                 $team_row .='</td>';
+                */
 
                 $team_row .= '<td>';
                   $april_query = $dbh->prepare('CALL get_team_april_total(?,?)');
@@ -169,6 +172,7 @@ print $league_info_data;
                   unset($september_query);
                 $team_row .= '</td>';
 
+                /*
                 $team_row .= '<td>';
                   $october_query = $dbh->prepare('CALL get_team_october_total(?,?)');
                   $october_query->bindParam(1, $teamid, PDO::PARAM_INT, 11);
@@ -179,6 +183,7 @@ print $league_info_data;
                   }
                   unset($october_query);
                 $team_row .= '</td>';
+                */
 
                 $team_row .= '<td>';
                 $leagueid = 10;
