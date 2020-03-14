@@ -270,7 +270,7 @@
               print '<span class="fa-stack" style="color:#df691a; margin-top:-20px;">';
                 print '<i class="fa fa-trophy fa-stack-2x"></i>';
                   print '<span class="fa fa-stack-1x">';
-                    print '<span style="font-size:12px; color:#fff; margin-top:-5px; display:block;">';
+                    print '<span style="font-size:12px; color:#fff; margin-top:-7px; display:block;">';
                       print $row2['year'];
                     print '</span>';
                 print '</span>';

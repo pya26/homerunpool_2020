@@ -184,7 +184,7 @@ print $league_info_data;
                   unset($october_query);
                 $team_row .= '</td>';
 
-
+                
                 $team_row .= '<td>';
                 $leagueid = 10;
                   $total_query = $dbh->prepare('CALL get_team_cumulative_month_total(?,?,?)');
@@ -197,6 +197,7 @@ print $league_info_data;
                   }
                   unset($total_query);
                 $team_row .= '</td>';
+                
 
                 $team_row .= '</tr>';
                 print $team_row;

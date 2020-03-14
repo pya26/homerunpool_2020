@@ -31,7 +31,7 @@
 				$player_id = $row['PlayerID'];
 
 				$player_row = '<tr>';
-				$player_row .= '<td>'.$row['FirstName'].' '.$row['LastName'].'</td>';
+				$player_row .= '<td>'.$row['FirstName'][0].'. '.$row['LastName'].'</td>';
 
 				$player_row .= '<td>';
 					$march_player_total = $dbh->prepare('CALL get_player_march_total(?,?)');
