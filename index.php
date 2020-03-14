@@ -2,6 +2,7 @@
 
   try {
     include('_config/config.php');
+    include("_config/db_connect.php");
     include("_includes/header.php");
     include("_includes/functions.php");
   } catch (PDOException $e) {
@@ -190,7 +191,7 @@
     <div class="row text-center">
       <div class="col-sm-12">
         <!--<h1>HomeRunPool.com</h1>-->
-        <img src="images/HomeRunPool-02.png" style="max-width:100%;max-height:100%;">        
+        <img src="images/HomeRunPool-02.png" style="max-width:100%;max-height:100%;">
       </div>
     </div>
   </div>
@@ -225,8 +226,8 @@
     </div>
     </div>
 
-    
-    
+
+
 
   <div class="container-fluid">
 
@@ -248,15 +249,44 @@
     <div class="row">
 
       <?php
-        
+
         while ($row = $league_teams->fetch(PDO::FETCH_ASSOC)) {
           print '<div class="col-md-4">';
             print '<div class="container table-responsive-sm">';
-              print '<h2>'.$row['team_name'].'</h2>';
+
+              //print '<h3>'.$row['team_name'].'</h3>';
+            print $row['team_name'];
+
+            $teamid = $row['team_id'];
+
+            $champ_query = $dbh->prepare('SELECT year FROM champions WHERE team_id = ? AND league_id = ?');
+            $champ_query->bindParam(1, $teamid, PDO::PARAM_INT, 11);
+            $champ_query->bindParam(2, $leagueid, PDO::PARAM_INT, 11);
+            $champ_query->execute();
+            //print '<i class="fa fa-trophy" style="color:#df691a; padding:5px;"></i>';
+            //print '<i class="fa fa-trophy" style="color:#df691a; padding:5px;"></i>';
+            while ($row2 = $champ_query->fetch(PDO::FETCH_ASSOC)) {
+
+              print '<span class="fa-stack" style="color:#df691a; margin-top:-20px;">';
+                print '<i class="fa fa-trophy fa-stack-2x"></i>';
+                  print '<span class="fa fa-stack-1x">';
+                    print '<span style="font-size:12px; color:#fff; margin-top:-5px; display:block;">';
+                      print $row2['year'];
+                    print '</span>';
+                print '</span>';
+              print '</span>';
+            }
+            unset($champ_query);
+
+
+
+
+
+
               include('team_table.php');
             print '</div>';
           print '</div>';
-          
+
           $rowCount++;
 
           if($rowCount % $numOfCols == 0) {
@@ -264,16 +294,16 @@
           }
 
         }
-      
+
 
 
       ?>
 
 
       <?php
-        
+
         //for ($x = $rowCount; $x <= $teams - 1; $x++) {
-          
+
       ?>
 
       <!--
@@ -281,7 +311,7 @@
 
           <div class="container table-responsive-sm">
             <h2>Team Name</h2>
-          </div>          
+          </div>
 
         </div>
       -->

@@ -1,12 +1,12 @@
 <?php
-
+/*
 try {
         include("_config/config.php");
         include("_config/db_connect.php");
     } catch (PDOException $e) {
         echo 'Connection failed: ' . $e->getMessage();
         die();
-    }
+    }*/
 
     $leagueid = $GLOBALS['league_id'];
     $seasonid = $GLOBALS['season_id'];
@@ -70,14 +70,14 @@ print $league_info_data;
           <thead>
               <tr>
                   <th>Team</th>
-                  <!--<th>March</th>-->
+                  <th>March</th>
                   <th>April</th>
                   <th>May</th>
                   <th>June</th>
                   <th>July</th>
                   <th>August</th>
                   <th>September</th>
-                  <!--<th>October</th>-->
+                  <th>October</th>
                   <th>Total</th>
               </tr>
           </thead>
@@ -88,23 +88,23 @@ print $league_info_data;
 
               while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $teamid = $row['team_id'];
-                
 
-                $team_row = '<tr>';                
+
+                $team_row = '<tr>';
                 $team_row .= '<td>'.$row['team_name'].'</td>';
-                
-                /*
+
+
                 $team_row .= '<td>';
                   $march_query = $dbh->prepare('CALL get_team_march_total(?,?)');
                   $march_query->bindParam(1, $teamid, PDO::PARAM_INT, 11);
                   $march_query->bindParam(2, $seasonid, PDO::PARAM_INT, 11);
-                  $march_query->execute();                  
+                  $march_query->execute();
                   while ($row2 = $march_query->fetch(PDO::FETCH_ASSOC)) {
                     $team_row .= $row2['march_total'];
                   }
                   unset($march_query);
                 $team_row .='</td>';
-                */
+
 
                 $team_row .= '<td>';
                   $april_query = $dbh->prepare('CALL get_team_april_total(?,?)');
@@ -172,7 +172,7 @@ print $league_info_data;
                   unset($september_query);
                 $team_row .= '</td>';
 
-                /*
+
                 $team_row .= '<td>';
                   $october_query = $dbh->prepare('CALL get_team_october_total(?,?)');
                   $october_query->bindParam(1, $teamid, PDO::PARAM_INT, 11);
@@ -183,7 +183,7 @@ print $league_info_data;
                   }
                   unset($october_query);
                 $team_row .= '</td>';
-                */
+
 
                 $team_row .= '<td>';
                 $leagueid = 10;
@@ -194,7 +194,7 @@ print $league_info_data;
                   $total_query->execute();
                   while ($row10 = $total_query->fetch(PDO::FETCH_ASSOC)) {
                     $team_row .= $row10['team_total'];
-                  }                 
+                  }
                   unset($total_query);
                 $team_row .= '</td>';
 

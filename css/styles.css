@@ -48,4 +48,6 @@ label.error{
   float: none;*/
 }
 
-
+.row {
+  padding-bottom: 15px;
+}
