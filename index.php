@@ -138,9 +138,6 @@
               <label for="password1">Password</label>
               <input type="password" class="form-control" id="password1" placeholder="Enter Password" required />
             </div>
-
-
-
           </div>
           <div class="modal-footer border-top-0 d-flex">
             <button type="submit" class="btn btn-primary">Create Account</button>
@@ -155,106 +152,76 @@
 
 
 <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
-    <!--<a class="navbar-brand" href="#">Navbar</a>-->
-    <!--<div></div>-->
-      <img src="images/swing_transparent_right_sm.png">&nbsp;&nbsp;&nbsp;
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+  <img src="images/swing_transparent_right_sm.png">&nbsp;&nbsp;&nbsp;
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item"><!--active-->
-          <a class="nav-link" href="#">About <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">FAQs</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
-        </li>
-      </ul>
-      <ul class="navbar-nav ml-auto">
-        <?php
-          if(is_logged_in()){
-            print '<li class="nav-item"><a class="nav-link" href="#">Hello ' . $_SESSION['first_name'] . '!</a></li>' .'<li class="nav-item"><a class="nav-link" href="logout.php"><i class="fas fa-sign-out-alt"></i>Sign-out</a></li>';
-          } else {
-            print '<li class="nav-item"><a class="nav-link" href="#" data-toggle="modal" data-target="#LogInModal"><i class="fas fa-sign-in-alt"></i> Sign-in</a></li>';
-          }
-        ?>
-        <li class="nav-item"><a class="nav-link" href="#">Front Office</a></li>
-      </ul>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item"><!--active-->
+        <a class="nav-link" href="#">About <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">FAQs</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Pricing</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav ml-auto">
+      <?php
+        if(is_logged_in()){
+          print '<li class="nav-item"><a class="nav-link" href="#">Hello ' . $_SESSION['first_name'] . '!</a></li>' .'<li class="nav-item"><a class="nav-link" href="logout.php"><i class="fas fa-sign-out-alt"></i>Sign-out</a></li>';
+        } else {
+          print '<li class="nav-item"><a class="nav-link" href="#" data-toggle="modal" data-target="#LogInModal"><i class="fas fa-sign-in-alt"></i> Sign-in</a></li>';
+        }
+      ?>
+      <li class="nav-item"><a class="nav-link" href="#">Front Office</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container-fluid">
+  <div class="row text-center">
+    <div class="col-sm-12">
+      <img src="images/HomeRunPool-02.png" style="max-width:100%;max-height:100%;">
     </div>
-  </nav>
+  </div>
+</div>
 
+<div class="jumbotron">
   <div class="container-fluid">
-    <div class="row text-center">
-      <div class="col-sm-12">
-        <!--<h1>HomeRunPool.com</h1>-->
-        <img src="images/HomeRunPool-02.png" style="max-width:100%;max-height:100%;">
+    <div class="row">
+      <div class="col-sm-4">
+        <img src="images/HomeRunPool-01.png" style="max-width:100%;max-height:100%;">
+      </div>
+      <div class="col-sm-8">
+        <!-- include leader board-->
+        <?php include("leader_board.php"); ?>
       </div>
     </div>
   </div>
+</div>
 
+<div class="container-fluid">
 
-    <div class="jumbotron">
-      <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-4">
-          <img src="images/HomeRunPool-01.png" style="max-width:100%;max-height:100%;">
-          <!--
-          <h3>Column 1</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-          <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
-        -->
-        </div>
-        <div class="col-sm-8">
-          <?php include("leader_board.php"); ?>
-          <!--<p>
-          <h2>Welcome to the fantasy league for lazy managers. All management of your team is handled prior to, and during the draft. You'll draft six players per team. There are no in-season substitutions.</h2>-->
-          <!--<h2>Ultricies nimis quis tincidunt iustum class tamen multo. Taciti vereor premo te at elementum. Torquent ultricies ridiculus lucidus orci. Nutus eros acsi dolore cum autem melior pellentesque sagittis minim.</h2>
-          </p>-->
-          <!--<h2>Once the draft is finalized your management duties are complete.&nbsp;&nbsp;&nbsp;<a class="btn btn-outline-primary btn-sm" href="#" role="button">Read more</a></h2>
-          <h2>Inhibeo exerci pretium venio jus accumsan valde. Nulla suscipere acsi dictum est class.&nbsp;&nbsp;&nbsp;<a class="btn btn-outline-primary btn-sm" href="#" role="button">Read more</a></h2>
-        </p>
-          <p class="lead">
-            <br />
-            <a class="btn btn-primary btn-lg" href="#" role="button"><i class="fas fa-user-plus"></i> Create Account</a>
-          </p>-->
-        </div>
-      </div>
-    </div>
-    </div>
+  <?php
+    $league_teams = $dbh->prepare("SELECT lt.team_id, t.team_name FROM `league_teams` lt LEFT JOIN Teams t ON t.team_id = lt.team_id WHERE lt.league_id = 10 AND lt.season_id = 10 AND lt.status_id = 'A' ORDER BY lt.sort ASC");
+    $league_teams->execute();
+    $league_team_count = $league_teams->rowCount();
 
+    $numOfCols = 3;
+    $rowCount = 0;
+    $teams = $league_team_count;
+  ?>
 
-
-
-  <div class="container-fluid">
+  <div class="row">
 
     <?php
-
-      include("_config/db_connect.php");
-
-      $league_teams = $dbh->prepare("SELECT lt.team_id, t.team_name FROM `league_teams` lt LEFT JOIN Teams t ON t.team_id = lt.team_id WHERE lt.league_id = 10 AND lt.season_id = 10 AND lt.status_id = 'A' ORDER BY lt.sort ASC");
-      $league_teams->execute();
-      $league_team_count = $league_teams->rowCount();
-
-      //unset($teams_count);
-
-      $numOfCols = 3;
-      $rowCount = 0;
-      $teams = $league_team_count;
-    ?>
-
-    <div class="row">
-
-      <?php
-
-        while ($row = $league_teams->fetch(PDO::FETCH_ASSOC)) {
-          print '<div class="col-md-4">';
-            print '<div class="container table-responsive-sm">';
-
-              //print '<h3>'.$row['team_name'].'</h3>';
+      while ($row = $league_teams->fetch(PDO::FETCH_ASSOC)) {
+        print '<div class="col-md-4">';
+          print '<div class="container table-responsive-sm">';
             print $row['team_name'];
 
             $teamid = $row['team_id'];
@@ -263,66 +230,38 @@
             $champ_query->bindParam(1, $teamid, PDO::PARAM_INT, 11);
             $champ_query->bindParam(2, $leagueid, PDO::PARAM_INT, 11);
             $champ_query->execute();
-            //print '<i class="fa fa-trophy" style="color:#df691a; padding:5px;"></i>';
-            //print '<i class="fa fa-trophy" style="color:#df691a; padding:5px;"></i>';
-            while ($row2 = $champ_query->fetch(PDO::FETCH_ASSOC)) {
 
-              print '<span class="fa-stack" style="color:#df691a; margin-top:-20px;">';
-                print '<i class="fa fa-trophy fa-stack-2x"></i>';
-                  print '<span class="fa fa-stack-1x">';
-                    print '<span style="font-size:12px; color:#fff; margin-top:-7px; display:block;">';
-                      print $row2['year'];
-                    print '</span>';
-                print '</span>';
-              print '</span>';
+            while ($row2 = $champ_query->fetch(PDO::FETCH_ASSOC)) {
+              $trophy_row = '<span class="fa-stack" style="color:#df691a; margin-top:-20px;">';
+              $trophy_row .= '<i class="fa fa-trophy fa-stack-2x"></i>';
+              $trophy_row .= '<span class="fa fa-stack-1x">';
+              $trophy_row .= '<span style="font-size:12px; color:#fff; margin-top:-7px; display:block;">';
+              $trophy_row .= $row2['year'];
+              $trophy_row .= '</span>';
+              $trophy_row .= '</span>';
+              $trophy_row .= '</span>';
+              print $trophy_row;
             }
             unset($champ_query);
 
+            /**
+             * include file to display the rows and columns for the team's tables
+             */
+            include('team_table.php');
 
-
-
-
-
-              include('team_table.php');
-            print '</div>';
           print '</div>';
+        print '</div>';
 
-          $rowCount++;
+        $rowCount++;
 
-          if($rowCount % $numOfCols == 0) {
-            print '</div><div class="row">';
-          }
-
+        if($rowCount % $numOfCols == 0) {
+          print '</div><div class="row">';
         }
-
-
-
-      ?>
-
-
-      <?php
-
-        //for ($x = $rowCount; $x <= $teams - 1; $x++) {
-
-      ?>
-
-      <!--
-        <div class="col-md-4">
-
-          <div class="container table-responsive-sm">
-            <h2>Team Name</h2>
-          </div>
-
-        </div>
-      -->
-      <?php
-        //$rowCount++;
-        //if($rowCount % $numOfCols == 0) echo '</div><div class="row">';
-        //}
-      ?>
-    </div>
-
+      }
+      unset($league_teams);
+    ?>
   </div>
+</div>
 
 <!-- Footer -->
 <footer class="page-footer font-small special-color-dark pt-4">
