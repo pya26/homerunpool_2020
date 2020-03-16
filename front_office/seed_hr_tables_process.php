@@ -1,9 +1,9 @@
 <?php
 
 	// Include functions, configurations, & database cennection files
-	include("_includes/functions.php");
-	$configs = include("_config/config.php");
+	include("../_config/config.php");
 	include("_config/db_connect.php");
+	include("../_includes/functions.php");
 
 
 	// set URL parameter variables
@@ -15,7 +15,7 @@
 		$season_id = 0;
 	}
 
-	
+
 	// Get array of all player ids in the players atble
 	$all_db_players_array = get_all_players();
 
@@ -50,7 +50,7 @@
 
 	} else {
 		$february_diff = array_diff($all_db_players_array, $february_hr_players_array);
-		
+
 		if(empty($february_diff)){
 			$msg .= 'Nothing to update for February ' . $season . '<br />';
 		} else {
@@ -68,9 +68,9 @@
 		$msg .= 'All players inserted for March ' . $season . '<br />';
 	} else {
 		$march_diff = array_diff($all_db_players_array, $march_hr_players_array);
-		
+
 		if(empty($march_diff)){
-			$msg .= 'Nothing to update for March ' . $season . '<br />';			
+			$msg .= 'Nothing to update for March ' . $season . '<br />';
 		} else {
 			insert_hrs_march_stub_records($march_diff,$season_id);
 			$msg .= 'Inserted missing records March ' . $season . '<br />';
@@ -85,7 +85,7 @@
 		$msg .= 'All players inserted for April ' . $season . '<br />';
 	} else {
 		$april_diff = array_diff($all_db_players_array, $april_hr_players_array);
-		
+
 		if(empty($april_diff)){
 			$msg .= 'Nothing to update for April ' . $season . '<br />';
 		} else {
@@ -102,7 +102,7 @@
 		$msg .= 'All players inserted for May ' . $season . '<br />';
 	} else {
 		$may_diff = array_diff($all_db_players_array, $may_hr_players_array);
-		
+
 		if(empty($may_diff)){
 			$msg .= 'Nothing to update for May ' . $season . '<br />';
 		} else {
@@ -120,7 +120,7 @@
 		$msg .= 'All players inserted for June ' . $season . '<br />';
 	} else {
 		$june_diff = array_diff($all_db_players_array, $june_hr_players_array);
-		
+
 		if(empty($june_diff)){
 			$msg .= 'Nothing to update for June ' . $season . '<br />';
 		} else {
@@ -138,7 +138,7 @@
 		$msg .= 'All players inserted for July ' . $season . '<br />';
 	} else {
 		$july_diff = array_diff($all_db_players_array, $july_hr_players_array);
-		
+
 		if(empty($july_diff)){
 			$msg .= 'Nothing to update for July ' . $season . '<br />';
 		} else {
@@ -156,7 +156,7 @@
 		$msg .= 'All players inserted for August ' . $season . '<br />';
 	} else {
 		$august_diff = array_diff($all_db_players_array, $august_hr_players_array);
-		
+
 		if(empty($august_diff)){
 			$msg .= 'Nothing to update for August ' . $season . '<br />';
 		} else {
@@ -174,7 +174,7 @@
 		$msg .= 'All players inserted for September ' . $season . '<br />';
 	} else {
 		$september_diff = array_diff($all_db_players_array, $september_hr_players_array);
-		
+
 		if(empty($september_diff)){
 			$msg .= 'Nothing to update for September ' . $season . '<br />';
 		} else {
@@ -192,7 +192,7 @@
 		$msg .= 'All players inserted for October ' . $season . '<br />';
 	} else {
 		$october_diff = array_diff($all_db_players_array, $october_hr_players_array);
-		
+
 		if(empty($october_diff)){
 			$msg .= 'Nothing to update for October ' . $season . '<br />';
 		} else {
@@ -210,7 +210,7 @@
 		$msg .= 'All players inserted for November ' . $season . '<br />';
 	} else {
 		$november_diff = array_diff($all_db_players_array, $november_hr_players_array);
-		
+
 		if(empty($november_diff)){
 			$msg .= 'Nothing to update for November ' . $season . '<br />';
 		} else {
@@ -220,8 +220,8 @@
 	}
 
 	echo json_encode($msg);
-	
-	
+
+
 
 
 

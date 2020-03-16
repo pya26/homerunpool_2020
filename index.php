@@ -1,13 +1,14 @@
 <?php
 
   try {
-    include('_config/config.php');
+    include("_config/config.php");
     include("_config/db_connect.php");
     include("_includes/header.php");
     include("_includes/functions.php");
   } catch (PDOException $e) {
     echo 'Connection failed: ' . $e->getMessage();
   }
+
 ?>
 
 <script>
@@ -198,7 +199,9 @@
       </div>
       <div class="col-sm-8">
         <!-- include leader board-->
-        <?php include("leader_board.php"); ?>
+        <?php
+          include("leader_board.php");
+        ?>
       </div>
     </div>
   </div>
@@ -207,7 +210,7 @@
 <div class="container-fluid">
 
   <?php
-    $league_teams = $dbh->prepare("SELECT lt.team_id, t.team_name FROM `league_teams` lt LEFT JOIN Teams t ON t.team_id = lt.team_id WHERE lt.league_id = 10 AND lt.season_id = 10 AND lt.status_id = 'A' ORDER BY lt.sort ASC");
+    $league_teams = $dbh->prepare("SELECT lt.team_id, t.team_name FROM league_teams lt LEFT JOIN teams t ON t.team_id = lt.team_id WHERE lt.league_id = 10 AND lt.season_id = 10 AND lt.status_id = 'A' ORDER BY lt.sort ASC");
     $league_teams->execute();
     $league_team_count = $league_teams->rowCount();
 
@@ -222,7 +225,7 @@
       while ($row = $league_teams->fetch(PDO::FETCH_ASSOC)) {
         print '<div class="col-md-4">';
           print '<div class="container table-responsive-sm">';
-            print $row['team_name'];
+            print '<span style="font-size:26px;">' . $row['team_name'] . "</span>";
 
             $teamid = $row['team_id'];
 

@@ -2,7 +2,8 @@
 	/**
 	 * Include Header
 	 */
-	include('_includes/header.php');
+  include("../_config/config.php");
+	include('../_includes/header.php');
 
 ?>
 
@@ -34,7 +35,7 @@
 	/**
 	 * Include Footer
 	 */
-	include('_includes/footer.php');
+	include('../_includes/footer.php');
 
 
 ?>

@@ -1,12 +1,12 @@
 <?php
 
   try {
-    include("_includes/header.php");
-    include("_includes/functions.php");
-    include("_config/db_connect.php");
+    include("../_config/config.php");
+    include("../_config/db_connect.php");
+    include("../_includes/header.php");
+    include("../_includes/functions.php");
   } catch (PDOException $e) {
     echo 'Connection failed: ' . $e->getMessage();
-    die();
   }
 
 	print "<a href='admin_dashboard.php'>Back to admin dashboard</a><br /><br />";

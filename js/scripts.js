@@ -761,12 +761,12 @@ $("#date").datepicker({
 
 	$( "#menu_div_1" ).click(function() {
 	  $( "#sub_menu_div_1" ).slideToggle("slow", function(){
-	      alert("The slideToggle() method is finished!");
+	      //alert("The slideToggle() method is finished!");
 	    });
 	});
 	$( "#menu_div_2" ).click(function() {
 	  $( "#sub_menu_div_2" ).slideToggle("slow", function(){
-	      alert("The slideToggle() method is finished!");
+	      //alert("The slideToggle() method is finished!");
 	    });
 	});
 
