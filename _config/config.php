@@ -20,7 +20,7 @@
 	/**
 	* set variables for bluehost
 	*/
-		$GLOBALS['base_url'] = 'http://box2009.temp.domains/~homeruo9/';
+		$GLOBALS['base_url'] = 'https://www.homerunpool.com/';
 		$GLOBALS['base_path'] = '/home1/homeruo9/public_html';
 	}
 

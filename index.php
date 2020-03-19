@@ -166,11 +166,14 @@
       <li class="nav-item">
         <a class="nav-link" href="#">FAQs</a>
       </li>
+      <!--
       <li class="nav-item">
         <a class="nav-link" href="#">Pricing</a>
       </li>
+    -->
     </ul>
     <ul class="navbar-nav ml-auto">
+      <!--
       <?php
         if(is_logged_in()){
           print '<li class="nav-item"><a class="nav-link" href="#">Hello ' . $_SESSION['first_name'] . '!</a></li>' .'<li class="nav-item"><a class="nav-link" href="logout.php"><i class="fas fa-sign-out-alt"></i>Sign-out</a></li>';
@@ -179,6 +182,7 @@
         }
       ?>
       <li class="nav-item"><a class="nav-link" href="#">Front Office</a></li>
+      -->
     </ul>
   </div>
 </nav>
