@@ -188,9 +188,12 @@
 </nav>
 
 <div class="container-fluid">
-  <div class="row text-center">
-    <div class="col-sm-12">
-      <img src="images/HomeRunPool-02.png" style="max-width:100%;max-height:100%;">
+  <!--<div class="row" style="background:transparent url('images/HRP_TitleGraphic-01.png') no-repeat center center /cover;">-->
+  <div class="row" style="background: transparent url('images/HRP_TitleGraphic-01.png') no-repeat center center /cover;">
+    <div class="col-sm-4 border">
+      <img src="images/HomeRunPool-03.png" style="max-width:90%;max-height:95%;">   
+    </div>
+    <div class="col-sm-8 border"> 
     </div>
   </div>
 </div>
@@ -198,10 +201,10 @@
 <div class="jumbotron">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-sm-4">
+      <!--<div class="col-sm-4">
         <img src="images/HomeRunPool-01.png" style="max-width:100%;max-height:100%;">
-      </div>
-      <div class="col-sm-8">
+      </div>-->
+      <div class="col-sm-12">
         <!-- include leader board-->
         <?php
           include("leader_board.php");

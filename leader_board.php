@@ -6,7 +6,7 @@
 ?>
 
 <div class="container table-responsive-sm">
-  <!--<h2>Leader Board</h2>-->
+  <h2>Leader Board</h2>
   <table id="leaderboard" class="table table-sm table-striped table-hover table-bordered border-primary" style="width:100%">
     <thead>
       <tr>
