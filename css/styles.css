@@ -48,6 +48,28 @@ label.error{
   float: none;*/
 }
 
+div#leaderboard_wrapper {
+    margin-top: -25px;
+}
+
 .row {
   padding-bottom: 15px;
+}
+
+.jumbotron {
+     padding: 1rem 0 0 0 !important;
+}
+
+
+
+/*Extra small devices (portrait phones, less than 576px)*/
+@media (min-width: 575.98px) {
+
+  .hr_hitter_heads {
+    background-image: url('../images/HRP_TitleGraphic-01.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+  }
+
 }

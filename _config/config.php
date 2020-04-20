@@ -14,8 +14,15 @@
 	$GLOBALS['season_id'] = 10;
 
 	if($_SERVER['CONTEXT_DOCUMENT_ROOT'] == 'C:/laragon/www'){
+
 		$GLOBALS['base_url'] = 'http://localhost/sandbox/homerunpool_2020/';
 		$GLOBALS['base_path'] = '/sandbox/homerunpool_2020/';
+	
+	} elseif($_SERVER['CONTEXT_DOCUMENT_ROOT'] == 'C:/wamp64/www') {
+
+		$GLOBALS['base_url'] = 'http://localhost/sandbox/homerunpool_2020/';
+		$GLOBALS['base_path'] = '/sandbox/homerunpool_2020/';
+
 	} else {
 	/**
 	* set variables for bluehost
@@ -26,5 +33,7 @@
 
 	$leagueid = $GLOBALS['league_id'];
 	$seasonid = $GLOBALS['season_id'];
+
+
 
 ?>
