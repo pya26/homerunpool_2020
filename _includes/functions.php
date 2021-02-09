@@ -39,14 +39,14 @@
 
 	function list_of_seasons(){
 
-		try {
-			  include("../_config/config.php");
-    		include("../_config/db_connect.php");
+		/*try {
+			include("_config/config.php");
+    		include("_config/db_connect.php");
 		} catch (PDOException $e) {
 			echo 'Connection failed: ' . $e->getMessage();
 			die();
-		}
-		//$dbh = $GLOBALS['dbh'];
+		}*/
+		$dbh = $GLOBALS['dbh'];
 
 		$stmt = $dbh->prepare('CALL sp_get_all_seasons');
 		$stmt->execute();
@@ -190,17 +190,17 @@
 	function current_season(){
 
 		$current_date =  date('Ymd');
-		$url = get_api_url(1) . '?date=' . $current_date;
+		$url = get_api_url(1) . '?date=' . '20200901'/*$current_date*/;
 
 		$current_season = mysportsfeeds_api_request($url);
 
-		if(isset($current_season->seasons[0]->slug)){
+		if(!empty($current_season->seasons[0])){
 			$season = $current_season->seasons[0]->slug;
 		} else {
 			$season = 'Season not defined';
 		}
 
-		$season = $current_season;
+		//$season = $current_season;
 
 		return $season;
 	}
@@ -210,13 +210,7 @@
 
 	function get_all_players(){
 
-		try {
-			$configs = include("../_config/config.php");
-    		include("../_config/db_connect.php");
-		} catch (PDOException $e) {
-			echo 'Connection failed: ' . $e->getMessage();
-		}
-		//$dbh = $GLOBALS['dbh'];
+		$dbh = $GLOBALS['dbh'];
 
 		$stmt = $dbh->prepare("CALL sp_get_all_players");
 		$stmt->execute();
@@ -224,8 +218,7 @@
 		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 			/**
 			 * added first name and last name for 'add_league_team_players.php'
-			 */
-			//$player_db_ids[] = $row['PlayerID'];
+			 */			
 			$player_db_ids[$row['PlayerID']] = $row['FirstName'] . ' ' . $row['LastName'];
 		}
 
@@ -237,13 +230,7 @@
 
 
 	function get_all_roster_statuses(){
-/*
-		try {
-			$configs = include("_config/config.php");
-    		include("_config/db_connect.php");
-		} catch (PDOException $e) {
-			echo 'Connection failed: ' . $e->getMessage();
-		}*/
+
 		$dbh = $GLOBALS['dbh'];
 
 		$stmt = $dbh->prepare("CALL sp_get_all_roster_statuses");
@@ -251,8 +238,7 @@
 
 		$status_array = array();
 		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-		  $status_array[$row['roster_status_id']] = $row['roster_status_name'];
-		  //$status_array[$row['roster_status_desc']] = $row['roster_status_desc'];*/
+		  $status_array[$row['roster_status_id']] = $row['roster_status_name'] . ' (' . $row['roster_status_desc'] . ')';
 		}
 
 	    return $status_array;
@@ -679,14 +665,10 @@
 
 	function get_registered_users(){
 
-		try {
-			include("../_config/db_connect.php");
-		} catch (PDOException $e) {
-			echo 'Connection failed: ' . $e->getMessage();
-		}
+		$dbh = $GLOBALS['dbh'];
 
-		 $stmt = $dbh->prepare("SELECT * FROM registered_users WHERE status_id = 'A' ORDER BY last_name");
-	   $stmt->execute();
+		$stmt = $dbh->prepare("SELECT * FROM registered_users WHERE status_id = 'A' ORDER BY last_name");
+	    $stmt->execute();
 
 		$reg_users_array = array();
 		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -701,12 +683,7 @@
 
 	function get_monthly_hrs_for_season($tablename,$season_id){
 
-		try {
-			$configs = include("_config/config.php");
-			include("_config/db_connect.php");
-		} catch (PDOException $e) {
-			echo 'Connection failed: ' . $e->getMessage();
-		}
+		$dbh = $GLOBALS['dbh'];
 
 	    $stmt = $dbh->prepare("SELECT player_id FROM {$tablename} WHERE season_id = {$season_id}");
 	    $stmt->execute();
@@ -729,12 +706,7 @@
 
 	function get_leagues(){
 
-		try {
-			$configs = include("../_config/config.php");
-			include("../_config/db_connect.php");
-		} catch (PDOException $e) {
-			echo 'Connection failed: ' . $e->getMessage();
-		}
+		$dbh = $GLOBALS['dbh'];
 
 		$stmt = $dbh->prepare("SELECT league_id, league_name, league_desc, league_type_id, teams_allowed, date_created, date_updated, created_by, status_id FROM leagues WHERE status_id = 'A' ORDER BY league_name ASC");
 	    $stmt->execute();
@@ -779,12 +751,7 @@
 
 	function get_teams_by_id($reg_id){
 
-		try {
-			$configs = include("_config/config.php");
-			include("_config/db_connect.php");
-		} catch (PDOException $e) {
-			echo 'Connection failed: ' . $e->getMessage();
-		}
+		$dbh = $GLOBALS['dbh'];
 
 		$query = $dbh->prepare("SELECT * FROM teams WHERE reg_id=?");
 		$query->bindParam(1, $reg_id, PDO::PARAM_INT);
@@ -800,12 +767,7 @@
 
 	function get_all_teams(){
 
-		try {
-			$configs = include("../_config/config.php");
-			include("../_config/db_connect.php");
-		} catch (PDOException $e) {
-			echo 'Connection failed: ' . $e->getMessage();
-		}
+		$dbh = $GLOBALS['dbh'];
 
 		$query = $dbh->prepare("SELECT * FROM teams WHERE status_id = 'A'");
 		$query->bindParam(1, $reg_id, PDO::PARAM_INT);
@@ -820,22 +782,18 @@
 	}
 
 
-	function get_leagues_by_id($reg_id){
+	function get_leagues_by_id($league_id){
 
-		try {
-			$configs = include("_config/config.php");
-			include("_config/db_connect.php");
-		} catch (PDOException $e) {
-			echo 'Connection failed: ' . $e->getMessage();
-		}
+		$dbh = $GLOBALS['dbh'];
 
-		$query = $dbh->prepare("SELECT l.league_id, l.league_name, lt.status_id, t.role_id FROM leagues l INNER JOIN league_teams lt ON lt.league_id = l.league_id INNER JOIN teams t ON t.team_id - lt.team_id INNER JOIN registered_users r ON r.reg_id = t.reg_id WHERE r.reg_id = ?");
-		$query->bindParam(1, $reg_id, PDO::PARAM_INT);
+		//$query = $dbh->prepare("SELECT l.league_id, l.league_name, lt.status_id, t.role_id FROM leagues l INNER JOIN league_teams lt ON lt.league_id = l.league_id INNER JOIN teams t ON t.team_id - lt.team_id INNER JOIN registered_users r ON r.reg_id = t.reg_id WHERE r.reg_id = ?");
+		$query = $dbh->prepare("SELECT l.league_id, l.league_name FROM leagues l WHERE l.league_id = ? AND l.status_id = 'A'");
+		$query->bindParam(1, $league_id, PDO::PARAM_INT);
 		$query->execute();
 
 		$leagues_array = array();
 		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
-			$leagues_array[] = ['league_id' => $row['league_id'], 'league_name' => $row['league_name'], 'status_id' => $row['status_id'], 'role_id' => $row['role_id']];
+			$leagues_array[] = ['league_id' => $row['league_id'], 'league_name' => $row['league_name']];
 		}
 
 		return $leagues_array;
@@ -958,6 +916,7 @@
         $result = $query->fetch(PDO::FETCH_ASSOC);*/
          $result = check_active_email($email);
 
+
 		if (!$result) {
 
 			$login_error = array('reg_id' => 0, 'msg' => 'The email you entered is not associated with an active user account.');
@@ -965,6 +924,7 @@
             return $login_error;
 
         } else {
+
 
             if (password_verify($pwd, $result['password'])) {
 
@@ -1076,12 +1036,15 @@
 
 	function check_active_email($email){
 
-		try {
+
+		/*try {
 			$configs = include("_config/config.php");
 			include("_config/db_connect.php");
 		} catch (PDOException $e) {
 			echo 'Connection failed: ' . $e->getMessage();
-		}
+		}*/
+
+		$dbh = $GLOBALS['dbh'];
 
 		$email = $email;
 

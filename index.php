@@ -173,7 +173,7 @@
     -->
     </ul>
     <ul class="navbar-nav ml-auto">
-      <!--
+      
       <?php
         if(is_logged_in()){
           print '<li class="nav-item"><a class="nav-link" href="#">Hello ' . $_SESSION['first_name'] . '!</a></li>' .'<li class="nav-item"><a class="nav-link" href="logout.php"><i class="fas fa-sign-out-alt"></i>Sign-out</a></li>';
@@ -182,7 +182,7 @@
         }
       ?>
       <li class="nav-item"><a class="nav-link" href="#">Front Office</a></li>
-      -->
+      
     </ul>
   </div>
 </nav>
@@ -211,8 +211,16 @@
 
 <div class="container-fluid">
 
+
   <?php
-    $league_teams = $dbh->prepare("SELECT lt.team_id, t.team_name FROM league_teams lt LEFT JOIN teams t ON t.team_id = lt.team_id WHERE lt.league_id = 10 AND lt.season_id = 10 AND lt.status_id = 'A' ORDER BY lt.sort ASC");
+  
+    $leagueid = $GLOBALS['league_id'];
+    $teamid = $GLOBALS['season_id'];
+  
+    
+    $league_teams = $dbh->prepare("SELECT lt.team_id, t.team_name FROM league_teams lt LEFT JOIN teams t ON t.team_id = lt.team_id WHERE lt.league_id=:leagueid AND lt.season_id=:seasonid AND lt.status_id = 'A' ORDER BY lt.sort ASC");
+    $league_teams->bindParam("leagueid", $leagueid, PDO::PARAM_INT, 11);
+    $league_teams->bindParam("seasonid", $teamid, PDO::PARAM_INT, 11);
     $league_teams->execute();
     $league_team_count = $league_teams->rowCount();
 
@@ -231,9 +239,9 @@
 
             $teamid = $row['team_id'];
 
-            $champ_query = $dbh->prepare('SELECT year FROM champions WHERE team_id = ? AND league_id = ?');
-            $champ_query->bindParam(1, $teamid, PDO::PARAM_INT, 11);
-            $champ_query->bindParam(2, $leagueid, PDO::PARAM_INT, 11);
+            $champ_query = $dbh->prepare('SELECT year FROM champions WHERE team_id=:teamid AND league_id=:leagueid');
+            $champ_query->bindParam("teamid", $teamid, PDO::PARAM_INT, 11);
+            $champ_query->bindParam("leagueid", $leagueid, PDO::PARAM_INT, 11);
             $champ_query->execute();
 
             while ($row2 = $champ_query->fetch(PDO::FETCH_ASSOC)) {

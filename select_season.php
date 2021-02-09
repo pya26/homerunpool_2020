@@ -1,6 +1,8 @@
 <?php
 
 	try {
+		include("_config/config.php");
+		include("_config/db_connect.php");
 		include("_includes/header.php");
 		include("_includes/functions.php");
 	} catch (PDOException $e) {
@@ -13,7 +15,11 @@
 	print "<a href='admin_dashboard.php'>Back to admin dashboard</a><br /><br />";
 
 	
+
 	$url = get_api_url($api_id);
+
+
+
 
 	$select_season_form = '<form id="select_season_form">';
 	$select_season_form .= '<input id="date_for_season" type="text"/>';	
