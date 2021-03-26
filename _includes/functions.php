@@ -237,18 +237,8 @@
 			/**
 			 * added first name and last name for 'add_league_team_players.php'
 			 */			
-			//$player_db_ids[$row['PlayerID']] = $row['FirstName'] . ' ' . $row['LastName'];
+			$player_db_ids[$row['PlayerID']] = $row['FirstName'] . ' ' . $row['LastName'];
 			
-			/*$player_db_ids['PlayerID'] = $row['PlayerID'];
-			$player_db_ids['FirstName'] = $row['FirstName'];
-			$player_db_ids['LastName'] = $row['LastName'];*/
-			//$player_id = settype($row['PlayerID'], "integer");
-			$player_id = (int) $row['PlayerID'];
-			$player_db_ids[] = array(
-				'player_id' => $player_id/*,
-				'player_first_name' => $row['FirstName'],
-				'player_last_name' => $row['LastName']*/
-				);
 		}
 
 		return $player_db_ids;

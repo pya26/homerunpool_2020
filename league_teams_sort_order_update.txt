@@ -1,0 +1,59 @@
+update league_teams
+set sort = 1
+where league_id = 10 AND team_id = 1 AND season_id = 14;
+
+update league_teams
+set sort = 2
+where league_id = 10 AND team_id = 7 AND season_id = 14;
+
+update league_teams
+set sort = 3
+where league_id = 10 AND team_id = 5 AND season_id = 14;
+
+update league_teams
+set sort = 4
+where league_id = 10 AND team_id = 6 AND season_id = 14;
+
+update league_teams
+set sort = 5
+where league_id = 10 AND team_id = 17 AND season_id = 14;
+
+update league_teams
+set sort = 6
+where league_id = 10 AND team_id = 11 AND season_id = 14;
+
+update league_teams
+set sort = 7
+where league_id = 10 AND team_id = 16 AND season_id = 14;
+
+update league_teams
+set sort = 8
+where league_id = 10 AND team_id = 2 AND season_id = 14;
+
+update league_teams
+set sort = 9
+where league_id = 10 AND team_id = 4 AND season_id = 14;
+
+update league_teams
+set sort = 10
+where league_id = 10 AND team_id = 3 AND season_id = 14;
+
+update league_teams
+set sort = 11
+where league_id = 10 AND team_id = 10 AND season_id = 14;
+
+update league_teams
+set sort = 12
+where league_id = 10 AND team_id = 14 AND season_id = 14;
+
+update league_teams
+set sort = 13
+where league_id = 10 AND team_id = 15 AND season_id = 14;
+
+update league_teams
+set sort = 14
+where league_id = 10 AND team_id = 18 AND season_id = 14;
+
+update league_teams
+set sort = 15
+where league_id = 10 AND team_id = 13 AND season_id = 14;
