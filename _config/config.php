@@ -8,8 +8,7 @@
 	$GLOBALS['msf_password'] = 'MYSPORTSFEEDS';
 	$GLOBALS['msf_api_v2_base_url'] = 'https://api.mysportsfeeds.com/v2.1/pull/mlb/';
 	$GLOBALS['config_base_path'] = 'C:\laragon\www\sandbox\homerunpool_2020';
-	$GLOBALS['league_id'] = 14;
-	$GLOBALS['season_id'] = 14;
+	$GLOBALS['league_id'] = 10;
 
 	if($_SERVER['CONTEXT_DOCUMENT_ROOT'] == 'C:/laragon/www'){
 
@@ -30,10 +29,6 @@
 		$GLOBALS['base_path'] = '/home1/homeruo9/public_html';
 		
 	}
-
-	$leagueid = $GLOBALS['league_id'];
-	$seasonid = $GLOBALS['season_id'];
-
 
 
 ?>

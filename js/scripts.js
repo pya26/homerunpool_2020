@@ -481,6 +481,7 @@ $("#date").datepicker({
 
 				},
 				error: function() {
+					$("#Preloader").hide();
 					alert('There was some error performing the AJAX call!');
 				}
 			}

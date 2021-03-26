@@ -6,8 +6,23 @@
     include("_includes/header.php");
     include("_includes/functions.php");
   } catch (PDOException $e) {
-    echo 'Connection failed: ' . $e->getMessage();
+    echo 'Connection failed: ' . $e->getMessage();     
+
   }
+
+
+    /**
+     * Set active season variables
+     */
+    $active_season = get_active_season();
+    
+    $GLOBALS["active_season_id"] = $active_season["id"];
+    $GLOBALS["active_season_name"] = $active_season["name"];
+    $GLOBALS["active_season_start_date"] = $active_season["start_date"];
+    $GLOBALS["active_season_end_date"] = $active_season["end_date"];    
+
+    $league_id = $GLOBALS['league_id'];
+    $season_id = $GLOBALS["active_season_id"];
 
 ?>
 
@@ -214,13 +229,12 @@
 
   <?php
   
-    $leagueid = $GLOBALS['league_id'];
-    $teamid = $GLOBALS['season_id'];
+   
   
     
     $league_teams = $dbh->prepare("SELECT lt.team_id, t.team_name FROM league_teams lt LEFT JOIN teams t ON t.team_id = lt.team_id WHERE lt.league_id=:leagueid AND lt.season_id=:seasonid AND lt.status_id = 'A' ORDER BY lt.sort ASC");
-    $league_teams->bindParam("leagueid", $leagueid, PDO::PARAM_INT, 11);
-    $league_teams->bindParam("seasonid", $teamid, PDO::PARAM_INT, 11);
+    $league_teams->bindParam("leagueid", $league_id, PDO::PARAM_INT, 11);
+    $league_teams->bindParam("seasonid", $season_id, PDO::PARAM_INT, 11);
     $league_teams->execute();
     $league_team_count = $league_teams->rowCount();
 
@@ -237,11 +251,11 @@
           print '<div class="container table-responsive-sm">';
             print '<span style="font-size:26px;">' . $row['team_name'] . "</span>";
 
-            $teamid = $row['team_id'];
+            $team_id = $row['team_id'];
 
             $champ_query = $dbh->prepare('SELECT year FROM champions WHERE team_id=:teamid AND league_id=:leagueid');
-            $champ_query->bindParam("teamid", $teamid, PDO::PARAM_INT, 11);
-            $champ_query->bindParam("leagueid", $leagueid, PDO::PARAM_INT, 11);
+            $champ_query->bindParam("teamid", $team_id, PDO::PARAM_INT, 11);
+            $champ_query->bindParam("leagueid", $league_id, PDO::PARAM_INT, 11);
             $champ_query->execute();
 
             while ($row2 = $champ_query->fetch(PDO::FETCH_ASSOC)) {
@@ -306,8 +320,8 @@
   <!-- Footer Elements -->
 
   <!-- Copyright -->
-  <div class="footer-copyright text-center py-3">© 2020 Copyright:
-    <a href="http://www.homerunpool.com"> homerunpool.com</a>
+  <div class="footer-copyright text-center py-3">&copy; <?php print date("Y"); ?> Copyright:
+    <a href="https://www.homerunpool.com"> homerunpool.com</a>
   </div>
   <!-- Copyright -->
 

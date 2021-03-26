@@ -1,11 +1,11 @@
 <?php
 
 	
-	try {
-		include("_includes/header.php");
-	    $configs = include("_config/config.php");
+	try {		
+	    include("_config/config.php");
 	    include("_config/db_connect.php");
 	    include("_includes/functions.php");
+	    include("_includes/header.php");
 	  } catch (PDOException $e) {
 	    echo 'Connection failed: ' . $e->getMessage();
 	    die();

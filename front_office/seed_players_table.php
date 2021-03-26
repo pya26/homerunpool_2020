@@ -20,17 +20,17 @@
   $seed_players_form .= 'Select player roster statuses to be included when seeding the players table:'; 
   $status_array = get_all_roster_statuses();
   $seed_players_form .= '<label for="roster_status[]" class="error"></label><br />';
-  $seed_players_form .= '<input type="checkbox" id="check_all_roster_status">Check all<br />';
+  $seed_players_form .= '<input type="checkbox" id="check_all_roster_status"> Check all<br />';
   foreach($status_array as $roster_status_name ){
-    $seed_players_form .= '<input type="checkbox" class="rosterStatusCheckBoxClass" id="roster_status" name="roster_status" value="'.$roster_status_name.'">'.$roster_status_name.'<br />';
+    $seed_players_form .= '<input type="checkbox" class="rosterStatusCheckBoxClass" id="roster_status" name="roster_status" value="'.$roster_status_name['roster_status_name'].'"> '.$roster_status_name['roster_status_name'] . " (" . $roster_status_name['roster_status_desc'].")<br />";
   }
 
   $seed_players_form .= '<br />Select which player positions should be seeded into the database:';
   $position_array = get_all_hitter_positions();
   $seed_players_form .= '<label for="position[]" class="error"></label><br />';
-  $seed_players_form .= '<input type="checkbox" id="check_all_positions">Check all<br />';
+  $seed_players_form .= '<input type="checkbox" id="check_all_positions"> Check all<br />';
   foreach($position_array as $key => $value ){
-    $seed_players_form .= '<input type="checkbox" class="positionCheckBoxClass" id="position" name="position" value="'.$key.'">'.$value.'<br />';
+    $seed_players_form .= '<input type="checkbox" class="positionCheckBoxClass" id="position" name="position" value="'.$key.'"> '.$value.'<br />';
   }
   $seed_players_form .= '<br /><input id="seed_players_form_submit" type="submit" value="Seed Players DB" /></form>';
 

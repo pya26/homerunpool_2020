@@ -1,5 +1,20 @@
 <?php
 
+	function get_active_season(){
+		
+		$dbh = $GLOBALS['dbh'];
+
+		$stmt = $dbh->prepare('CALL get_active_season');
+		$stmt->execute();
+
+		$active_season_array = array();
+		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+			$active_season_array = $row;
+		}
+
+		return $active_season_array;
+	}
+
 
 
 	function dynamic_select($the_array, $element_name, $label = '', $init_value = '') {
@@ -34,6 +49,9 @@
 	    return $menu;
 	}
 
+
+
+	
 
 
 
@@ -219,7 +237,18 @@
 			/**
 			 * added first name and last name for 'add_league_team_players.php'
 			 */			
-			$player_db_ids[$row['PlayerID']] = $row['FirstName'] . ' ' . $row['LastName'];
+			//$player_db_ids[$row['PlayerID']] = $row['FirstName'] . ' ' . $row['LastName'];
+			
+			/*$player_db_ids['PlayerID'] = $row['PlayerID'];
+			$player_db_ids['FirstName'] = $row['FirstName'];
+			$player_db_ids['LastName'] = $row['LastName'];*/
+			//$player_id = settype($row['PlayerID'], "integer");
+			$player_id = (int) $row['PlayerID'];
+			$player_db_ids[] = array(
+				'player_id' => $player_id/*,
+				'player_first_name' => $row['FirstName'],
+				'player_last_name' => $row['LastName']*/
+				);
 		}
 
 		return $player_db_ids;
@@ -238,7 +267,12 @@
 
 		$status_array = array();
 		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-		  $status_array[$row['roster_status_id']] = $row['roster_status_name'] . ' (' . $row['roster_status_desc'] . ')';
+		  	//$status_array[$row['roster_status_id']] = $row['roster_status_name'] . ' (' . $row['roster_status_desc'] . ')';
+		 	$status_array[] = array(
+		 		'roster_status_id' => $row['roster_status_id'],
+		 		'roster_status_name' => $row['roster_status_name'],
+		 		'roster_status_desc' => $row['roster_status_desc']
+		 	);
 		}
 
 	    return $status_array;

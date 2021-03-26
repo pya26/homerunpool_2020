@@ -49,6 +49,7 @@
   // set full url to be passed to the curl_request function 
   $url = $GLOBALS['msf_api_v2_base_url'] . $api_file . $url_params;
 
+
   // call the API function to request all players info that was selected (season,statuses, positions)  and set variable for the response. I named the response variable
   // $player_info_response even though it will return all player info, but I'm only using it to build an array of the ID's to pass into another API call
   $player_info_response = mysportsfeeds_api_request($url);

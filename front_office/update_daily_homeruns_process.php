@@ -12,7 +12,7 @@ $season = mysportsfeeds_api_request($url);
 
 $season_slug = $season->seasons[0]->slug;
 
-$seasonid = get_season_id($season_slug);
+$season_id = get_season_id($season_slug);
 
 $url_hrs = $GLOBALS['msf_api_v2_base_url'] . $season_slug .'/date/' . $date . '/player_gamelogs.json';
 
@@ -106,7 +106,7 @@ foreach ($hr_response->gamelogs as $key => $value) {
 
 	if($homeruns > 0){
 		
-		$stmt = $dbh->prepare("UPDATE " . $table_string . " SET " . $column_name  . " = " .$homeruns ." WHERE player_id = ". $playerid ." AND season_id = " . $seasonid . "");
+		$stmt = $dbh->prepare("UPDATE " . $table_string . " SET " . $column_name  . " = " .$homeruns ." WHERE player_id = ". $playerid ." AND season_id = " . $season_id . "");
 	    $stmt->execute();
 
 	    unset($stmt);
@@ -116,13 +116,12 @@ foreach ($hr_response->gamelogs as $key => $value) {
 
 	    $stmt = $dbh->prepare($sp_statement);
 	    $stmt->bindParam(1, $playerid, PDO::PARAM_INT, 11);
-	    $stmt->bindParam(2, $seasonid, PDO::PARAM_INT, 11);
+	    $stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);
 	    $stmt->execute();
 
 	    unset($stmt);
 	   
 	}
-
 
 }
 
