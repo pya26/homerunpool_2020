@@ -21,8 +21,8 @@
 	*/
 
 	//Get yesterday's date. Format as 'YYYYMMDD' (ex. 20200319)
-	//$yesterday_date = date("Ymd",strtotime("-1 days"));
-	$yesterday_date = '20190401';
+	$yesterday_date = date("Ymd",strtotime("-1 days"));
+	//$yesterday_date = '20190401';
 
 	$url = $GLOBALS['msf_api_v2_base_url'] . 'current_season.json?date=' . $yesterday_date;
 
@@ -39,6 +39,11 @@
 	$day = substr($yesterday_date, 6, 2);
 
 	$column_name = "day" . ltrim($day, '0');
+
+	/*print "<pre>";
+	print_r($seasonid);
+	print "</pre>";
+	exit();*/
 
 	
 	switch ($month) {
@@ -116,7 +121,7 @@
 
 		if($homeruns > 0){
 			
-			
+			/*
 			$stmt = $dbh->prepare("UPDATE " . $table_string . " SET " . $column_name  . " = " .$homeruns ." WHERE player_id = ". $playerid ." AND season_id = " . $seasonid . "");
 		    $stmt->execute();
 		    
@@ -128,7 +133,7 @@
 		    $stmt->execute();
 
 		    unset($stmt);
-		   
+		    */
 		    //$yesterday_hr_array[] = ['api_param_id' => $row['api_param_id'],'api_param_name' => $row['api_param_name'],'api_param_filter' => $row['api_param_filter'],'api_param_desc' => $row['api_param_desc']];
 		    $yesterday_hr_array[] = $first_name.' '.$last_name.' -- HR\'s('.$homeruns.')';			
 
@@ -140,6 +145,8 @@
 	print "<pre>";
 	print_r($yesterday_hr_array);
 	print "</pre>";
+
+	exit();
 
 	if(!empty($yesterday_hr_array)){
 

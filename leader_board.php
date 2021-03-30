@@ -6,7 +6,7 @@
 ?>
 
 <div class="container table-responsive-sm">
-  <h1><?php print $GLOBALS["active_season_name"]; ?> Season Leader Board<div style="float:right;font-size: 0.5em;">last updated: 03/21/2021 @9:55AM</div></h1>  
+  <h1><?php print $GLOBALS["active_season_name"]; ?> Season Leader Board<!--<div style="float:right;font-size: 0.5em;">last updated: 03/21/2021 @9:55AM</div>--></h1>  
   <table id="leaderboard" class="table table-sm table-striped table-hover table-bordered border-primary" style="width:100%">
     <thead>
       <tr>

@@ -227,10 +227,7 @@
 <div class="container-fluid">
 
 
-  <?php
-  
-   
-  
+  <?php  
     
     $league_teams = $dbh->prepare("SELECT lt.team_id, t.team_name FROM league_teams lt LEFT JOIN teams t ON t.team_id = lt.team_id WHERE lt.league_id=:leagueid AND lt.season_id=:seasonid AND lt.status_id = 'A' ORDER BY lt.sort ASC");
     $league_teams->bindParam("leagueid", $league_id, PDO::PARAM_INT, 11);

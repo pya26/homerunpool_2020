@@ -8,6 +8,6 @@
 	$GLOBALS['msf_password'] = 'MYSPORTSFEEDS';
 	$GLOBALS['msf_api_v2_base_url'] = 'https://api.mysportsfeeds.com/v2.1/pull/mlb/';
 	$GLOBALS['league_id'] = 10;
-	$GLOBALS['season_id'] = 10;
+	$GLOBALS['season_id'] = 14;
 
 ?>
