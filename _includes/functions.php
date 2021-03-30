@@ -1111,4 +1111,45 @@
 
 
 
+
+	function get_last_updated_date($league_id,$season_id){
+
+		$dbh = $GLOBALS['dbh'];
+
+		$stmt = $dbh->prepare('CALL get_last_updated_date(?,?)');
+	    $stmt->bindParam(1, $league_id, PDO::PARAM_INT);
+	    $stmt->bindParam(2, $season_id, PDO::PARAM_INT);
+	    $stmt->execute();
+	    
+	    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+	    	$d=strtotime($row['date_updated']);
+	      	
+	      	$last_date =  date("m/d/Y g:i a", $d);
+	    }
+
+	    
+	    return $last_date;
+
+	}
+
+
+
+
+	function update_last_updated_date($league_id,$season_id){
+
+		date_default_timezone_set('America/New_York');
+	    $date = date('Y-m-d h:i');  
+
+		$dbh = $GLOBALS['dbh'];
+
+		$stmt = $dbh->prepare('CALL update_last_updated_date(?,?,?)');
+	    $stmt->bindParam(1, $league_id, PDO::PARAM_INT);
+	    $stmt->bindParam(2, $season_id, PDO::PARAM_INT);
+	    $stmt->bindParam(3, $date, PDO::PARAM_STR);
+	    $stmt->execute();
+
+	}
+
+
+
 ?>
