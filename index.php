@@ -188,7 +188,7 @@
     -->
     </ul>
     <ul class="navbar-nav ml-auto">
-      
+      <!--
       <?php
         if(is_logged_in()){
           print '<li class="nav-item"><a class="nav-link" href="#">Hello ' . $_SESSION['first_name'] . '!</a></li>' .'<li class="nav-item"><a class="nav-link" href="logout.php"><i class="fas fa-sign-out-alt"></i>Sign-out</a></li>';
@@ -197,6 +197,7 @@
         }
       ?>
       <li class="nav-item"><a class="nav-link" href="#">Front Office</a></li>
+    -->
       
     </ul>
   </div>
@@ -294,6 +295,7 @@
   <div class="container-fluid">
 
     <!-- Social buttons -->
+    <!--
     <ul class="list-unstyled list-inline text-center">
       <li class="list-inline-item">
         <a class="btn-floating btn-fb mx-1">
@@ -311,6 +313,7 @@
         </a>
       </li>
     </ul>
+  -->
     <!-- Social buttons -->
 
   </div>
