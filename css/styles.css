@@ -29,10 +29,16 @@ p {
 }
 
 .fa-ambulance {
-  color: white;
-  vertical-align: bottom;  
-  cursor: pointer;
+  color: white !important;
+  vertical-align: bottom !important;  
+  cursor: pointer !important;
 }
+
+.fa-id-badge{
+  color: white !important;
+  cursor: pointer !important;
+}
+
 
 
 label.error{
@@ -104,3 +110,4 @@ h3.popover-header{
     color:#2b3e50;
     font-weight: bold;
 }
+
