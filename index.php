@@ -251,6 +251,33 @@
 
             $team_id = $row['team_id'];
 
+            //$injury_query = $dbh->prepare('SELECT year FROM champions WHERE team_id=:teamid AND league_id=:leagueid');
+            $injury_query = $dbh->prepare('SELECT ltp.*,i.player_id, i.injury_desc, i.playing_probability, p.FirstName, p.LastName FROM league_team_players ltp JOIN injured_players i ON i.player_id = ltp.player_id LEFT JOIN players p ON p.PlayerID = i.player_id WHERE ltp.league_id=:leagueid AND ltp.season_id=:seasonid AND ltp.team_id=:teamid');           
+            $injury_query->bindParam("leagueid", $league_id, PDO::PARAM_INT, 11);
+            $injury_query->bindParam("seasonid", $season_id, PDO::PARAM_INT, 11);
+            $injury_query->bindParam("teamid", $team_id, PDO::PARAM_INT, 11);
+            $injury_query->execute();
+            $no=$injury_query->rowCount();
+            //$num_rows = $injury_query->fetchColumn();
+
+            if($no > 0){
+              print '<span class="fa-stack" style="color:#df691a; margin-top:-20px;">';
+              print '&nbsp;&nbsp;&nbsp;<a tabindex="0" data-toggle="popover"  data-html="true" data-trigger="focus" title="Injury Report" data-placement="bottom" data-content="';
+             
+              while ($row2 = $injury_query->fetch(PDO::FETCH_ASSOC)) {
+                print $row2['FirstName'] .' '. $row2['LastName'] . '&nbsp;&nbsp;&nbsp;'. $row2['playing_probability'] .'&nbsp;&nbsp;&nbsp;('. $row2['injury_desc'] .')<br />';              
+              }
+              print '</tbody></table>';
+              print'"><i class="fa fa-ambulance">&nbsp;</i></a>';
+              print '</span>';            
+              
+            }   
+
+            //print '<a tabindex="0" class="btn btn-lg btn-danger" role="button" data-toggle="popover" data-trigger="click" title="Dismissible popover" data-placement="bottom" data-content="And here some amazing content. Its very engaging. Right?">Dismissible popover</a>';      
+
+           
+
+
             $champ_query = $dbh->prepare('SELECT year FROM champions WHERE team_id=:teamid AND league_id=:leagueid');
             $champ_query->bindParam("teamid", $team_id, PDO::PARAM_INT, 11);
             $champ_query->bindParam("leagueid", $league_id, PDO::PARAM_INT, 11);
@@ -267,7 +294,12 @@
               $trophy_row .= '</span>';
               print $trophy_row;
             }
-            unset($champ_query);
+
+            unset($champ_query);   
+
+           
+
+            
 
             /**
              * include file to display the rows and columns for the team's tables

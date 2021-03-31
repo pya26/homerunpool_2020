@@ -5,6 +5,10 @@
 	include("../_includes/functions.php");
 
 
+	delete_injured_players();
+
+
+	
 	// set file name of api
   	$api_file = 'injuries.json';
 
@@ -18,13 +22,31 @@
 	// $player_info_response even though it will return all player info, but I'm only using it to build an array of the ID's to pass into another API call
 	$player_injury_response = mysportsfeeds_api_request($url);
 
-	print "<pre>";
+	/*print "<pre>";
 	print_r($player_injury_response);
+	print "<pre>";*/
+
+	/*$mung = get_injured_players(12258);
+
 	print "<pre>";
+	print_r($mung);
+	print "</pre>";
+	exit();*/
 
 	foreach($player_injury_response->players as $key => $value) {
-		print $value->id . ' -- '. $value->firstName . ' ' . $value->lastName . ' -- ' . $value->currentInjury->description . ' -- ' . $value->currentInjury->playingProbability . '<br />';
+		//print $value->id . ' -- '. $value->firstName . ' ' . $value->lastName . ' -- ' . $value->currentInjury->description . ' -- ' . $value->currentInjury->playingProbability . '<br />';
+	
+		$player_id = $value->id;
+		$injury_desc = $value->currentInjury->description;
+		$playing_probability = $value->currentInjury->playingProbability;
+
+		//print  $player_id . ' - ' . $injury_desc . ' - ' . $playing_probability . '<br />';
+		insert_injured_players($player_id,$injury_desc,$playing_probability);
 	}
+
+	print "done";
+
+
 
 	
 	

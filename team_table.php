@@ -27,8 +27,19 @@
 
 				$player_id = $row['PlayerID'];
 
-				$player_row = '<tr>';
-					$player_row .= '<td>'.$row['FirstName'][0].'. '.$row['LastName'].'</td>';
+				$injured_players = get_injured_players($player_id);
+
+				$new_arr = array_column($injured_players, 'player_id');
+
+				$mung =  array_search($player_id,$new_arr);
+				
+				if($mung){
+					$player_row = '<tr class="injured_yellow">';
+				} else {
+					$player_row = '<tr>';
+				}
+
+					$player_row .= '<td >'.$row['FirstName'][0].'. '.$row['LastName'].'</td>';
 
 					$player_row .= '<td>';
 						$march_player_total = $dbh->prepare('CALL get_player_march_total(?,?)');

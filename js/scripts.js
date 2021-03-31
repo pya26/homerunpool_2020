@@ -17,6 +17,9 @@ $(function() {
 			e.preventDefault();
 		});*/
 
+$('[data-toggle="popover"]').popover()
+
+
 /*
 	 * Set date format and max date to select for jquery datepicker widget
 	 */

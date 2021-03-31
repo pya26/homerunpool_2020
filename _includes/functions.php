@@ -1152,4 +1152,53 @@
 
 
 
+	
+	function delete_injured_players(){
+		$dbh = $GLOBALS['dbh'];
+
+		$stmt = $dbh->prepare('CALL delete_injured_players');
+		$stmt->execute();
+	}	
+
+
+
+
+	function insert_injured_players($player_id,$injury_desc,$playing_probability){
+
+		$dbh = $GLOBALS['dbh'];
+
+		$stmt = $dbh->prepare('CALL insert_injured_players(?,?,?)');
+	    $stmt->bindParam(1, $player_id, PDO::PARAM_INT);
+	    $stmt->bindParam(2, $injury_desc, PDO::PARAM_STR);
+	    $stmt->bindParam(3, $playing_probability, PDO::PARAM_STR);
+	    $stmt->execute();
+
+	}
+
+
+
+
+	function get_injured_players(){
+
+		$dbh = $GLOBALS['dbh'];
+
+		$stmt = $dbh->prepare('CALL get_injured_players');
+		$stmt->execute();
+		$no = $stmt->rowCount();
+
+		if ($no > 0) {
+	        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+	        	$injured_players[] =  ['player_id' => $row['player_id'], 'injury_desc' => $row['injury_desc'], 'playing_probability' => $row['playing_probability']];
+	        }
+
+	        return $injured_players;
+	    
+	    } else {
+	    	return $injured_players = array();
+	    }
+
+	}
+
+
+
 ?>

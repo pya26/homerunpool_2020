@@ -23,6 +23,17 @@ p {
     opacity:0.9 !important;
 }
 
+.injured_yellow {
+  background-color: yellow !important;
+  color:black !important;
+}
+
+.fa-ambulance {
+  color: white;
+  vertical-align: bottom;  
+  cursor: pointer;
+}
+
 
 label.error{
 	color:red;
@@ -72,4 +83,24 @@ div#leaderboard_wrapper {
     background-size: cover;
   }
 
+}
+
+
+
+.popover {   
+    max-width: 600px !important;
+    width: 500px !important;
+}
+
+h3.popover-header{
+    background-color: yellow;
+    text-align: center;
+    color:#343a40;
+    font-weight: bold;
+}
+
+.popover-body{
+    background-color: white;
+    color:#2b3e50;
+    font-weight: bold;
 }
