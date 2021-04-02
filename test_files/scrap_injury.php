@@ -5,6 +5,7 @@
 	include("../_includes/functions.php");
 
 
+	
 	delete_injured_players();
 
 
@@ -22,9 +23,7 @@
 	// $player_info_response even though it will return all player info, but I'm only using it to build an array of the ID's to pass into another API call
 	$player_injury_response = mysportsfeeds_api_request($url);
 
-	/*print "<pre>";
-	print_r($player_injury_response);
-	print "<pre>";*/
+	
 
 	/*$mung = get_injured_players(12258);
 
@@ -43,6 +42,13 @@
 		//print  $player_id . ' - ' . $injury_desc . ' - ' . $playing_probability . '<br />';
 		insert_injured_players($player_id,$injury_desc,$playing_probability);
 	}
+
+
+
+	$league_id = $GLOBALS['league_id'];
+    $season_id = 14;
+
+	update_last_updated_date($league_id,$season_id);
 
 	print "done";
 

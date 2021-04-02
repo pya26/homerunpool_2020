@@ -417,17 +417,12 @@
 
 	function insert_hrs_february_stub_records($player_ids_array,$season_id){
 
-		try {
-			$configs = include("_config/config.php");
-			include("_config/db_connect.php");
-		} catch (PDOException $e) {
-			echo 'Connection failed: ' . $e->getMessage();
-		}
+		$dbh = $GLOBALS['dbh'];
 
-		foreach($player_ids_array as $value) {
+		foreach($player_ids_array as $key => $value) {
 
     		$stmt = $dbh->prepare('CALL insert_hrs_february_stub_records(?,?)');
-		    $player_id = $value;
+		    $player_id = $key;
 
 		    $stmt->bindParam(1, $player_id, PDO::PARAM_INT, 11);
 			$stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);
@@ -442,16 +437,11 @@
 
 	function insert_hrs_march_stub_records($player_ids_array,$season_id){
 
-		try {
-			$configs = include("_config/config.php");
-			include("_config/db_connect.php");
-		} catch (PDOException $e) {
-			echo 'Connection failed: ' . $e->getMessage();
-		}
+		$dbh = $GLOBALS['dbh'];
 
-		foreach($player_ids_array as $value) {
+		foreach($player_ids_array as $key => $value) {
     		$stmt = $dbh->prepare('CALL insert_hrs_march_stub_records(?,?)');
-		    $player_id = $value;
+		    $player_id = $key;
 
 		    $stmt->bindParam(1, $player_id, PDO::PARAM_INT, 11);
 			$stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);
@@ -463,16 +453,11 @@
 
 	function insert_hrs_april_stub_records($player_ids_array,$season_id){
 
-		try {
-			$configs = include("_config/config.php");
-			include("_config/db_connect.php");
-		} catch (PDOException $e) {
-			echo 'Connection failed: ' . $e->getMessage();
-		}
+		$dbh = $GLOBALS['dbh'];
 
-		foreach($player_ids_array as $value) {
+		foreach($player_ids_array as $key => $value) {
     		$stmt = $dbh->prepare('CALL insert_hrs_april_stub_records(?,?)');
-		    $player_id = $value;
+		    $player_id = $key;
 
 		    $stmt->bindParam(1, $player_id, PDO::PARAM_INT, 11);
 			$stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);
@@ -484,16 +469,11 @@
 
 	function insert_hrs_may_stub_records($player_ids_array,$season_id){
 
-		try {
-			$configs = include("_config/config.php");
-			include("_config/db_connect.php");
-		} catch (PDOException $e) {
-			echo 'Connection failed: ' . $e->getMessage();
-		}
+		$dbh = $GLOBALS['dbh'];
 
-		foreach($player_ids_array as $value) {
+		foreach($player_ids_array as $key => $value) {
     		$stmt = $dbh->prepare('CALL insert_hrs_may_stub_records(?,?)');
-		    $player_id = $value;
+		    $player_id = $key;
 
 		    $stmt->bindParam(1, $player_id, PDO::PARAM_INT, 11);
 			$stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);
@@ -505,16 +485,11 @@
 
 	function insert_hrs_june_stub_records($player_ids_array,$season_id){
 
-		try {
-			$configs = include("_config/config.php");
-			include("_config/db_connect.php");
-		} catch (PDOException $e) {
-			echo 'Connection failed: ' . $e->getMessage();
-		}
+		$dbh = $GLOBALS['dbh'];
 
-		foreach($player_ids_array as $value) {
+		foreach($player_ids_array as $key => $value) {
     		$stmt = $dbh->prepare('CALL insert_hrs_june_stub_records(?,?)');
-		    $player_id = $value;
+		    $player_id = $key;
 
 		    $stmt->bindParam(1, $player_id, PDO::PARAM_INT, 11);
 			$stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);
@@ -526,16 +501,11 @@
 
 	function insert_hrs_july_stub_records($player_ids_array,$season_id){
 
-		try {
-			$configs = include("_config/config.php");
-			include("_config/db_connect.php");
-		} catch (PDOException $e) {
-			echo 'Connection failed: ' . $e->getMessage();
-		}
+		$dbh = $GLOBALS['dbh'];
 
-		foreach($player_ids_array as $value) {
+		foreach($player_ids_array as $key => $value) {
     		$stmt = $dbh->prepare('CALL insert_hrs_july_stub_records(?,?)');
-		    $player_id = $value;
+		    $player_id = $key;
 
 		    $stmt->bindParam(1, $player_id, PDO::PARAM_INT, 11);
 			$stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);
@@ -547,16 +517,11 @@
 
 	function insert_hrs_august_stub_records($player_ids_array,$season_id){
 
-		try {
-			$configs = include("_config/config.php");
-			include("_config/db_connect.php");
-		} catch (PDOException $e) {
-			echo 'Connection failed: ' . $e->getMessage();
-		}
+		$dbh = $GLOBALS['dbh'];
 
-		foreach($player_ids_array as $value) {
+		foreach($player_ids_array as $key => $value) {
     		$stmt = $dbh->prepare('CALL insert_hrs_august_stub_records(?,?)');
-		    $player_id = $value;
+		    $player_id = $key;
 
 		    $stmt->bindParam(1, $player_id, PDO::PARAM_INT, 11);
 			$stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);
@@ -568,16 +533,11 @@
 
 	function insert_hrs_september_stub_records($player_ids_array,$season_id){
 
-		try {
-			$configs = include("_config/config.php");
-			include("_config/db_connect.php");
-		} catch (PDOException $e) {
-			echo 'Connection failed: ' . $e->getMessage();
-		}
+		$dbh = $GLOBALS['dbh'];
 
-		foreach($player_ids_array as $value) {
+		foreach($player_ids_array as $key => $value) {
     		$stmt = $dbh->prepare('CALL insert_hrs_september_stub_records(?,?)');
-		    $player_id = $value;
+		    $player_id = $key;
 
 		    $stmt->bindParam(1, $player_id, PDO::PARAM_INT, 11);
 			$stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);
@@ -589,16 +549,11 @@
 
 	function insert_hrs_october_stub_records($player_ids_array,$season_id){
 
-		try {
-			$configs = include("_config/config.php");
-			include("_config/db_connect.php");
-		} catch (PDOException $e) {
-			echo 'Connection failed: ' . $e->getMessage();
-		}
+		$dbh = $GLOBALS['dbh'];
 
-		foreach($player_ids_array as $value) {
+		foreach($player_ids_array as $key => $value) {
     		$stmt = $dbh->prepare('CALL insert_hrs_october_stub_records(?,?)');
-		    $player_id = $value;
+		    $player_id = $key;
 
 		    $stmt->bindParam(1, $player_id, PDO::PARAM_INT, 11);
 			$stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);
@@ -610,16 +565,11 @@
 
 	function insert_hrs_november_stub_records($player_ids_array,$season_id){
 
-		try {
-			$configs = include("_config/config.php");
-			include("_config/db_connect.php");
-		} catch (PDOException $e) {
-			echo 'Connection failed: ' . $e->getMessage();
-		}
+		$dbh = $GLOBALS['dbh'];
 
-		foreach($player_ids_array as $value) {
+		foreach($player_ids_array as $key => $value) {
     		$stmt = $dbh->prepare('CALL insert_hrs_november_stub_records(?,?)');
-		    $player_id = $value;
+		    $player_id = $key;
 
 		    $stmt->bindParam(1, $player_id, PDO::PARAM_INT, 11);
 			$stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);

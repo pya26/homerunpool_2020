@@ -1,9 +1,16 @@
 <?php
 
 	// Include functions, configurations, & database cennection files
-	include("../_config/config.php");
-	include("_config/db_connect.php");
-	include("../_includes/functions.php");
+	
+	try {
+	    include("../_config/config.php");
+	    include("../_config/db_connect.php");
+	    include("../_includes/functions.php");
+	 } catch (PDOException $e) {
+	    echo 'Connection failed: ' . $e->getMessage();     
+	 }
+
+
 
 
 	// set URL parameter variables
@@ -219,7 +226,7 @@
 		}
 	}
 
-	echo json_encode($msg);
+	//echo json_encode($msg);
 
 
 

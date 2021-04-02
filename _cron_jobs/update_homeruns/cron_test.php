@@ -7,6 +7,7 @@
 		echo 'Connection failed: ' . $e->getMessage();
 	}
 
+
 	/*
 	$stmt = $dbh->prepare("SELECT * FROM registered_users WHERE status_id = 'A' ORDER BY last_name");
 	$stmt->execute();
@@ -21,16 +22,17 @@
 	*/
 
 	//Get yesterday's date. Format as 'YYYYMMDD' (ex. 20200319)
-	$yesterday_date = date("Ymd",strtotime("-1 days"));
-	//$yesterday_date = '20190401';
+	//$yesterday_date = date("Ymd",strtotime("-1 days"));
+	$yesterday_date = '20210401';
 
 	$url = $GLOBALS['msf_api_v2_base_url'] . 'current_season.json?date=' . $yesterday_date;
 
 	$season = mysportsfeeds_api_request($url);
 
-	$season_slug = $season->seasons[0]->slug;
+	$season_slug = $season->seasons[0]->slug;	
 
 	$seasonid = get_season_id($season_slug);
+
 
 	$url_hrs = $GLOBALS['msf_api_v2_base_url'] . $season_slug .'/date/' . $yesterday_date . '/player_gamelogs.json';
 
@@ -40,11 +42,7 @@
 
 	$column_name = "day" . ltrim($day, '0');
 
-	/*print "<pre>";
-	print_r($seasonid);
-	print "</pre>";
-	exit();*/
-
+	
 	
 	switch ($month) {
 		case '01':
@@ -108,8 +106,12 @@
 	    	$msg = "default message";
 	}
 
+	
+	
 
 	$hr_response = mysportsfeeds_api_request($url_hrs);
+
+	
 
 	$yesterday_hr_array = [];
 	foreach ($hr_response->gamelogs as $key => $value) {
@@ -142,11 +144,12 @@
 
 	}
 
-	print "<pre>";
-	print_r($yesterday_hr_array);
-	print "</pre>";
-
-	exit();
+	
+print "<pre>";
+print_r($yesterday_hr_array);
+print "</pre>";
+exit();
+	
 
 	if(!empty($yesterday_hr_array)){
 
