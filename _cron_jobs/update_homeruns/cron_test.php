@@ -3,6 +3,7 @@
 	try {
 		include("../_config/_config.php");
 		include("../_config/_db_config.php");
+		include("../../_includes/functions.php");
 	} catch (PDOException $e) {
 		echo 'Connection failed: ' . $e->getMessage();
 	}
@@ -22,8 +23,8 @@
 	*/
 
 	//Get yesterday's date. Format as 'YYYYMMDD' (ex. 20200319)
-	//$yesterday_date = date("Ymd",strtotime("-1 days"));
-	$yesterday_date = '20210401';
+	$yesterday_date = date("Ymd",strtotime("-1 days"));
+	//$yesterday_date = '20210401';
 
 	$url = $GLOBALS['msf_api_v2_base_url'] . 'current_season.json?date=' . $yesterday_date;
 
@@ -122,10 +123,13 @@
 		
 
 		if($homeruns > 0){
+
+			$dbh = $GLOBALS['dbh'];
 			
-			/*
-			$stmt = $dbh->prepare("UPDATE " . $table_string . " SET " . $column_name  . " = " .$homeruns ." WHERE player_id = ". $playerid ." AND season_id = " . $seasonid . "");
+			$stmt = $dbh->prepare("UPDATE hrs_april SET day1 = " .$homeruns . " WHERE player_id = ". $playerid ." AND season_id = " . $seasonid . "");
+			//$stmt = $dbh->prepare("UPDATE " . $table_string . " SET " . $column_name  . " = " .$homeruns . " WHERE player_id = ". $playerid ." AND season_id = " . $seasonid . "");
 		    $stmt->execute();
+		    /*unset($stmt);
 		    
 		    $sp_statement = "CALL ". $hr_totals_stored_proc . "(?,?)";
 
@@ -134,8 +138,8 @@
 		    $stmt->bindParam(2, $seasonid, PDO::PARAM_INT, 11);
 		    $stmt->execute();
 
-		    unset($stmt);
-		    */
+		    unset($stmt);*/
+		    
 		    //$yesterday_hr_array[] = ['api_param_id' => $row['api_param_id'],'api_param_name' => $row['api_param_name'],'api_param_filter' => $row['api_param_filter'],'api_param_desc' => $row['api_param_desc']];
 		    $yesterday_hr_array[] = $first_name.' '.$last_name.' -- HR\'s('.$homeruns.')';			
 
@@ -144,11 +148,12 @@
 
 	}
 
+
 	
 print "<pre>";
 print_r($yesterday_hr_array);
 print "</pre>";
-exit();
+
 	
 
 	if(!empty($yesterday_hr_array)){
@@ -192,7 +197,7 @@ exit();
 
 
 
-
+/*
 	function get_season_id($season){
 
 		try {
@@ -242,7 +247,7 @@ exit();
 
 		return $response;
 	}
-	
+*/	
 
 
 ?>

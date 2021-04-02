@@ -306,7 +306,10 @@
 		}*/
 		$dbh = $GLOBALS['dbh'];
 
-		$stmt = $dbh->prepare('CALL sp_get_season_id_by_name(?)');
+		/*$stmt = $dbh->prepare('CALL sp_get_season_id_by_name(?)');
+		$stmt->bindParam(1, $season, PDO::PARAM_STR, 15);
+		$stmt->execute();*/
+		$stmt = $dbh->prepare('SELECT id FROM lkp_seasons WHERE slug = ?');
 		$stmt->bindParam(1, $season, PDO::PARAM_STR, 15);
 		$stmt->execute();
 
@@ -1074,7 +1077,7 @@
 	    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 	    	$d=strtotime($row['date_updated']);
 	      	
-	      	$last_date =  date("m/d/Y g:i a", $d);
+	      	$last_date =  date("m/d/Y", $d);
 	    }
 
 	    
@@ -1085,10 +1088,10 @@
 
 
 
-	function update_last_updated_date($league_id,$season_id){
+	function update_last_updated_date($league_id,$season_id,$date){
 
-		date_default_timezone_set('America/New_York');
-	    $date = date('Y-m-d h:i');  
+		//date_default_timezone_set('America/New_York');
+	    //$date = date('Y-m-d h:i');  
 
 		$dbh = $GLOBALS['dbh'];
 

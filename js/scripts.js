@@ -238,7 +238,7 @@ $("#date").datepicker({
 
 
 			$.ajax(
-			'/sandbox/homerunpool_2020/front_office/update_daily_homeruns_process.php?date=' + date,
+			'/front_office/update_daily_homeruns_process.php?date=' + date,
 			{
 				success: function(data) {
 
