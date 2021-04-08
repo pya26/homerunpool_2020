@@ -48,7 +48,12 @@
 	$league_id = $GLOBALS['league_id'];
     $season_id = 14;
 
-	update_last_updated_date($league_id,$season_id);
+    date_default_timezone_set('America/New_York');
+	$date = date('Y-m-d');
+	//$newDateTime = date('Y-m-d h:i', strtotime($date));
+	
+
+	update_last_updated_date($league_id,$season_id,$date);
 
 	print "done";
 

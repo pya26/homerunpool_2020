@@ -10,9 +10,9 @@
 
 
     date_default_timezone_set('America/New_York');
-	$date = date('Y-m-d');
+	$date = date('Y-m-d H:i:s', time());
 	//$newDateTime = date('Y-m-d h:i', strtotime($date));
-	print $newDateTime . '<br />';
+	print $date . '<br />';
 	
 	update_last_updated_date($league_id,$season_id,$date);
 
