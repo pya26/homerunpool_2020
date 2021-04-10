@@ -28,6 +28,11 @@ p {
   color:black !important;
 }
 
+.table .injured_yellow a {
+    color: #2B3E50;
+}
+
+
 .fa-ambulance {
   color: white !important;
   vertical-align: bottom !important;  

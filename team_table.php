@@ -38,7 +38,14 @@
 				} else {
 					$player_row = '<tr>';
 				}
-					$mlb_player_slug = strtolower($row['FirstName'].'-'.$row['LastName'].'-'.$row['MLBID'].'?stats=gamelogs-r-hitting-mlb&year=2021');
+					//$mlb_player_slug = strtolower($row['FirstName'].'-'.$row['LastName'].'-'.$row['MLBID'].'?stats=gamelogs-r-hitting-mlb&year=2021');
+					
+					$fname = str_replace(".","-", $row['FirstName']);
+					$lname_array_to_search = array(' Jr',' Jr.');
+					$lname = str_replace($lname_array_to_search,"-jr", $row['LastName']);
+					$lname = str_replace(".","", $lname);
+					$mlb_player_slug = trim(strtolower($fname.'-'.$lname.'-'.$row['MLBID'].'?stats=gamelogs-r-hitting-mlb&year=2021'));
+					
 					$player_row .= '<td><a href="https://www.mlb.com/player/'.$mlb_player_slug.'" target="_blank">'.$row['FirstName'][0].'. '.$row['LastName'].'</a></td>';
 
 					$player_row .= '<td>';

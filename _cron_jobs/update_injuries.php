@@ -1,16 +1,12 @@
 <?php
-	// include functions, configurations, and database configurations file  
-	include("../_config/config.php");
-	include("../_config/db_connect.php"); 
-	include("../_includes/functions.php");
 
+    include('/home1/homeruo9/public_html/_config/config.php');
+    include('/home1/homeruo9/public_html/_config/db_connect.php');
+    include('/home1/homeruo9/public_html/_includes/functions.php');
 
-	
-	delete_injured_players();
+    delete_injured_players();
 
-
-	
-	// set file name of api
+    // set file name of api
   	$api_file = 'injuries.json';
 
 
@@ -24,14 +20,6 @@
 	$player_injury_response = mysportsfeeds_api_request($url);
 
 	
-
-	/*$mung = get_injured_players(12258);
-
-	print "<pre>";
-	print_r($mung);
-	print "</pre>";
-	exit();*/
-
 	foreach($player_injury_response->players as $key => $value) {
 		//print $value->id . ' -- '. $value->firstName . ' ' . $value->lastName . ' -- ' . $value->currentInjury->description . ' -- ' . $value->currentInjury->playingProbability . '<br />';
 	
@@ -49,20 +37,61 @@
     $season_id = 14;
 
     date_default_timezone_set('America/New_York');
-	$thedatetime = date('Y-m-d H:i:s', time());
+	$date = date('Y-m-d');
 	//$newDateTime = date('Y-m-d h:i', strtotime($date));
 	
 
-	update_last_updated_date($league_id,$season_id,$thedatetime);
-
-	print "done";
+	update_last_updated_date($league_id,$season_id,$date);
 
 
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    $from_email = "support@homerunpool.com";
+	$to_email = "pya2626@gmail.com";
+
+	$subject = "Injuries updated";
+
+	$headers = "Reply-To: The Sender <".$from_email.">\r\n";
+	$headers .= "Return-Path: The Sender <".$from_email.">\r\n";
+	$headers .= "From: Homerunpool.com <".$from_email.">\r\n";
+	$headers .= "Organization: Homerunpool.com\r\n";
+	$headers .= "MIME-Version: 1.0\r\n";
+	$headers .= "Content-type: text/plain; charset=iso-8859-1\r\n";
+	$headers .= "X-Priority: 3\r\n";
+	$headers .= "X-Mailer: PHP". phpversion() ."\r\n";
+
+	$body = "Injuries have been updated\r\n\r\n";
 
 	
-	
+
+	$send_mail = mail($to_email, $subject, $body, $headers);
+
+
+
 ?>
-
-
-
-

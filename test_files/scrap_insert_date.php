@@ -10,13 +10,21 @@
 
 
     date_default_timezone_set('America/New_York');
-	$date = date('Y-m-d H:i:s', time());
-	//$newDateTime = date('Y-m-d h:i', strtotime($date));
-	print $date . '<br />';
 	
-	update_last_updated_date($league_id,$season_id,$date);
+	$thedate = date('Y-m-d');
+	$thedatetime = date('Y-m-d H:i:s', time());
 
-	$last_update = get_last_updated_date($league_id,$season_id);
-	print $last_update;
+	print $thedate;
+	print '<br />';
+	print $thedatetime;
+
+	//$stmt = $dbh->prepare('INSERT INTO test_date_update (thedate,thedatetime) VALUES (?,?)');
+	$stmt = $dbh->prepare('UPDATE last_updated SET last_date_updated = ? WHERE last_updated_id = 1');
+    $stmt->bindParam(1, $thedatetime, PDO::PARAM_STR);
+    $stmt->execute();
+
+
+
+
 
 ?>
