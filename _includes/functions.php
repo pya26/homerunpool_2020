@@ -17,6 +17,8 @@
 
 
 
+
+
 	function dynamic_select($the_array, $element_name, $label = '', $init_value = '') {
 	    $menu = '';
 	    if ($label != '') $menu .= '
@@ -51,19 +53,10 @@
 
 
 
-	
-
 
 
 	function list_of_seasons(){
 
-		/*try {
-			include("_config/config.php");
-    		include("_config/db_connect.php");
-		} catch (PDOException $e) {
-			echo 'Connection failed: ' . $e->getMessage();
-			die();
-		}*/
 		$dbh = $GLOBALS['dbh'];
 
 		$stmt = $dbh->prepare('CALL sp_get_all_seasons');
@@ -76,6 +69,7 @@
 
 		return $seasons_array;
 	}
+
 
 
 
@@ -101,13 +95,7 @@
 
 	function get_api_and_params($api_id){
 
-		try {
-			$configs = include("_config/config.php");
-    		include("_config/db_connect.php");
-		} catch (PDOException $e) {
-			echo 'Connection failed: ' . $e->getMessage();
-			die();
-		}
+		$dbh = $GLOBALS['dbh'];
 
 		$api_url_query = $dbh->prepare("SELECT api_name, api_url, api_desc  FROM msf_apis WHERE api_id = ?");
 		$api_url_query->bindParam(1, $api_id, PDO::PARAM_INT);
@@ -137,16 +125,10 @@
 
 	function get_api_url($api_id){
 
-		/*try {
-			$configs = include("_config/config.php");
-    		include("_config/db_connect.php");
-		} catch (PDOException $e) {
-			echo 'Connection failed: ' . $e->getMessage();
-		}*/
 		$dbh = $GLOBALS['dbh'];
 
-		$stmt = $dbh->prepare('CALL sp_get_api_url(?)');
-		$stmt->bindParam(1, $api_id, PDO::PARAM_INT, 11);
+		$stmt = $dbh->prepare('CALL sp_get_api_url(:apiid)');
+		$stmt->bindParam('apiid', $api_id, PDO::PARAM_INT, 11);
 		$stmt->execute();
 
 		$format = 'json';
@@ -164,7 +146,6 @@
 		} else {
 			return 'error';
 		}
-
 	}
 
 
@@ -172,13 +153,6 @@
 
 
 	function mysportsfeeds_api_request($url){
-
-		/*try {
-			$configs = include("../_config/config.php");
-		} catch (PDOException $e) {
-			echo 'Connection failed: ' . $e->getMessage();
-			die();
-		}*/
 
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
@@ -208,7 +182,7 @@
 	function current_season(){
 
 		$current_date =  date('Ymd');
-		$url = get_api_url(1) . '?date=' . '20200901'/*$current_date*/;
+		$url = get_api_url(1) . '?date=' . $current_date;
 
 		$current_season = mysportsfeeds_api_request($url);
 
@@ -218,10 +192,9 @@
 			$season = 'Season not defined';
 		}
 
-		//$season = $current_season;
-
 		return $season;
 	}
+
 
 
 
@@ -242,8 +215,8 @@
 		}
 
 		return $player_db_ids;
-
 	}
+
 
 
 
@@ -257,7 +230,7 @@
 
 		$status_array = array();
 		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-		  	//$status_array[$row['roster_status_id']] = $row['roster_status_name'] . ' (' . $row['roster_status_desc'] . ')';
+
 		 	$status_array[] = array(
 		 		'roster_status_id' => $row['roster_status_id'],
 		 		'roster_status_name' => $row['roster_status_name'],
@@ -271,14 +244,9 @@
 
 
 
+
 	function get_all_hitter_positions(){
-/*
-		try {
-			$configs = include("_config/config.php");
-    		include("_config/db_connect.php");
-		} catch (PDOException $e) {
-			echo 'Connection failed: ' . $e->getMessage();
-		}*/
+
 		$dbh = $GLOBALS['dbh'];
 
 		$stmt = $dbh->prepare('CALL sp_get_all_hitter_positions');
@@ -290,53 +258,39 @@
 	    }
 
 	    return $position_array;
-
 	}
+
 
 
 
 
 	function get_season_id($season){
-/*
-		try {
-			$configs = include("../_config/config.php");
-    		include("../_config/db_connect.php");
-		} catch (PDOException $e) {
-			echo 'Connection failed: ' . $e->getMessage();
-		}*/
+
 		$dbh = $GLOBALS['dbh'];
 
-		/*$stmt = $dbh->prepare('CALL sp_get_season_id_by_name(?)');
-		$stmt->bindParam(1, $season, PDO::PARAM_STR, 15);
-		$stmt->execute();*/
-		$stmt = $dbh->prepare('SELECT id FROM lkp_seasons WHERE slug = ?');
-		$stmt->bindParam(1, $season, PDO::PARAM_STR, 15);
+		$stmt = $dbh->prepare('CALL sp_get_season_id_by_name(:season_name_slug)');
+		$stmt->bindParam('season_name_slug', $season, PDO::PARAM_STR, 15);
 		$stmt->execute();
+		$rowCount = $stmt->rowCount();
 
+		if($rowCount > 0){
+			while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+				$id = $row['id'];
+			}
 
-		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-			$id = $row['id'];
-		}
-
-		if($id > 0){
 			return $id;
+
 		} else {
+
 			return 0;
 		}
-
 	}
 
 
 
 
-	function insert_players($player_info_response){
 
-		/*try {
-			$configs = include("_config/config.php");
-			include("_config/db_connect.php");
-		} catch (PDOException $e) {
-			echo 'Connection failed: ' . $e->getMessage();
-		}*/
+	function insert_players($player_info_response){
 
 		$dbh = $GLOBALS['dbh'];
 
@@ -411,7 +365,6 @@
 	      $stmt->execute();
 
 	    }
-
 	}
 
 
@@ -454,20 +407,28 @@
 	}
 
 
+
+
+
 	function insert_hrs_april_stub_records($player_ids_array,$season_id){
 
 		$dbh = $GLOBALS['dbh'];
 
 		foreach($player_ids_array as $key => $value) {
-    		$stmt = $dbh->prepare('CALL insert_hrs_april_stub_records(?,?)');
-		    $player_id = $key;
 
-		    $stmt->bindParam(1, $player_id, PDO::PARAM_INT, 11);
-			$stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);
+			$player_id = $key;
+
+    		$stmt = $dbh->prepare('CALL insert_hrs_april_stub_records(:playerid,:seasonid)');		    
+
+		    $stmt->bindParam('playerid', $player_id, PDO::PARAM_INT, 11);
+			$stmt->bindParam('seasonid', $season_id, PDO::PARAM_INT, 11);
 
 			$stmt->execute();
 		}
 	}
+
+
+
 
 
 	function insert_hrs_may_stub_records($player_ids_array,$season_id){
@@ -486,6 +447,9 @@
 	}
 
 
+
+
+
 	function insert_hrs_june_stub_records($player_ids_array,$season_id){
 
 		$dbh = $GLOBALS['dbh'];
@@ -500,6 +464,9 @@
 			$stmt->execute();
 		}
 	}
+
+
+
 
 
 	function insert_hrs_july_stub_records($player_ids_array,$season_id){
@@ -518,6 +485,9 @@
 	}
 
 
+
+
+
 	function insert_hrs_august_stub_records($player_ids_array,$season_id){
 
 		$dbh = $GLOBALS['dbh'];
@@ -532,6 +502,9 @@
 			$stmt->execute();
 		}
 	}
+
+
+
 
 
 	function insert_hrs_september_stub_records($player_ids_array,$season_id){
@@ -550,6 +523,9 @@
 	}
 
 
+
+
+
 	function insert_hrs_october_stub_records($player_ids_array,$season_id){
 
 		$dbh = $GLOBALS['dbh'];
@@ -566,6 +542,9 @@
 	}
 
 
+
+
+
 	function insert_hrs_november_stub_records($player_ids_array,$season_id){
 
 		$dbh = $GLOBALS['dbh'];
@@ -580,7 +559,6 @@
 			$stmt->execute();
 		}
 	}
-
 	/*
 	function insert_monthly_hrs_stub_records($month,$player_id,$season_id){
 
@@ -640,6 +618,10 @@
 	}
 	*/
 
+
+
+
+
 	function get_registered_users(){
 
 		$dbh = $GLOBALS['dbh'];
@@ -653,8 +635,9 @@
 		}
 
 		return $reg_users_array;
-
 	}
+
+
 
 
 
@@ -677,8 +660,10 @@
 		} else {
 			return 0;
 		}
-
 	}
+
+
+
 
 
 	function get_leagues(){
@@ -687,17 +672,17 @@
 
 		$stmt = $dbh->prepare("SELECT league_id, league_name, league_desc, league_type_id, teams_allowed, date_created, date_updated, created_by, status_id FROM leagues WHERE status_id = 'A' ORDER BY league_name ASC");
 	    $stmt->execute();
-	    //$result = $stmt->fetch(PDO::FETCH_ASSOC);
 
 	    $leagues_array = array();
 	    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 			$leagues_array[] = ['league_id' => $row['league_id'], 'league_name' => $row['league_name']];
-		}
-		//, 'league_desc' => $row['league_desc'], 'league_type_id' => $row['league_type_id'], 'teams_allowed' => $row['teams_allowed'], 'commissioner' => $row['commissioner'], 'date_created' => $row['date_created'], 'date_updated' => $row['date_updated'], 'created_by' => $row['created_by'], 'status_id' => $row['status_id']]
+		}		
 
 	    return $leagues_array;
-
 	}
+
+
+
 
 
 	function leagues_select_menu(){
@@ -722,8 +707,10 @@
 	    $league_select .= '</select>';
 
 	    return $league_select;
-
 	}
+
+
+
 
 
 	function get_teams_by_id($reg_id){
@@ -742,6 +729,10 @@
 		return $teams_array;
 	}
 
+
+
+
+
 	function get_all_teams(){
 
 		$dbh = $GLOBALS['dbh'];
@@ -757,6 +748,9 @@
 
 		return $teams_array;
 	}
+
+
+
 
 
 	function get_leagues_by_id($league_id){
@@ -777,14 +771,12 @@
 	}
 
 
+
+
+
 	function get_status_name($status_id){
 
-		try {
-			$configs = include("_config/config.php");
-			include("_config/db_connect.php");
-		} catch (PDOException $e) {
-			echo 'Connection failed: ' . $e->getMessage();
-		}
+		$dbh = $GLOBALS['dbh'];
 
 		$query = $dbh->prepare("SELECT status_name FROM lkp_status WHERE status_id = ?");
 		$query->bindParam(1, $status_id, PDO::PARAM_STR);
@@ -798,14 +790,12 @@
 	}
 
 
+
+
+
 	function get_roles_name($role_id){
 
-		try {
-			$configs = include("_config/config.php");
-			include("_config/db_connect.php");
-		} catch (PDOException $e) {
-			echo 'Connection failed: ' . $e->getMessage();
-		}
+		$dbh = $GLOBALS['dbh'];
 
 		$query = $dbh->prepare("SELECT role_name FROM lkp_roles WHERE role_id = ?");
 		$query->bindParam(1, $role_id, PDO::PARAM_INT);
@@ -819,14 +809,12 @@
 	}
 
 
+
+
+
 	function get_league_info($lid){
 
-		try {
-			$configs = include("_config/config.php");
-			include("_config/db_connect.php");
-		} catch (PDOException $e) {
-			echo 'Connection failed: ' . $e->getMessage();
-		}
+		$dbh = $GLOBALS['dbh'];
 
 		$query = $dbh->prepare("SELECT league_name, league_desc, league_type_id, teams_allowed, date_created, date_updated, created_by, status_id FROM leagues WHERE league_id = ?");
 		$query->bindParam(1, $lid, PDO::PARAM_INT);
@@ -838,18 +826,15 @@
 		}
 
 		return $league_info_array;
-
 	}
+
+
+
 
 
 	function get_registered_user_name($reg_id){
 
-		try {
-			$configs = include("_config/config.php");
-			include("_config/db_connect.php");
-		} catch (PDOException $e) {
-			echo 'Connection failed: ' . $e->getMessage();
-		}
+		$dbh = $GLOBALS['dbh'];
 
 		$query = $dbh->prepare("SELECT first_name, last_name FROM registered_users WHERE reg_id = ?");
 		$query->bindParam(1, $reg_id, PDO::PARAM_INT);
@@ -863,11 +848,14 @@
 	}
 
 
+
+
+
 	function date_format_table($date){
 
 		return date('n/j/Y',strtotime($date));
-
 	}
+
 
 
 
@@ -948,11 +936,7 @@
         }
 
 		return $user_login_array;
-
 	}
-
-
-
 
 
 
@@ -985,16 +969,7 @@
 				return $forgot_password_array;
 			}
 		}
-
 	}
-
-
-
-
-
-
-
-
 
 
 
@@ -1007,19 +982,13 @@
 		} else {
 			return 0;
 		}
-
 	}
 
 
+
+
+
 	function check_active_email($email){
-
-
-		/*try {
-			$configs = include("_config/config.php");
-			include("_config/db_connect.php");
-		} catch (PDOException $e) {
-			echo 'Connection failed: ' . $e->getMessage();
-		}*/
 
 		$dbh = $GLOBALS['dbh'];
 
@@ -1032,35 +1001,79 @@
         $result = $query->fetch(PDO::FETCH_ASSOC);
 
         return $result;
-
-
 	}
+
+
 
 
 
 	function get_player_league_teams_by_id($league_id,$team_id,$season_id){
 
-		try {
-			include("../_config/config.php");
-			include("../_config/db_connect.php");
-		} catch (PDOException $e) {
-			echo 'Connection failed: ' . $e->getMessage();
-		}
+		$dbh = $GLOBALS['dbh'];
 
 		$stmt = $dbh->prepare("SELECT ltp.player_id, p.FirstName, p.LastName FROM league_team_players ltp JOIN Players p ON p.PlayerID = ltp.player_id WHERE ltp.league_id = ? AND ltp.team_id = ? AND ltp.season_id = ?");
 	    $stmt->bindParam(1, $league_id, PDO::PARAM_INT);
 	    $stmt->bindParam(2, $team_id, PDO::PARAM_INT);
 	    $stmt->bindParam(3, $season_id, PDO::PARAM_INT);
 
-    if ($stmt->execute()) {
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        	$league_team_players[] =  ['player_id' => $row['player_id'], 'first_name' => $row['FirstName'], 'last_name' => $row['LastName']];
-        }
+	    if ($stmt->execute()) {
+	        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+	        	$league_team_players[] =  ['player_id' => $row['player_id'], 'first_name' => $row['FirstName'], 'last_name' => $row['LastName']];
+	        }
 
-        return $league_team_players;
-    }
-
+	        return $league_team_players;
+	    }
 	}
+
+
+
+
+
+	function get_league_teams($league_id,$season_id){
+
+		$dbh = $GLOBALS['dbh'];
+
+		$league_teams = $dbh->prepare("SELECT lt.team_id, t.team_name FROM league_teams lt LEFT JOIN teams t ON t.team_id = lt.team_id WHERE lt.league_id=:leagueid AND lt.season_id=:seasonid AND lt.status_id = 'A' ORDER BY lt.sort ASC");
+	    $league_teams->bindParam("leagueid", $league_id, PDO::PARAM_INT, 11);
+	    $league_teams->bindParam("seasonid", $season_id, PDO::PARAM_INT, 11);
+	    $league_teams->execute();	
+
+	    return	$league_teams;
+	}
+
+
+
+
+
+	function get_league_team_players($league_id,$season_id,$team_id){
+
+		$dbh = $GLOBALS['dbh'];
+
+		$injury_query = $dbh->prepare('SELECT ltp.*,i.player_id, i.injury_desc, i.playing_probability, p.FirstName, p.LastName FROM league_team_players ltp JOIN injured_players i ON i.player_id = ltp.player_id LEFT JOIN players p ON p.PlayerID = i.player_id WHERE ltp.league_id=:leagueid AND ltp.season_id=:seasonid AND ltp.team_id=:teamid');           
+        $injury_query->bindParam("leagueid", $league_id, PDO::PARAM_INT, 11);
+        $injury_query->bindParam("seasonid", $season_id, PDO::PARAM_INT, 11);
+        $injury_query->bindParam("teamid", $team_id, PDO::PARAM_INT, 11);
+        $injury_query->execute();
+
+        return $injury_query;
+	}
+
+
+
+
+
+	function get_champions($team_id,$league_id){
+
+		$dbh = $GLOBALS['dbh'];
+
+		$champ_query = $dbh->prepare('SELECT year FROM champions WHERE team_id=:teamid AND league_id=:leagueid');
+        $champ_query->bindParam("teamid", $team_id, PDO::PARAM_INT, 11);
+        $champ_query->bindParam("leagueid", $league_id, PDO::PARAM_INT, 11);
+        $champ_query->execute();
+
+        return $champ_query;
+	}
+
 
 
 
@@ -1069,9 +1082,9 @@
 
 		$dbh = $GLOBALS['dbh'];
 
-		$stmt = $dbh->prepare('CALL get_last_updated_date(?,?)');
-	    $stmt->bindParam(1, $league_id, PDO::PARAM_INT);
-	    $stmt->bindParam(2, $season_id, PDO::PARAM_INT);
+		$stmt = $dbh->prepare('CALL get_last_updated_date(:leagueid,:seasonid)');
+	    $stmt->bindParam('leagueid', $league_id, PDO::PARAM_INT);
+	    $stmt->bindParam('seasonid', $season_id, PDO::PARAM_INT);
 	    $stmt->execute();
 	    
 	    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -1080,39 +1093,37 @@
 	      	$last_date =  date("m/d/Y g:i:s a", $d);
 	      	//$last_date =  date("m/d/Y", $d);
 	    }
-
 	    
 	    return $last_date;
-
 	}
+
 
 
 
 
 	function update_last_updated_date($league_id,$season_id,$date){
 
-		//date_default_timezone_set('America/New_York');
-	    //$date = date('Y-m-d h:i');  
-
 		$dbh = $GLOBALS['dbh'];
 
-		$stmt = $dbh->prepare('CALL update_last_updated_date(?,?,?)');
-	    $stmt->bindParam(1, $league_id, PDO::PARAM_INT);
-	    $stmt->bindParam(2, $season_id, PDO::PARAM_INT);
-	    $stmt->bindParam(3, $date, PDO::PARAM_STR);
+		$stmt = $dbh->prepare('CALL update_last_updated_date(:leagueid,:seasonid,:date)');
+	    $stmt->bindParam('leagueid', $league_id, PDO::PARAM_INT);
+	    $stmt->bindParam('seasonid', $season_id, PDO::PARAM_INT);
+	    $stmt->bindParam('date', $date, PDO::PARAM_STR);
 	    $stmt->execute();
-
 	}
 
 
 
-	
+
+
 	function delete_injured_players(){
+		
 		$dbh = $GLOBALS['dbh'];
 
 		$stmt = $dbh->prepare('CALL delete_injured_players');
 		$stmt->execute();
-	}	
+	}
+
 
 
 
@@ -1121,13 +1132,13 @@
 
 		$dbh = $GLOBALS['dbh'];
 
-		$stmt = $dbh->prepare('CALL insert_injured_players(?,?,?)');
-	    $stmt->bindParam(1, $player_id, PDO::PARAM_INT);
-	    $stmt->bindParam(2, $injury_desc, PDO::PARAM_STR);
-	    $stmt->bindParam(3, $playing_probability, PDO::PARAM_STR);
+		$stmt = $dbh->prepare('CALL insert_injured_players(:playerid,:injury_desc,:playing_probability)');
+	    $stmt->bindParam('playerid', $player_id, PDO::PARAM_INT);
+	    $stmt->bindParam('injury_desc', $injury_desc, PDO::PARAM_STR);
+	    $stmt->bindParam('playing_probability', $playing_probability, PDO::PARAM_STR);
 	    $stmt->execute();
-
 	}
+
 
 
 
@@ -1150,7 +1161,6 @@
 	    } else {
 	    	return $injured_players = array();
 	    }
-
 	}
 
 
