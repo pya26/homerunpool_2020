@@ -37,11 +37,10 @@
     $season_id = 14;
 
     date_default_timezone_set('America/New_York');
-	$date = date('Y-m-d');
-	//$newDateTime = date('Y-m-d h:i', strtotime($date));
+	$thedatetime = date('Y-m-d H:i:s', time());
 	
 
-	update_last_updated_date($league_id,$season_id,$date);
+	update_last_updated_date($league_id,$season_id,$thedatetime);
 
 
 

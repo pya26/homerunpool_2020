@@ -29,7 +29,7 @@ p {
 }
 
 .table .injured_yellow a {
-    color: #2B3E50;
+    color: #2B3E50 !important;
 }
 
 
@@ -92,6 +92,10 @@ div#leaderboard_wrapper {
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
+  }
+
+  .table .injured_yellow a {
+      color: #2B3E50 !important;
   }
 
 }

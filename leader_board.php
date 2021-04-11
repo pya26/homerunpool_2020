@@ -1,3 +1,14 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="container table-responsive-sm">
+        <div style="float:right;">
+            Last Updated: <?php print get_last_updated_date($league_id,$season_id);?>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <?php
   $stmt = $dbh->prepare("SELECT t.team_id, t.team_name FROM teams t LEFT JOIN league_teams lt ON lt.team_id = t.team_id WHERE t.status_id = 'A' AND lt.league_id = ?  AND lt.season_id = ? AND lt.status_id = 'A'");
   $stmt->bindParam(1, $league_id, PDO::PARAM_INT, 11);
@@ -6,7 +17,7 @@
 ?>
 
 <div class="container table-responsive-sm">
-  <h1><?php print $GLOBALS["active_season_name"]; ?> Season Leader Board<div style="float:right;font-size: 0.35em;">last updated: <?php print get_last_updated_date($league_id,$season_id);?></div></h1>  
+  <h1><?php print $GLOBALS["active_season_name"]; ?> Season Leader Board</h1>  
   <table id="leaderboard" class="table table-sm table-striped table-hover table-bordered border-primary" style="width:100%">
     <thead>
       <tr>

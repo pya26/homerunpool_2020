@@ -1077,7 +1077,7 @@
 	    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 	    	$d=strtotime($row['last_date_updated']);
 	      	
-	      	$last_date =  date("m/d/Y h:i:s a", $d);
+	      	$last_date =  date("m/d/Y g:i:s a", $d);
 	      	//$last_date =  date("m/d/Y", $d);
 	    }
 

@@ -1,6 +1,12 @@
 <?php
 
-    $new_array = array(
+
+    // include functions, configurations, and database configurations file  
+    include("../_config/config.php");
+    include("../_config/db_connect.php"); 
+    include("../_includes/functions.php");
+
+    /*$new_array = array(
         'playerid~10609~leagueid~10~seasonid~10' => '5',
         'playerid~10726~leagueid~10~seasonid~10' => '4',
         'playerid~10734~leagueid~10~seasonid~10' => '1',
@@ -25,7 +31,12 @@
         print $value.'<br /><br />';
 
     }
+*/
 
+   
+    if(!is_logged_in()){
+        header('Location: http://localhost/sandbox/homerunpool_2020');
+    }
 
 
 ?>
