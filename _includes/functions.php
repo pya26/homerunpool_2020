@@ -268,12 +268,13 @@
 
 		$dbh = $GLOBALS['dbh'];
 
-		$stmt = $dbh->prepare('CALL sp_get_season_id_by_name(:season_name_slug)');
-		$stmt->bindParam('season_name_slug', $season, PDO::PARAM_STR, 15);
+		$stmt = $dbh->prepare('CALL sp_get_season_id_by_name(:seasonslug)');
+		$stmt->bindParam('seasonslug', $season, PDO::PARAM_STR, 15);
 		$stmt->execute();
 		$rowCount = $stmt->rowCount();
 
 		if($rowCount > 0){
+			
 			while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 				$id = $row['id'];
 			}
@@ -281,7 +282,6 @@
 			return $id;
 
 		} else {
-
 			return 0;
 		}
 	}

@@ -2,9 +2,12 @@
 
 	$date = date("Ymd",strtotime("-1 days"));
 
-    include('/home1/homeruo9/public_html/_config/config.php');
+    /*include('/home1/homeruo9/public_html/_config/config.php');
     include('/home1/homeruo9/public_html/_config/db_connect.php');
-    include('/home1/homeruo9/public_html/_includes/functions.php');
+    include('/home1/homeruo9/public_html/_includes/functions.php');*/
+    include('_config/config.php');
+    include('_config/db_connect.php');
+    include('_includes/functions.php');
 		
 
 	$url = $GLOBALS['msf_api_v2_base_url'] . 'current_season.json?date=' . $date;

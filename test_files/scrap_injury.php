@@ -6,7 +6,7 @@
 
 
 	
-	delete_injured_players();
+	//delete_injured_players();
 
 
 	
@@ -25,12 +25,12 @@
 
 	
 
-	/*$mung = get_injured_players(12258);
+	/*$mung = get_injured_players(12258);*/
 
 	print "<pre>";
-	print_r($mung);
+	print_r($player_injury_response);
 	print "</pre>";
-	exit();*/
+	exit();
 
 	foreach($player_injury_response->players as $key => $value) {
 		//print $value->id . ' -- '. $value->firstName . ' ' . $value->lastName . ' -- ' . $value->currentInjury->description . ' -- ' . $value->currentInjury->playingProbability . '<br />';
@@ -50,8 +50,7 @@
 
     date_default_timezone_set('America/New_York');
 	$thedatetime = date('Y-m-d H:i:s', time());
-	//$newDateTime = date('Y-m-d h:i', strtotime($date));
-	
+		
 
 	update_last_updated_date($league_id,$season_id,$thedatetime);
 

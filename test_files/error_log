@@ -1,0 +1,1 @@
+[12-Apr-2021 11:54:10 America/Boise] PHP Warning:  PDOStatement::execute(): SQLSTATE[HY000]: General error: 1267 Illegal mix of collations (utf8_general_ci,IMPLICIT) and (utf8_unicode_ci,IMPLICIT) for operation '=' in /home1/homeruo9/public_html/_includes/functions.php on line 280

@@ -12,7 +12,9 @@
 
 	$season_slug = $season->seasons[0]->slug;
 
-	$season_id = get_season_id($season_slug);
+	//$season_id = get_season_id($season_slug);
+
+	$season_id = 14;
 
 	$url_hrs = $GLOBALS['msf_api_v2_base_url'] . $season_slug .'/date/' . $date . '/player_gamelogs.json';
 
@@ -86,7 +88,12 @@
 	}
 
 
+
+
 	$hr_response = mysportsfeeds_api_request($url_hrs);
+
+
+
 
 
 	foreach ($hr_response->gamelogs as $key => $value) {
@@ -96,34 +103,37 @@
 		$homeruns = $value->stats->batting->homeruns;
 	
 
-	if($homeruns > 0){
-		
-		/*$stmt = $dbh->prepare("UPDATE " . $table_string . " SET " . $column_name  . " = " .$homeruns ." WHERE player_id = ". $playerid ." AND season_id = " . $season_id . "");
-	    $stmt->execute();
+		if($homeruns > 0){
+			
+			$stmt = $dbh->prepare("UPDATE " . $table_string . " SET " . $column_name  . " = " .$homeruns ." WHERE player_id = ? AND season_id = ?");
+		    $stmt->bindParam(1, $playerid, PDO::PARAM_INT, 11);
+		    $stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);
+		    $stmt->execute();
 
-	    unset($stmt);
+		    unset($stmt);
 
-	    
-	    $sp_statement = "CALL ". $hr_totals_stored_proc . "(?,?)";
+		    
+		    $sp_statement = "CALL ". $hr_totals_stored_proc . "(?,?)";
 
-	    $stmt = $dbh->prepare($sp_statement);
-	    $stmt->bindParam(1, $playerid, PDO::PARAM_INT, 11);
-	    $stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);
-	    $stmt->execute();
+		    $stmt = $dbh->prepare($sp_statement);
+		    $stmt->bindParam(1, $playerid, PDO::PARAM_INT, 11);
+		    $stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);
+		    $stmt->execute();
 
-	    unset($stmt);*/
+		    unset($stmt);
 
-	    $player_hrs = array(
-			'player_id' => $playerid,
-			'player_firstname' => $first_name,
-			'player_lastname' => $last_name,
-			'homeruns' => $homeruns
-		);
-		$player_hr_array[] = $player_hrs;
-	   
+		    $player_hrs = array(
+				'player_id' => $playerid,
+				'player_firstname' => $first_name,
+				'player_lastname' => $last_name,
+				'homeruns' => $homeruns
+			);
+			$player_hr_array[] = $player_hrs;
+		   
+		}
+
 	}
 
-}
 
 
 
@@ -132,12 +142,13 @@
 
 
 
+print_r($player_hr_array);
 
 
 
 
 
-	
+	/*
 	$yesterday_date_format = strtotime($date);
  	$yesterday_date_format = date('n/j/Y', $yesterday_date_format);	
 
@@ -165,7 +176,7 @@
 
 	$send_mail = mail($to_email, $subject, $body, $headers);
 
-
+*/
 
 	
 
