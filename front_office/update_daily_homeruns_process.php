@@ -1,10 +1,15 @@
 <?php
 
-$date = $_GET['date'];
-
 include("../_config/config.php");
 include("../_config/db_connect.php");
 include("../_includes/functions.php");
+
+    if(!is_super_user()){
+        print "Only the Super User is allowed back here!";
+        exit();
+    }
+
+$date = $_GET['date'];
 
 
 $url = $GLOBALS['msf_api_v2_base_url'] . 'current_season.json?date=' . $date;

@@ -8,6 +8,11 @@
     include("../_includes/functions.php");
   } catch (PDOException $e) {}
 
+  if(!is_super_user()){
+      print "Only the Super User is allowed back here!";
+      exit();
+  }
+
 
   $league_id = $_POST['league_id'];
   $team_id = $_POST['team_id'];

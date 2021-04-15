@@ -10,6 +10,11 @@
     die();
   }
 
+    if(!is_super_user()){
+        print "Only the Super User is allowed back here!";
+        exit();
+    }
+
   print "<a href='admin_dashboard.php'>Back to admin dashboard</a><br /><br />";
 
   $seed_players_form = '<form id="seed_players_form">';

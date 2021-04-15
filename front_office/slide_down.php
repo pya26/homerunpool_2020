@@ -2,8 +2,14 @@
 	/**
 	 * Include Header
 	 */
-  include("../_config/config.php");
+    include("../_config/config.php");
 	include('../_includes/header.php');
+	include("../_includes/functions.php");
+
+    if(!is_super_user()){
+        print "Only the Super User is allowed back here!";
+        exit();
+    }
 
 ?>
 

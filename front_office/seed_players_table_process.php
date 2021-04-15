@@ -6,6 +6,11 @@
   include("../_config/db_connect.php"); 
   include("../_includes/functions.php");
 
+    if(!is_super_user()){
+        print "Only the Super User is allowed back here!";
+        exit();
+    }
+
   // set URL parameter variables
   if(isset($_GET['season'])){
     $season = $_GET['season'];

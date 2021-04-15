@@ -8,7 +8,10 @@
     echo 'Connection failed: ' . $e->getMessage();
   }
 
-
+    if(!is_super_user()){
+        print "Only the Super User is allowed back here!";
+        exit();
+    }
 
 ?>
 

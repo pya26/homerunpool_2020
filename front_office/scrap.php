@@ -6,6 +6,11 @@
     include("../_config/db_connect.php"); 
     include("../_includes/functions.php");
 
+    if(!is_super_user()){
+        print "Only the Super User is allowed back here!";
+        exit();
+    }
+
     /*$new_array = array(
         'playerid~10609~leagueid~10~seasonid~10' => '5',
         'playerid~10726~leagueid~10~seasonid~10' => '4',

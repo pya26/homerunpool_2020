@@ -5,9 +5,14 @@
       include("../_includes/functions.php");
     } catch (PDOException $e) {}
 
-    if(!isset($_SESSION['reg_id'])){
-      $redirect_url = "login.php?redirect=" . $_SERVER['REQUEST_URI'];
+    /*if(!isset($_SESSION['reg_id'])){
+      $redirect_url = "../login.php?redirect=" . $_SERVER['REQUEST_URI'];
       header("Location: ".$redirect_url);
+    }*/
+
+    if(!is_super_user()){
+        print "Only the Super User is allowed back here!";
+        exit();
     }
 
 ?>

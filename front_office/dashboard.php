@@ -12,7 +12,6 @@
 
 	
 	if(!is_super_user()){
-        //header('Location: http://localhost/sandbox/homerunpool_2020');
         print "Only the Super User is allowed back here!";
         exit();
     }

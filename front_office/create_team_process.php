@@ -5,7 +5,13 @@
        include("../_config/config.php");
       include("../_includes/header.php");
       include("../_config/db_connect.php");
+      include("../_includes/functions.php");
     } catch (PDOException $e) {}
+
+    if(!is_super_user()){
+        print "Only the Super User is allowed back here!";
+        exit();
+    }
 
 
 	if (isset($_POST['create-team'])) {
