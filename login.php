@@ -25,7 +25,7 @@
     </div>
     <div class="form-element">
         <label>Password</label>
-        <input type="password" name="password" required />
+        <input type="password" name="pwd" required />
     </div>
     <button type="submit" name="login" value="login">Log In</button>
 </form>

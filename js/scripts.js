@@ -71,8 +71,23 @@ $("#date").datepicker({
 			'login_process.php?email=' + email + '&pwd=' + pwd,
 			{
 				success: function(data) {
-					var jsonData = JSON.parse(data);
 
+					var jsonData = JSON.parse(data);					
+
+					if(jsonData.msg_code == 0){
+						$('#LogInModal').modal('hide');
+						location.reload();
+					} else if(jsonData.msg_code == 1 || jsonData.msg_code == 2 || jsonData.msg_code == 3 || jsonData.msg_code == 4 || jsonData.msg_code == 5 || jsonData.msg_code == 6) {
+						$display_html_error_msg = '<div class="alert alert-dismissible alert-danger">';
+						$display_html_error_msg += '<button type="button" class="close" data-dismiss="alert">×</button>';
+						$display_html_error_msg += jsonData.msg;
+						$display_html_error_msg += '</div>';
+						$('div#error_msg').html($display_html_error_msg);
+						//$('#LogInModal').modal('hide');
+						//location.reload();
+					} 
+
+					/*
 					if(jsonData.reg_id == 0){
 						$display_html_error_msg = '<div class="alert alert-dismissible alert-danger">';
 						$display_html_error_msg += '<button type="button" class="close" data-dismiss="alert">×</button>';
@@ -84,6 +99,7 @@ $("#date").datepicker({
 						$('#LogInModal').modal('hide');
 						location.reload();
 					}
+					*/
 
 				},
 				error: function() {

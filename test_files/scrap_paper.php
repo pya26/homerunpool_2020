@@ -12,20 +12,9 @@
     include('../_includes/functions.php');
 
 
-	$date = date("Ymd",strtotime("-1 days"));	
-
-	$url = $GLOBALS['msf_api_v2_base_url'] . 'current_season.json?date=' . $date;
-	$season = mysportsfeeds_api_request($url);
-
-	$season_slug = $season->seasons[0]->slug;
-
-	print $season_slug;
-
-	$season_id = get_season_id($season_slug);
-
-
-
-	print '<br />' . $season_id;
+	$update_token = update_reg_users_token(31);
+	
+	print_r($update_token);
 
 ?>
 

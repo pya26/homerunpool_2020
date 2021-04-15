@@ -3,13 +3,23 @@
 	 * Include Header
 	 */
 	try {
-		$configs = include('../_config/config.php');
-		include("../_includes/header.php");
+	  include("../_config/config.php");
+      include("../_config/db_connect.php");
+      include("../_includes/functions.php");
 	} catch (PDOException $e) {
 		echo 'Connection failed: ' . $e->getMessage();
 	}
 
+	
+	if(!is_super_user()){
+        //header('Location: http://localhost/sandbox/homerunpool_2020');
+        print "Only the Super User is allowed back here!";
+        exit();
+    }
+
 ?>
+
+
 
 
 <ul>

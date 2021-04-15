@@ -48,8 +48,6 @@ $header .= '<script src="'.$GLOBALS['base_url'].'js/fSelect.js"></script>';
 $header .= '</head>';
 $header .= '<body>';
 
-session_start();
-
 /*print "<pre>";
 print_r($_SESSION);
 print "</pre>";

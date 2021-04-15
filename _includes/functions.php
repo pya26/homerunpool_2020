@@ -987,6 +987,18 @@
 
 
 
+	function is_super_user(){
+
+		if(is_logged_in() && isset($_SESSION['super_user']) && $_SESSION['super_user'] == 1){
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+
+
+
+
 
 	function check_active_email($email){
 
@@ -1161,6 +1173,33 @@
 	    } else {
 	    	return $injured_players = array();
 	    }
+	}
+
+
+
+
+	function update_reg_users_token($reg_id){
+
+		$dbh = $GLOBALS['dbh'];
+
+		$token = md5(rand().time());
+            
+        $update_token = $dbh->prepare("UPDATE registered_users SET token = :token WHERE reg_id = :reg_id");
+        $update_token->bindParam('token', $token, PDO::PARAM_STR, 255);
+        $update_token->bindParam('reg_id', $reg_id, PDO::PARAM_INT);
+        $update_token->execute();
+        $update_token_count = $update_token->rowCount();
+
+        if($update_token_count == 1){
+
+        	return 1;
+
+        } else {
+
+        	return 0;
+
+        }
+
 	}
 
 

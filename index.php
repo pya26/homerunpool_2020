@@ -84,16 +84,21 @@
       </div>
       <div class="modal-body">
         <form id="login_form">
+          
           <div class="modal-body">
             <div id="error_msg"></div>
+
             <div class="form-group">
               <label for="email1">Email address</label>
               <input type="email" class="form-control" id="email_uname" aria-describedby="emailHelp" placeholder="Enter email" required />
             </div>
+
             <div class="form-group">
               <label for="password1">Password</label>
               <input type="password" class="form-control" id="password1" placeholder="Password" required />
             </div>
+
+            
             <div class="row">
               <div class="col-md-6">
                   <div class="custom-control custom-checkbox">
@@ -102,20 +107,28 @@
                   </div>
               </div>
             </div>
+
             <div class="row justify-content-center">
               <div>
                   <label><a href="#" class="text-muted" data-toggle="modal" data-target="#ForgotModal" data-dismiss="modal">Forgot Password?</a></label>
               </div>
             </div>
+
             <div class="row justify-content-center">
               <div>
                   <label><a href="#" class="text-muted" data-toggle="modal" data-target="#CreateAccountModal" data-dismiss="modal">Create an Account</a></label>
               </div>
             </div>
+
           </div>
-          <div class="modal-footer border-top-0 d-flex text-center">
-            <button type="submit" class="btn btn-primary">Sign-in</button>
+          
+          <div class="row justify-content-center">
+            <div class="col-md-6">
+              <button type="submit" class="btn btn-primary btn-block">Sign-in</button>
+            </div>
           </div>
+          
+
         </form>
       </div>
     </div>
@@ -188,16 +201,19 @@
     -->
     </ul>
     <ul class="navbar-nav ml-auto">
-      <!--
+
+      
       <?php
+      
         if(is_logged_in()){
-          print '<li class="nav-item"><a class="nav-link" href="#">Hello ' . $_SESSION['first_name'] . '!</a></li>' .'<li class="nav-item"><a class="nav-link" href="logout.php"><i class="fas fa-sign-out-alt"></i>Sign-out</a></li>';
+          print '<li class="nav-item"><a class="nav-link" href="#">Hello ' . $_SESSION['firstname'] . '!</a></li>' .'<li class="nav-item"><a class="nav-link" href="logout.php"><i class="fas fa-sign-out-alt"></i>Sign-out</a></li>';
         } else {
           print '<li class="nav-item"><a class="nav-link" href="#" data-toggle="modal" data-target="#LogInModal"><i class="fas fa-sign-in-alt"></i> Sign-in</a></li>';
         }
+        
       ?>
-      <li class="nav-item"><a class="nav-link" href="#">Front Office</a></li>
-    -->
+      <!--<li class="nav-item"><a class="nav-link" href="#">Front Office</a></li>-->
+    
       
     </ul>
   </div>

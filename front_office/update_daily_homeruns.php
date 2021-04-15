@@ -9,6 +9,14 @@
 		die();
 	}
 
+	if(!is_logged_in()){
+
+		print '<div class="alert alert-danger">You don\'t have permission to be back here.</div>';
+		exit();
+	}
+
+	
+
 	//$api_id = $_GET['id'];
 
 

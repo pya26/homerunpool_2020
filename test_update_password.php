@@ -4,8 +4,8 @@
     include("_includes/header.php");
     include("_config/db_connect.php");    
 
-    $email = 'pya2626@gmail.com';
-    $password = 'Kelster26';
+    $email = 'nolanphillips108@gmail.com';
+    $password = 'Mbetts50';
     $password_hash = password_hash($password, PASSWORD_BCRYPT);
 
     $query = $dbh->prepare("UPDATE registered_users SET password=:pwd WHERE EMAIL=:email");

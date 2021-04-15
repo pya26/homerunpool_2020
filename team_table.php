@@ -51,6 +51,7 @@
 					$lname_array_to_search = array(' Jr',' Jr.');
 					$lname = str_replace($lname_array_to_search,"-jr", $row['LastName']);
 					$lname = str_replace(".","", $lname);
+					$lname = str_replace("'","-", $lname);
 
 					$mlb_player_slug = trim(strtolower($fname.$lname.'-'.$row['MLBID'].'?stats=gamelogs-r-hitting-mlb&year=2021'));
 					
