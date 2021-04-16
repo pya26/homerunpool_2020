@@ -2,15 +2,11 @@
 
 	try {
 		include('_config/config.php');
+		include('_includes/functions.php');
 	} catch (PDOException $e) {
 		echo 'Connection failed: ' . $e->getMessage();
 	}
    
-	session_start();
-
-	// destroy all sessions
-	session_destroy();	
-
-	header("Location: ".$GLOBALS['base_url']);
+	user_log_out();
 
 ?>

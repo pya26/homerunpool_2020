@@ -98,7 +98,7 @@
               <input type="password" class="form-control" id="password1" placeholder="Password" required />
             </div>
 
-            
+            <!--
             <div class="row">
               <div class="col-md-6">
                   <div class="custom-control custom-checkbox">
@@ -107,6 +107,7 @@
                   </div>
               </div>
             </div>
+          -->
 
             <div class="row justify-content-center">
               <div>
@@ -114,11 +115,13 @@
               </div>
             </div>
 
+            <!--
             <div class="row justify-content-center">
               <div>
                   <label><a href="#" class="text-muted" data-toggle="modal" data-target="#CreateAccountModal" data-dismiss="modal">Create an Account</a></label>
               </div>
             </div>
+          -->
 
           </div>
           

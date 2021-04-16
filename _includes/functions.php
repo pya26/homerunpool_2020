@@ -860,82 +860,149 @@
 
 
 
-	function user_login($email,$pwd){
+	function user_login($email_signin,$password_signin){
 
-		session_start();
+		    $dbh = $GLOBALS['dbh'];
 
-		/*try {
-			$configs = include("_config/config.php");
-			include("_config/db_connect.php");
-		} catch (PDOException $e) {
-			echo 'Connection failed: ' . $e->getMessage();
-		}
+		    // set error message variables
+		    global $wrongPwdErr, $accountNotExistErr, $emailPwdErr, $verificationRequiredErr, $email_empty_err, $pass_empty_err;		    
 
-		$email = $email;
-        $password = $pwd;
+		    // clean data 
+		    $user_email = filter_var($email_signin, FILTER_SANITIZE_EMAIL);
+		    //$pswd = mysqli_real_escape_string($connection, $password_signin);
 
-        $query = $dbh->prepare("SELECT * FROM registered_users WHERE email=:email AND status_id = 'A'");
-        $query->bindParam("email", $email, PDO::PARAM_STR);
-        $query->execute();
-
-        $result = $query->fetch(PDO::FETCH_ASSOC);*/
-         $result = check_active_email($email);
+		    // Query if email exists in db
+		    $check_email_exists = get_reg_user_by_email($email_signin);
 
 
-		if (!$result) {
+		    if(!empty($email_signin) && !empty($password_signin)){
+		        /*if(!preg_match("/^(?=.*\d)(?=.*[@#\-_$%^&+=§!\?])(?=.*[a-z])(?=.*[A-Z])[0-9A-Za-z@#\-_$%^&+=§!\?]{6,20}$/", $password_signin)) {
+		            $wrongPwdErr = 'Password should be between 6 to 20 charcters long, contains atleast one special chacter, lowercase, uppercase and a digit.';
+		            
+		            $wrongPwdErr_array = array('msg_code' => 1, 'msg' => $wrongPwdErr);
+		            echo json_encode($wrongPwdErr_array);
 
-			$login_error = array('reg_id' => 0, 'msg' => 'The email you entered is not associated with an active user account.');
+		        }*/
+		        // Check if email exist
+		        if($check_email_exists->rowCount() == 0) {
+		            $accountNotExistErr = 'User account does not exist.';
+		            
+		            $accountNotExistErr_array = array('msg_code' => 2, 'msg' => $accountNotExistErr);
+		            echo json_encode($accountNotExistErr_array);
 
-            return $login_error;
+		        } else {
 
-        } else {
+		            // Fetch partial user data
+		            while($row = $check_email_exists->fetch(PDO::FETCH_ASSOC)) {
+		                $id              = $row['reg_id'];
+		                $email           = $row['email'];
+		                $pass_word       = $row['password'];
+		                $reg_user_status = $row['status_id'];
+		            }		           
+		            
 
-
-            if (password_verify($pwd, $result['password'])) {
-
-                //Check if logged in user is an administrator.  If so set a "Super User" session to 1
-                if($result['role_id'] == 4){
-                    $_SESSION['super_user'] = 1;
-                } else {
-                    $_SESSION['super_user'] = 0;
-                }
-
-                $_SESSION['reg_id'] = $result['reg_id'];
-                $reg_id = $_SESSION['reg_id'];
-                $_SESSION['first_name'] = $result['first_name'];
-                $_SESSION['last_name'] = $result['last_name'];
-
-				/*
-                $query = $dbh->prepare("SELECT * FROM teams WHERE reg_id=:regid AND status_id = 'A'");
-                $query->bindParam("regid", $reg_id, PDO::PARAM_STR);
-                $query->execute();
-
-                if ($query->rowCount() > 1) {
-
-                    if($_POST['redirect'] == ''){
-                        header("Location: front_office.php");
-                    } else {
-                        header("Location: " . $_POST['redirect']);
-                    }
-
-                } else {
-
-                    header("Location: leader_board.php");
-
-                }*/
-
-                $login_session_array = array('reg_id' => $_SESSION['reg_id'], 'super_user' => $_SESSION['super_user'], 'first_name' => $_SESSION['first_name'], 'last_name' => $_SESSION['last_name']);
-            	return $login_session_array;
-
-            } else {
-            	$login_error = array('reg_id' => 0, 'msg' => 'The password you entered is invalid.');
-            	return $login_error;
-            }
+		            // Verify password
+		            $password = password_verify($password_signin, $pass_word);
 
 
-        }
+		            // Allow only verified user
+		            if($email_signin == $email && $password_signin == $password) {
+		               
+		               if($reg_user_status == 'A') {
+		                    /*if($email_signin == $email && $password_signin == $password) {*/
 
-		return $user_login_array;
+		                        $update_token = update_reg_users_token($id);
+
+		                        if($update_token < 1){
+
+		                            $verificationRequiredErr = 'Your user account token was not updated. Please contact the site administrator to resolve this issue.';
+
+		                            $verificationRequiredErr_array = array('msg_code' => 4, 'msg' => $verificationRequiredErr);
+		                            echo json_encode($verificationRequiredErr_array);
+
+		                        } else {
+
+		                            $get_reg_user_by_id = get_reg_user_by_id($id);
+		                                                    
+		                            while($row2 = $get_reg_user_by_id->fetch(PDO::FETCH_ASSOC)) {
+		                                //Check if logged in user is an administrator.  If so set a "Super User" session to 1
+		                                if($row2['role_id'] == 4){
+		                                    $_SESSION['super_user'] = 1;
+		                                } else {
+		                                    $_SESSION['super_user'] = 0;
+		                                }
+		                                $_SESSION['reg_id']            = $row2['reg_id'];
+		                                $_SESSION['firstname']     = $row2['first_name'];
+		                                $_SESSION['lastname']      = $row2['last_name'];
+		                                $_SESSION['email']         = $row2['email'];
+		                                $_SESSION['token']         = $row2['token'];
+		                            }
+		                        }
+
+		                        $login_session_array = array('msg_code' => 0,'reg_id' => $_SESSION['reg_id'], 'super_user' => $_SESSION['super_user'], 'first_name' => $_SESSION['firstname'], 'last_name' => $_SESSION['lastname']);
+		                        echo json_encode($login_session_array);
+
+		                    /*} else {
+		                        $emailPwdErr = 'Either email or password is incorrect.';
+
+		                        $emailPwdErr_array = array('msg_code' => 3, 'msg' => $emailPwdErr);
+		                        echo json_encode($emailPwdErr_array);
+
+		                    }*/
+
+		                } elseif ($reg_user_status == 'D') {
+		                    $verificationRequiredErr = 'Your account is currently pending deletion.';
+
+		                    $verificationRequiredErr_array = array('msg_code' => 4, 'msg' => $verificationRequiredErr);
+		                    echo json_encode($verificationRequiredErr_array);
+
+		                } elseif ($reg_user_status == 'S') {
+		                    $verificationRequiredErr = 'Your account is currently suspended. Please contact your league commissioner to resolve this issue.';
+
+		                    $verificationRequiredErr_array = array('msg_code' => 4, 'msg' => $verificationRequiredErr);
+		                    echo json_encode($verificationRequiredErr_array);
+
+		                } elseif ($reg_user_status == 'P') {
+		                    $verificationRequiredErr = 'Your account is currently pending confirmation. Please check your email and click the link to confirm your email address.';
+
+		                    $verificationRequiredErr_array = array('msg_code' => 4, 'msg' => $verificationRequiredErr);
+		                    echo json_encode($verificationRequiredErr_array);
+
+		                } elseif ($reg_user_status == 'I') {
+		                    $verificationRequiredErr = 'Your account is currently inactive. Please contact your league commissioner to resolve this issue.';
+
+		                    $verificationRequiredErr_array = array('msg_code' => 4, 'msg' => $verificationRequiredErr);
+		                    echo json_encode($verificationRequiredErr_array);
+
+		                }
+
+		            } else {
+		                $emailPwdErr = 'Password is incorrect.';
+
+		                $emailPwdErr_array = array('msg_code' => 3, 'msg' => $emailPwdErr);
+		                echo json_encode($emailPwdErr_array);
+
+		            }
+
+		        }
+
+		    } else {
+		        if(empty($email_signin)){
+		            $email_empty_err = "Email not provided.";
+
+		            $emailPwdErr_array = array('msg_code' => 5, 'msg' => $email_empty_err);
+		            echo json_encode($emailPwdErr_array);
+
+		        }
+		        
+		        if(empty($password_signin)){
+		            $pass_empty_err = "Password not provided.";
+
+		            $pass_empty_err_array = array('msg_code' => 6, 'msg' => $pass_empty_err);
+		            echo json_encode($pass_empty_err_array);
+
+		        }            
+		    }			
 	}
 
 
@@ -994,6 +1061,20 @@
 		} else {
 			return 0;
 		}
+	}
+
+
+
+
+	function user_log_out(){
+
+		//session_start();
+
+		// destroy all sessions
+		session_destroy();	
+
+		header("Location: ".$GLOBALS['base_url']);
+
 	}
 
 
@@ -1201,6 +1282,57 @@
         }
 
 	}
+
+
+
+
+	function get_reg_user_by_email($email){
+
+		$dbh = $GLOBALS['dbh'];
+
+		$reg_user_by_email = $dbh->prepare("SELECT * From registered_users WHERE email = :email");
+	    $reg_user_by_email->bindParam('email', $email, PDO::PARAM_STR, 150);
+	    $reg_user_by_email->execute();
+	    
+        return $reg_user_by_email;
+	}
+
+
+
+
+	function get_reg_user_by_id($id){
+
+		$dbh = $GLOBALS['dbh'];
+
+		$reg_user_by_id = $dbh->prepare("SELECT * From registered_users WHERE reg_id = :reg_id");
+	    $reg_user_by_id->bindParam('reg_id', $id, PDO::PARAM_INT);
+	    $reg_user_by_id->execute();
+	    
+        return $reg_user_by_id;
+	}
+
+
+
+
+	function get_registered_user_status($email_signin){
+
+		$dbh = $GLOBALS['dbh'];
+
+		$get_reg_user = $dbh->prepare("SELECT status_id From registered_users WHERE email = :email");
+        $get_reg_user->bindParam('email', $email_signin, PDO::PARAM_STR, 150);
+        $get_reg_user->execute();
+
+        while($row = $get_reg_user->fetch(PDO::FETCH_ASSOC)) {
+        	$status_id = $row['status_id'];
+        }
+
+        return $status_id;
+	}
+
+
+
+
+	
 
 
 
