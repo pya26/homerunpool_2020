@@ -874,8 +874,11 @@
 		    // Query if email exists in db
 		    $check_email_exists = get_reg_user_by_email($email_signin);
 
+		    
 
 		    if(!empty($email_signin) && !empty($password_signin)){
+
+		    	
 		        /*if(!preg_match("/^(?=.*\d)(?=.*[@#\-_$%^&+=§!\?])(?=.*[a-z])(?=.*[A-Z])[0-9A-Za-z@#\-_$%^&+=§!\?]{6,20}$/", $password_signin)) {
 		            $wrongPwdErr = 'Password should be between 6 to 20 charcters long, contains atleast one special chacter, lowercase, uppercase and a digit.';
 		            
@@ -885,20 +888,22 @@
 		        }*/
 		        // Check if email exist
 		        if($check_email_exists->rowCount() == 0) {
-		            $accountNotExistErr = 'User account does not exist.';
+		            //$accountNotExistErr = 'User account does not exist.';
+		            $accountNotExistErr = $check_email_exists;
 		            
 		            $accountNotExistErr_array = array('msg_code' => 2, 'msg' => $accountNotExistErr);
 		            echo json_encode($accountNotExistErr_array);
 
 		        } else {
 
-		            // Fetch partial user data
+		           // Fetch partial user data
 		            while($row = $check_email_exists->fetch(PDO::FETCH_ASSOC)) {
 		                $id              = $row['reg_id'];
 		                $email           = $row['email'];
 		                $pass_word       = $row['password'];
 		                $reg_user_status = $row['status_id'];
-		            }		           
+		            }
+		            $check_email_exists->closeCursor();		           
 		            
 
 		            // Verify password
@@ -1290,11 +1295,11 @@
 
 		$dbh = $GLOBALS['dbh'];
 
-		$reg_user_by_email = $dbh->prepare("SELECT * From registered_users WHERE email = :email");
+		$reg_user_by_email = $dbh->prepare('CALL get_reg_user_by_email(:email)');
 	    $reg_user_by_email->bindParam('email', $email, PDO::PARAM_STR, 150);
-	    $reg_user_by_email->execute();
-	    
-        return $reg_user_by_email;
+	    $reg_user_by_email->execute();	 
+
+		return $reg_user_by_email;
 	}
 
 

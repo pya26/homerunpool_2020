@@ -92,9 +92,11 @@
 
 	$hr_response = mysportsfeeds_api_request($url_hrs);
 
+/*print "<pre>";
+print_r($hr_response);
+print "</pre>";
 
-
-
+exit();*/
 
 	foreach ($hr_response->gamelogs as $key => $value) {
 		$playerid =  $value->player->id;

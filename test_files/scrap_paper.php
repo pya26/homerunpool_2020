@@ -12,9 +12,14 @@
     include('../_includes/functions.php');
 
 
-	$update_token = update_reg_users_token(31);
 	
-	print_r($update_token);
+	$email = "pya2626@gmail.com";
+
+	$mung = get_reg_user_by_email($email);
+
+
+
+    print_r($mung->rowCount());
 
 ?>
 

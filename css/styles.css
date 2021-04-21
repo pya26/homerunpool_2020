@@ -121,3 +121,12 @@ h3.popover-header{
     font-weight: bold;
 }
 
+.404_knoblauck {
+    background-image: transparent url('../images/errors/ck.jpg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+  }
+
+  
+
