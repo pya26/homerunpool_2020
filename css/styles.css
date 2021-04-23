@@ -103,10 +103,11 @@ div#leaderboard_wrapper {
 
 
 
-.popover {   
+/*.popover {   
     max-width: 600px !important;
     width: 500px !important;
-}
+}*/
+.popover{width:auto!important; max-width: none}
 
 h3.popover-header{
     background-color: yellow;
@@ -127,6 +128,8 @@ h3.popover-header{
     background-position: center center;
     background-size: cover;
   }
+
+
 
   
 

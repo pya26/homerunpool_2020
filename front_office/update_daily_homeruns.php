@@ -19,7 +19,7 @@
 	//$api_id = $_GET['id'];
 
 
-	print "<a href='admin_dashboard.php'>Back to admin dashboard</a><br /><br />";
+	print "<a href='dashboard.php'>Back to admin dashboard</a><br /><br />";
 
 	//$url = get_api_url($api_id);
 

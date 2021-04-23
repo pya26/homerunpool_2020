@@ -203,22 +203,20 @@
       </li>
     -->
     </ul>
-    <ul class="navbar-nav ml-auto">
-
-      
-      <?php
-      
-        if(is_logged_in()){
-          print '<li class="nav-item"><a class="nav-link" href="#">Hello ' . $_SESSION['firstname'] . '!</a></li>' .'<li class="nav-item"><a class="nav-link" href="logout.php"><i class="fas fa-sign-out-alt"></i>Sign-out</a></li>';
-        } else {
-          print '<li class="nav-item"><a class="nav-link" href="#" data-toggle="modal" data-target="#LogInModal"><i class="fas fa-sign-in-alt"></i> Sign-in</a></li>';
-        }
-        
-      ?>
-      <!--<li class="nav-item"><a class="nav-link" href="#">Front Office</a></li>-->
-    
-      
-    </ul>
+    <!--<div id="loginDiv">-->
+      <ul class="navbar-nav ml-auto">
+        <?php        
+          if(is_logged_in()){
+            print '<li class="nav-item"><a class="nav-link" href="#">Hello ' . $_SESSION['firstname'] . '!</a></li>';
+            print '<li class="nav-item"><a class="nav-link" href="' . $GLOBALS['base_url'] . 'front_office/dashboard.php">Front Office</a></li>';
+            print '<li class="nav-item"><a class="nav-link" href="logout.php">Logout <i class="fas fa-sign-out-alt"></i></a></li>';            
+          } else {
+            print '<li class="nav-item"><a class="nav-link" href="#" data-toggle="modal" data-target="#LogInModal">Login <i class="fas fa-sign-in-alt"></i></a></li>';
+          }        
+        ?>
+        <!--<li class="nav-item"><a class="nav-link" href="#">Front Office</a></li>-->       
+      <!--</ul>-->
+    <div>
   </div>
 </nav>
 
@@ -276,7 +274,7 @@
             //$num_rows = $injury_query->fetchColumn(); <i class="far fa-id-badge"></i>
 
             if($no > 0){ 
-             print '<span class="fa-stack" style="color:#df691a; margin-top:-20px;">';            
+              print '<span class="fa-stack" style="color:#df691a; margin-top:-20px;">';            
               print '<a tabindex="1" data-toggle="popover"  data-html="true" data-trigger="focus" title="Injury Report" data-placement="bottom" data-content="';
              
               while ($row2 = $injury_query->fetch(PDO::FETCH_ASSOC)) {
