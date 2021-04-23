@@ -1,6 +1,1 @@
-[20-Apr-2021 07:23:20 America/Boise] PHP Warning:  PDOStatement::execute(): SQLSTATE[HY000]: General error: 1267 Illegal mix of collations (utf8_general_ci,IMPLICIT) and (utf8_unicode_ci,IMPLICIT) for operation '=' in /home1/homeruo9/public_html/_includes/functions.php on line 1300
-[20-Apr-2021 07:23:20 America/Boise] PHP Fatal error:  Uncaught Error: Call to a member function fetch() on null in /home1/homeruo9/public_html/_includes/functions.php:1303
-Stack trace:
-#0 /home1/homeruo9/public_html/test_files/scrap_paper.php(18): get_reg_user_by_email('pya2626@gmail.c...')
-#1 {main}
-  thrown in /home1/homeruo9/public_html/_includes/functions.php on line 1303
+[23-Apr-2021 11:25:11 America/Boise] PHP Parse error:  syntax error, unexpected '$value' (T_VARIABLE) in /home1/homeruo9/public_html/test_files/scrap_injury.php on line 42

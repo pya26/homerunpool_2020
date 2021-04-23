@@ -1241,13 +1241,15 @@
 
 
 
-	function get_injured_players(){
+	function get_injured_players($player_id){
 
 		$dbh = $GLOBALS['dbh'];
 
-		$stmt = $dbh->prepare('CALL get_injured_players');
+		$stmt = $dbh->prepare('CALL get_injured_players(:playerid)');
+		$stmt->bindParam('playerid', $player_id, PDO::PARAM_INT);
 		$stmt->execute();
-		$no = $stmt->rowCount();
+		$recordCount = $stmt->rowCount();
+		/*$no = $stmt->rowCount();
 
 		if ($no > 0) {
 	        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -1258,6 +1260,12 @@
 	    
 	    } else {
 	    	return $injured_players = array();
+	    }*/
+
+	    if($recordCount){
+	    	return 1;
+	    } else {
+	    	return 0;
 	    }
 	}
 

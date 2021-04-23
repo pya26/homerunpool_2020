@@ -29,11 +29,12 @@
 
 				$injured_players = get_injured_players($player_id);
 
-				$new_arr = array_column($injured_players, 'player_id');
+				/*$new_arr = array_column($injured_players, 'player_id');
 
 				$mung =  array_search($player_id,$new_arr);
+				*/
 				
-				if($mung){
+				if($injured_players == 1){
 					$player_row = '<tr class="injured_yellow">';
 				} else {
 					$player_row = '<tr>';
