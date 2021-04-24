@@ -95,11 +95,7 @@ switch ($month) {
 
 
 
-
 $hr_response = mysportsfeeds_api_request($url_hrs);
-
-
-
 
 
 foreach ($hr_response->gamelogs as $key => $value) {

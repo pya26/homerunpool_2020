@@ -1,13 +1,15 @@
 <?php
 
-	$date = date("Ymd",strtotime("-1 days"));
+	$date = date("Ymd",strtotime("-1 days"));	
 
-    /*include('/home1/homeruo9/public_html/_config/config.php');
+    include('/home1/homeruo9/public_html/_config/config.php');
     include('/home1/homeruo9/public_html/_config/db_connect.php');
-    include('/home1/homeruo9/public_html/_includes/functions.php');*/
-    include('_config/config.php');
-    include('_config/db_connect.php');
-    include('_includes/functions.php');
+    include('/home1/homeruo9/public_html/_includes/functions.php');
+    /*include('../_config/config.php');
+    include('../_config/db_connect.php');
+    include('../_includes/functions.php');*/
+
+    include('email_config.php');
 		
 
 	$url = $GLOBALS['msf_api_v2_base_url'] . 'current_season.json?date=' . $date;
@@ -91,6 +93,15 @@
 
 	$hr_response = mysportsfeeds_api_request($url_hrs);
 
+	if(empty($hr_response->gamelogs)){
+
+		$subject = 'Update Homerun Cron Job was Unsuccessful';
+		$body = 'The gamelogs api response was empty.';
+
+		$send_mail = mail($to_email, $subject, $body, $headers);		
+		exit();
+	}
+
 
 	foreach ($hr_response->gamelogs as $key => $value) {
 		$playerid =  $value->player->id;
@@ -145,19 +156,7 @@
 	$yesterday_date_format = strtotime($date);
  	$yesterday_date_format = date('n/j/Y', $yesterday_date_format);	
 
-	$from_email = "support@homerunpool.com";
-	$to_email = "pya2626@gmail.com";
-
 	$subject = "Homeruns hit yesterday ".$yesterday_date_format;
-
-	$headers = "Reply-To: The Sender <".$from_email.">\r\n";
-	$headers .= "Return-Path: The Sender <".$from_email.">\r\n";
-	$headers .= "From: Homerunpool.com <".$from_email.">\r\n";
-	$headers .= "Organization: Homerunpool.com\r\n";
-	$headers .= "MIME-Version: 1.0\r\n";
-	$headers .= "Content-type: text/plain; charset=iso-8859-1\r\n";
-	$headers .= "X-Priority: 3\r\n";
-	$headers .= "X-Mailer: PHP". phpversion() ."\r\n";
 
 	$body = "The following players hit homeruns yesterday on ".$yesterday_date_format.". \r\n\r\n";
 
