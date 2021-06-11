@@ -9,7 +9,8 @@
   	$api_file = 'players.json';
 
 
-  	$url_params = '?player=10561';
+  	//$url_params = '?player=10561';
+  	$url_params = '?player=12563';
 
   	// set full url to be passed to the curl_request function 
     $url = $GLOBALS['msf_api_v2_base_url'] . $api_file . $url_params;
@@ -18,6 +19,11 @@
 	// $player_info_response even though it will return all player info, but I'm only using it to build an array of the ID's to pass into another API call
 	$player_response = mysportsfeeds_api_request($url);
 
+
+	print "<pre>";
+	print_r($player_response);
+	print "</pre>";
+	exit();
 
 	print "<pre>";
 	print_r($player_response->players[0]->player->externalMappings[4]);

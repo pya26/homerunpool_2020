@@ -1,0 +1,15 @@
+# Ignore the __notes directory
+__notes/
+
+# Ignore the test_files directory
+test_files/
+
+# Ignore the following files
+db_additions.txt
+db_deletes.txt
+email.php
+homerunpool.sql
+homeruo9_homerunpool.sql
+league_teams_sort_order_update.txt
+scrap_paper.php
+test_functions.php

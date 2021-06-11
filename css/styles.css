@@ -129,6 +129,9 @@ h3.popover-header{
     background-size: cover;
   }
 
+ h3.popover-header #team_info{
+  background-color: #000 !important;
+}
 
 
   

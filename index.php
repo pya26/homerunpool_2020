@@ -263,7 +263,14 @@
       while ($row = $league_teams->fetch(PDO::FETCH_ASSOC)) {
         print '<div class="col-md-4">';
           print '<div class="container table-responsive-sm">';
-            print '<span style="font-size:26px;">' . $row['team_name'] . "</span>";
+              //print '<a tabindex="1" data-toggle="popover"  data-html="true" data-trigger="focus" title="Team Info" data-placement="bottom" data-content=""';
+              //print $row['team_name'];
+            print '<a tabindex="1" data-toggle="popover" id="team_info" data-html="true" data-trigger="focus" title="Team Info" data-placement="bottom" data-content=""';
+            print '<span style="font-size:26px;color:#fff;">';            
+            print $row['team_name'];
+            print "</a>";
+            print "</span>";
+            print "</a>";
 
             $team_id = $row['team_id'];            
 
