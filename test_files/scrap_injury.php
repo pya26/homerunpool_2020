@@ -41,8 +41,8 @@
 		$injury_desc = $value->currentInjury->description;
 		$playing_probability = $value->currentInjury->playingProbability;
 
-		//print  $player_id . ' - ' . $first_name . ' ' . $last_name . ' - ' . $injury_desc . ' - ' . $playing_probability . '<br />';
-		insert_injured_players($player_id,$injury_desc,$playing_probability);
+		print  $player_id . ' - ' . $first_name . ' ' . $last_name . ' - ' . $injury_desc . ' - ' . $playing_probability . '<br />';
+		//insert_injured_players($player_id,$injury_desc,$playing_probability);
 	}
 
 
@@ -54,7 +54,7 @@
 	$thedatetime = date('Y-m-d H:i:s', time());
 		
 
-	update_last_updated_date($league_id,$season_id,$thedatetime);
+	//update_last_updated_date($league_id,$season_id,$thedatetime);
 
 	print "done";
 
