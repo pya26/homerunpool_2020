@@ -1,0 +1,5 @@
+Update Homeruns
+/opt/cpanel/ea-php74/root/usr/bin/php-cgi /home1/homeruo9/_cron_jobs/update_homeruns.php
+
+Update Injuries
+/opt/cpanel/ea-php74/root/usr/bin/php-cgi /home1/homeruo9/_cron_jobs/update_injuries.php
