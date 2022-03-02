@@ -3,3 +3,6 @@ Update Homeruns
 
 Update Injuries
 /opt/cpanel/ea-php74/root/usr/bin/php-cgi /home1/homeruo9/_cron_jobs/update_injuries.php
+
+Update lawton chiles
+/opt/cpanel/ea-php74/root/usr/bin/php-cgi /home1/homeruo9/_cron_jobs/update_death_pool_dod.php
