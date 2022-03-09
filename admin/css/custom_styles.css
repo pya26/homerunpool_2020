@@ -1,0 +1,16 @@
+@charset "UTF-8";
+
+.sb-sidenav .sb-sidenav-menu .nav .sb-sidenav-menu-heading {
+    padding: 0.5rem 0.25rem 0.25rem;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.sb-sidenav .sb-sidenav-menu .nav .nav-link {
+    display: flex;
+    align-items: center;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    position: relative;
+}

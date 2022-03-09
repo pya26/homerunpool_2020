@@ -626,12 +626,14 @@
 
 		$dbh = $GLOBALS['dbh'];
 
-		$stmt = $dbh->prepare("SELECT * FROM registered_users WHERE status_id = 'A' ORDER BY last_name");
-	    $stmt->execute();
+		//$stmt = $dbh->prepare("SELECT * FROM registered_users ORDER BY last_name");
+		$stmt = $dbh->prepare("SELECT ru.reg_id, ru.first_name, ru.last_name, ru.email, ru.date_created, ru.date_updated, ru.role_id, r.role_name, ru.status_id, s.status_name FROM registered_users ru LEFT JOIN lkp_status s on s.status_id = ru.status_id LEFT JOIN lkp_roles r on r.role_id = ru.role_id
+ORDER BY ru.last_name");
+		$stmt->execute();
 
 		$reg_users_array = array();
 		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-			$reg_users_array[] = ['reg_id' => $row['reg_id'], 'first_name' => $row['first_name'], 'last_name' => $row['last_name']];
+			$reg_users_array[] = ['reg_id' => $row['reg_id'], 'first_name' => $row['first_name'], 'last_name' => $row['last_name'], 'email' => $row['email'], 'date_created' => $row['date_created'], 'date_updated' => $row['date_updated'], 'role_name' => $row['role_name'], 'status_name' => $row['status_name']];
 		}
 
 		return $reg_users_array;

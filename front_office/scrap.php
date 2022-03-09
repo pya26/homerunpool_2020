@@ -11,6 +11,11 @@
         exit();
     }
 
+
+    print "<pre>";
+    print_r(current_season());
+    print "</pre>";
+
     /*$new_array = array(
         'playerid~10609~leagueid~10~seasonid~10' => '5',
         'playerid~10726~leagueid~10~seasonid~10' => '4',
