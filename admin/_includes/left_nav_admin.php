@@ -5,7 +5,7 @@
 <div class="collapse" id="collapseUsers" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
     <nav class="sb-sidenav-menu-nested nav">
         <a class="nav-link" href="create_user.php">Add Users</a>
-        <a class="nav-link" href="edit_registered_users.php">Edit Users</a>
+        <a class="nav-link" href="list_registered_users.php">Edit Users</a>
     </nav>
 </div>
 

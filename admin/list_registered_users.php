@@ -1,5 +1,4 @@
 <?php
-
   try {
     include("../_config/config.php");
     include("../_config/db_connect.php");
@@ -52,6 +51,73 @@
 
 
     </head>
+    <!-- Vertically centered modal -->
+
+<div class="modal fade" id="editUser" tabindex="-1" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Edit User</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <form id="editUserForm" name="editUserForm" role="form">
+          <div class="modal-body">   
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="validationCustom01" class="form-label">First name</label>
+                    <input type="text" class="form-control" id="validationCustom01" value="" required>
+                    <div class="valid-feedback">Looks good!</div>
+                    <div class="invalid-feedback">Please enter a first name.</div>
+
+                    <label for="validationCustom02" class="form-label">Last name</label>
+                    <input type="text" class="form-control" id="validationCustom02" value="" required>
+                    <div class="valid-feedback">Looks good!</div>
+                    <div class="invalid-feedback">Please enter a last name.</div>
+
+                    <label for="validationCustomEmail" class="form-label">Email</label>                            
+                    <input type="text" class="form-control" id="validationCustomEmail" aria-describedby="inputGroupPrepend" required>
+                    <div class="valid-feedback">Looks good!</div>
+                    <div class="invalid-feedback">Please enter an email.</div>
+
+                    <label for="validationCustomMobile" class="form-label">Mobile Number</label>                            
+                    <input type="text" class="form-control" id="validationCustomMobile" aria-describedby="inputGroupPrepend" required>
+                    <div class="valid-feedback">Looks good!</div>
+                    <!--<div class="invalid-feedback">Please enter an email.</div>-->
+
+                    <label for="validationCustomPassword" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="validationCustomPassword" placeholder="" />
+                    <div class="valid-feedback">Looks good!</div>
+                    <div class="invalid-feedback">Please enter a password.</div>
+
+                    <label for="validationCustomMobile" class="form-label">Confirm Password</label>
+                    <input type="password" class="form-control" id="validationCustomPasswordConfirm"  placeholder="" />
+                    <div class="valid-feedback">Looks good!</div>
+                    <div class="invalid-feedback">Please confirm correct password.</div>
+
+                    <label for="validationCustomMobile" class="form-label" id="validationCustomStatus">Status</label>
+                    <select class="form-select form-select-md">
+                      <option selected>Open this select menu</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
+                    <div class="valid-feedback">Looks good!</div>
+                    <div class="invalid-feedback">Please select status.</div>
+                </div>
+            </div>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" id="editUserSubmit">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
@@ -100,7 +166,7 @@
 
 
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Edit Registered Users</h1>
+                        <h1 class="mt-4">Registered Users</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
                             <li class="breadcrumb-item active">Registered Users</li>
@@ -135,7 +201,6 @@
                                                     $date_created = strtotime($value["date_created"]);
                                                     $date_updated = strtotime($value["date_updated"]);
 
-
                                                     $table_row = '<tr>';
                                                     $table_row .= '<td>'.$value["reg_id"].'</td>';
                                                     $table_row .= '<td>'.$value["first_name"].'</td>';
@@ -146,7 +211,7 @@
                                                     $table_row .= '<td>'.date("m/d/Y",$date_created).'</td>';
                                                     $table_row .= '<td>'.date("m/d/Y",$date_updated).'</td>';
                                                     $table_row .= '<td>'.$value["status_name"].'</td>';
-                                                    $table_row .= '<td><a href="#" class="btn btn-primary btn-sm" tabindex="-1" role="button" aria-disabled="true">Edit</a></td>';
+                                                    $table_row .= '<td><button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editUser">Edit</button></td>';
                                                     $table_row .= '</tr>';
 
                                                     print $table_row;

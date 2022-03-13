@@ -38,7 +38,7 @@
                     <main>
                         
                         <?php
-                            require '_includes/main_content.php';
+                            require '_includes/edit_player_content.php';
                         ?>
 
                     </main>

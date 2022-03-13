@@ -221,6 +221,21 @@
 
 
 
+	function get_player_by_id($playerid){
+
+		$dbh = $GLOBALS['dbh'];
+
+		$stmt = $dbh->prepare("SELECT * FROM Players WHERE PlayerID = :playerid");
+		$stmt->bindParam('playerid', $playerid, PDO::PARAM_INT);
+		$stmt->execute();
+
+		return $stmt->fetch(PDO::FETCH_ASSOC);
+	}
+
+
+
+
+
 	function get_all_roster_statuses(){
 
 		$dbh = $GLOBALS['dbh'];
@@ -793,6 +808,23 @@ ORDER BY ru.last_name");
 
 
 
+	function get_all_status(){
+
+		$dbh = $GLOBALS['dbh'];
+
+		$query = $dbh->prepare("SELECT * FROM lkp_status");
+		$query->execute();
+		
+		$status_array = array();
+		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+			$status_array[] = ['status_id' => $row['status_id'], 'status_name' => $row['status_name']];
+		}
+
+		return $status_array;
+	}
+
+
+
 
 
 	function get_roles_name($role_id){
@@ -1342,6 +1374,21 @@ ORDER BY ru.last_name");
         }
 
         return $status_id;
+	}
+
+
+
+
+	function replace_diacritic($string) {
+
+		$unwanted_array = array('Š'=>'S', 'š'=>'s', 'Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A', 'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E',
+			'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I', 'Ï'=>'I', 'Ñ'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U', 'Ú'=>'U', 'Û'=>'U', 
+			'Ü'=>'U', 'Ý'=>'Y', 'Þ'=>'B', 'ß'=>'Ss', 'à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a', 'å'=>'a', 'æ'=>'a', 'ç'=>'c','è'=>'e', 'é'=>'e', 'ê'=>'e', 'ë'=>'e', 
+			'ì'=>'i', 'í'=>'i', 'î'=>'i', 'ï'=>'i', 'ð'=>'o', 'ñ'=>'n', 'ò'=>'o', 'ó'=>'o', 'ô'=>'o', 'õ'=>'o', 'ö'=>'o', 'ø'=>'o', 'ù'=>'u', 'ú'=>'u', 'û'=>'u', 'ý'=>'y', 'þ'=>'b', 'ÿ'=>'y' );
+
+		$str = strtr( $string, $unwanted_array );
+
+	   return $str; // Removes special chars.
 	}
 
 
