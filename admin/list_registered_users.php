@@ -118,8 +118,12 @@
                 </nav>
             </div>
             <div id="layoutSidenav_content">
-                <main>
+                <main>                    
                     <?php
+                        if(isset($super_user_access) && $super_user_access == 1){
+                            print $msg;
+                            exit();
+                        }
                         include '_includes/registered_users_content.php';
                     ?>
                 </main>

@@ -25,6 +25,18 @@
 <script src="js/scripts.js"></script>   
 
 
+<?php
+
+	if(!is_super_user()){
+	    //print "Only the Super User is allowed back here!";
+	    $super_user_access = 1;
+	    $msg = '<div class="alert alert-danger" role="alert">Only the Super User is allowed back here! <a href="#" class="alert-link">Click to login</a>.</div>';
+	    
+	}
+
+?>
+
+
 
 
 

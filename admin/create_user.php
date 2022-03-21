@@ -40,6 +40,10 @@
             <div id="layoutSidenav_content">
                 <main>
                     <?php
+                        if(isset($super_user_access) && $super_user_access == 1){
+                            print $msg;
+                            exit();
+                        }
                         require '_includes/create_user_content.php';
                     ?>
                     

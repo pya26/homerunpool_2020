@@ -40,6 +40,10 @@
                     <main>
                         
                         <?php
+                            if(isset($super_user_access) && $super_user_access == 1){
+                                print $msg;
+                                exit();
+                            }
                             require '_includes/edit_player_content.php';
                         ?>
 

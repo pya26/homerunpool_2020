@@ -208,7 +208,7 @@
         <?php        
           if(is_logged_in()){
             print '<li class="nav-item"><a class="nav-link" href="#">Hello ' . $_SESSION['firstname'] . '!</a></li>';
-            print '<li class="nav-item"><a class="nav-link" href="' . $GLOBALS['base_url'] . 'front_office/dashboard.php">Front Office</a></li>';
+            print '<li class="nav-item"><a class="nav-link" href="' . $GLOBALS['base_url'] . 'admin/index.php">Front Office</a></li>';
             print '<li class="nav-item"><a class="nav-link" href="logout.php">Logout <i class="fas fa-sign-out-alt"></i></a></li>';            
           } else {
             print '<li class="nav-item"><a class="nav-link" href="#" data-toggle="modal" data-target="#LogInModal">Login <i class="fas fa-sign-in-alt"></i></a></li>';
