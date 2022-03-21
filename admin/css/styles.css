@@ -11699,3 +11699,9 @@ body {
   font-size: 0.75rem;
   border-radius: 0.25rem !important;
 }
+
+.btn-sm-kp {
+  padding: 0.25rem 0.5rem;
+  font-size: .675rem;
+  border-radius: 0.2rem; 
+}

@@ -248,7 +248,7 @@
   <?php  
 
     // Get league teams
-    $league_teams = get_league_teams($league_id,$season_id);
+    $league_teams = get_active_league_teams($league_id,$season_id);
     // Count how many teams are returned from the get_league_teams query  
     $league_team_count = $league_teams->rowCount();
 

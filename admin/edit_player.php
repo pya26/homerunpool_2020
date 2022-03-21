@@ -10,9 +10,11 @@
 ?>
 <!DOCTYPE html>
     <html lang="en">
-    <?php
-        include '_includes/header.php';
-    ?>
+    <head>
+        <?php
+            include '_includes/header.php';
+        ?>
+    </head>
         <body class="sb-nav-fixed">
             <?php
                 include '_includes/nav_bar.php';

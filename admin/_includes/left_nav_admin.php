@@ -9,6 +9,16 @@
     </nav>
 </div>
 
+<div class="sb-sidenav-menu-heading">Draft</div>
+<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseDraft" aria-expanded="false" aria-controls="collapseLeague">
+    <div class="sb-nav-link-icon"><i class="fas fa-baseball-ball"></i></div>Manage Draft<div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+</a>
+<div class="collapse" id="collapseDraft" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+    <nav class="sb-sidenav-menu-nested nav">
+        <a class="nav-link" href="set_teams_players.php">Set Team Players</a>
+    </nav>
+</div>
+
 <div class="sb-sidenav-menu-heading">Leagues</div>
 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLeague" aria-expanded="false" aria-controls="collapseLeague">
     <div class="sb-nav-link-icon"><i class="fas fa-baseball-ball"></i></div>Manage Leagues<div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -38,7 +48,7 @@
 <div class="collapse" id="collapsePlayers" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
     <nav class="sb-sidenav-menu-nested nav">
         <a class="nav-link" href="layout-static.html">Add Players</a>
-        <a class="nav-link" href="layout-sidenav-light.html">Edit Players</a>
+        <a class="nav-link" href="list_players.php">Edit Players</a>
         <a class="nav-link" href="layout-sidenav-light.html">Update Homeruns</a>
         <a class="nav-link" href="layout-sidenav-light.html">Update Disabled List</a>
     </nav>

@@ -754,13 +754,28 @@ ORDER BY ru.last_name");
 
 		$dbh = $GLOBALS['dbh'];
 
-		$query = $dbh->prepare("SELECT * FROM teams WHERE status_id = 'A'");
+		$query = $dbh->prepare("SELECT * FROM teams ORDER BY team_name");//WHERE status_id = 'A'
 		$query->bindParam(1, $reg_id, PDO::PARAM_INT);
 		$query->execute();
 
 		$teams_array = array();
 		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
 			$teams_array[] = ['team_id' => $row['team_id'], 'team_name' => $row['team_name']];
+		}
+
+		return $teams_array;
+	}
+
+	function get_all_teams_users(){
+
+		$dbh = $GLOBALS['dbh'];
+
+		$query = $dbh->prepare("SELECT t.*, r.reg_id, r.first_name, r.last_name FROM teams t LEFT JOIN registered_users r ON t.reg_id = r.reg_id ORDER BY t.team_name");//WHERE status_id = 'A'
+		$query->execute();
+
+		$teams_array = array();
+		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+			$teams_array[] = ['team_id' => $row['team_id'], 'team_name' => $row['team_name'], 'reg_id' => $row['reg_id'], 'first_name' => $row['first_name'], 'last_name' => $row['last_name']];
 		}
 
 		return $teams_array;
@@ -785,6 +800,23 @@ ORDER BY ru.last_name");
 		}
 
 		return $leagues_array;
+	}
+
+
+	function get_seasons_by_id($season_id){
+
+		$dbh = $GLOBALS['dbh'];
+
+		$query = $dbh->prepare("SELECT * FROM lkp_seasons WHERE id = ?");
+		$query->bindParam(1, $season_id, PDO::PARAM_INT);
+		$query->execute();
+
+		$season_array = array();
+		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+			$season_array[] = ['id' => $row['id'], 'season_name' => $row['name']];
+		}
+
+		return $season_array;
 	}
 
 
@@ -1161,16 +1193,32 @@ ORDER BY ru.last_name");
 
 
 
-	function get_league_teams($league_id,$season_id){
+	function get_active_league_teams($league_id,$season_id){
 
 		$dbh = $GLOBALS['dbh'];
 
-		$league_teams = $dbh->prepare("SELECT lt.team_id, t.team_name FROM league_teams lt LEFT JOIN teams t ON t.team_id = lt.team_id WHERE lt.league_id=:leagueid AND lt.season_id=:seasonid AND lt.status_id = 'A' ORDER BY lt.sort ASC");
+		$league_teams = $dbh->prepare("SELECT lt.team_id, t.team_name, r.first_name, r.last_name FROM league_teams lt LEFT JOIN teams t ON t.team_id = lt.team_id LEFT JOIN registered_users r ON r.reg_id = t.reg_id WHERE lt.league_id=:leagueid AND lt.season_id=:seasonid AND lt.status_id = 'A' ORDER BY lt.sort ASC");
 	    $league_teams->bindParam("leagueid", $league_id, PDO::PARAM_INT, 11);
 	    $league_teams->bindParam("seasonid", $season_id, PDO::PARAM_INT, 11);
-	    $league_teams->execute();	
-
+	    $league_teams->execute();
+	    
 	    return	$league_teams;
+	}
+
+	function get_all_league_teams($league_id,$season_id){
+
+		$dbh = $GLOBALS['dbh'];
+
+		$league_teams = $dbh->prepare("SELECT lt.league_teams_id, lt.team_id, lt.sort, t.team_name, r.first_name, r.last_name FROM league_teams lt LEFT JOIN teams t ON t.team_id = lt.team_id LEFT JOIN registered_users r ON r.reg_id = t.reg_id WHERE lt.league_id=:leagueid AND lt.season_id=:seasonid ORDER BY lt.sort ASC");
+	    $league_teams->bindParam("leagueid", $league_id, PDO::PARAM_INT, 11);
+	    $league_teams->bindParam("seasonid", $season_id, PDO::PARAM_INT, 11);
+	    $league_teams->execute();
+
+	    while ($row = $league_teams->fetch(PDO::FETCH_ASSOC)) {
+        	$league_teams_array[] =  ['league_teams_id' => $row['league_teams_id'], 'sort' => $row['sort'], 'team_id' => $row['team_id'], 'team_name' => $row['team_name'], 'first_name' => $row['first_name'], 'last_name' => $row['last_name']];
+        }
+	    
+	    return	$league_teams_array;
 	}
 
 
@@ -1188,6 +1236,26 @@ ORDER BY ru.last_name");
         $injury_query->execute();
 
         return $injury_query;
+	}
+
+
+
+
+	function get_league_team_players_draft($league_id,$season_id,$team_id){
+
+		$dbh = $GLOBALS['dbh'];
+
+		$team_players_query = $dbh->prepare('SELECT ltp.*, p.PlayerID, p.FirstName, p.LastName FROM league_team_players ltp LEFT JOIN players p ON p.PlayerID = ltp.player_id WHERE ltp.league_id=:leagueid AND ltp.season_id=:seasonid AND ltp.team_id=:teamid ORDER BY ltp.sort');           
+        $team_players_query->bindParam("leagueid", $league_id, PDO::PARAM_INT, 11);
+        $team_players_query->bindParam("seasonid", $season_id, PDO::PARAM_INT, 11);
+        $team_players_query->bindParam("teamid", $team_id, PDO::PARAM_INT, 11);
+        $team_players_query->execute();
+
+        while ($row = $team_players_query->fetch(PDO::FETCH_ASSOC)) {			
+        	$team_players_array[] =  ['league_team_player_id' => $row['league_team_player_id'], 'player_id' => $row['PlayerID'], 'FirstName' => $row['FirstName'], 'LastName' => $row['LastName']];
+		}
+
+        return $team_players_array;
 	}
 
 

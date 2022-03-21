@@ -40,9 +40,8 @@
                     <main>
                         
                         <?php
-                            require '_includes/main_content.php';
-                        ?>
-
+                            include '_includes/set_teams_players_content.php';
+                        ?>                        
 
                     </main>
                     <footer class="py-4 bg-light mt-auto">

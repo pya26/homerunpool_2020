@@ -61,13 +61,13 @@
             </div>
         </div>
     </div>
-    <div class="card mb-4">
+
+    <!--<div class="card mb-4">
         <div class="card-header">
             <i class="fas fa-table me-1"></i>
             Players
         </div>
-        <div class="card-body">
-            
+        <div class="card-body">            
 
             <table id="datatablesListPlayers" class="table table-striped" style="width:100%">
                 <thead>
@@ -95,8 +95,7 @@
                             $table_row .= '<td>'.$row['LastName'].'</td>';
                             $table_row .= '<td>'.$row['PrimaryPosition'].'</td>';
                             $table_row .= '<td>'.$row['TeamAbbr'].'</td>';
-                            $table_row .= '<td>'.$row['status_id'].'</td>';
-                            /*$table_row .= '<td><button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editPlayerModal" id=editPlayer" value='.$row['PlayerID'].'">edit</button></td>';*/
+                            $table_row .= '<td>'.$row['status_id'].'</td>';                            
                             $table_row .= '<td><a href="edit_player.php?player_id='.$row['PlayerID'].'" class="btn btn-primary btn-sm" role="button">Edit</a></td>';
                             
                             $table_row .= '</tr>';
@@ -106,17 +105,7 @@
                 
                 </tbody>
             </table>
-
-
-
-
-
-
-
-
-
-
             
         </div>
-    </div>
+    </div>-->
 </div>
