@@ -191,10 +191,22 @@
 															print $value["first_name"].' '.$value["last_name"] .')';
 														print '</td>';
 														print '<td style="text-align:right;">';
-															print '<select data-size="2" class="selectpicker" id="team_id">';
-															print '<option value="0">0</option>';
+														print '<form action="edit_team_sort_process.php" method="POST">';
+														print '<input type="hidden" name="league_teams_id" value="'.$value["league_teams_id"].'">';
+														print '<input type="hidden" name="league_id" value="'.$league_id.'">';
+														print '<input type="hidden" name="season_id" value="'.$season_id.'">';
+															print '<select data-size="2" class="selectpicker" name="sort" id="team_sort">';																
+																for ($x = 1; $x <= $num_teams; $x++) {
+																	if($x == $value["sort"]){
+																  		print '<option value="'.$x.'" selected>'.$x.'</option>';
+																  	} else {
+																  		print '<option value="'.$x.'">'.$x.'</option>';
+																  	}
+																}
 															print '</select>';
-															print '&nbsp;&nbsp;&nbsp;<a href="delete_league_team_process.php?lt_id='.$value["league_teams_id"].'&league_id='.$league_id.'&season_id='.$season_id.'&class=0" class="btn btn-primary btn-sm btn-sm-kp" role="button">Order</a>';
+															print '<input type="submit" value="Save order" class="btn btn-primary btn-sm">';
+															//print '&nbsp;&nbsp;&nbsp;<a href="edit_team_sort_process.php?lt_id='.$value["league_teams_id"].'&league_id='.$league_id.'&season_id='.$season_id.'&class=0" class="btn btn-primary btn-sm btn-sm-kp" role="button">Save Order</a>';
+														print '</form>';
 														print '</td>';
 													print '</tr>';
 												print '</thead>';
