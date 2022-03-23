@@ -254,22 +254,7 @@
 
 	</div>
 
-	<div class="row gx-3 mb-3 d-none" id="add_players_to_teams_div">
-
-	    <!-- 1 column that spans across all 12 grid sections-->
-	    <div class="col col-md-3">
-	        <div class="p-3 border bg-light">            
-	           Add players to teams
-	        </div>	        
-	    </div>
-
-	    <div class="col col-md-9">
-	        <div class="p-3 border bg-light">            
-	           2 
-	        </div>	        
-	    </div>	    
-
-	</div>
+	
 
 
 	

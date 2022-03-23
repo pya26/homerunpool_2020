@@ -6,7 +6,7 @@
     </ol>
 
    
-    <form class="row g-3 needs-validation" novalidate>
+    <form name="createUserForm" id="createUserForm" class="row g-3" novalidate> <!-- removed class name for validation "needs-validation"-->
         <div class="col-md-12">
             <label for="validationCustom01" class="form-label">First name</label>
             <input type="text" class="form-control" id="validationCustom01" value="" required>
@@ -28,7 +28,7 @@
             <div class="valid-feedback">Looks good!</div>
             <!--<div class="invalid-feedback">Please enter an email.</div>-->
 
-            <label for="validationCustomPassword" class="form-label">Password</label>
+            <!--<label for="validationCustomPassword" class="form-label">Password</label>
             <input type="password" class="form-control" id="validationCustomPassword" placeholder="" />
             <div class="valid-feedback">Looks good!</div>
             <div class="invalid-feedback">Please enter a password.</div>
@@ -36,18 +36,19 @@
             <label for="validationCustomMobile" class="form-label">Confirm Password</label>
             <input type="password" class="form-control" id="validationCustomPasswordConfirm"  placeholder="" />
             <div class="valid-feedback">Looks good!</div>
-            <div class="invalid-feedback">Please confirm correct password.</div>
+            <div class="invalid-feedback">Please confirm correct password.</div>-->
         </div>
 
-        <div class="col-12">
+        <!--<div class="col-12">
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
                 <label class="form-check-label" for="invalidCheck">Agree to terms and conditions</label>
                 <div class="invalid-feedback">You must agree before submitting.</div>
             </div>
         </div>
+        -->
         <div class="col-12">
-            <button class="btn btn-primary" type="submit">Submit form</button>
+            <button class="btn btn-primary" id="createUserFormButton" type="submit">Submit form</button>
         </div>
     </form>
     

@@ -315,14 +315,158 @@ $(function() {
     });
 
 
+
+
+    $("#submitActiveSeasonButton").button().click(function(e){
+
+        //stop submit the form, we will post it manually.
+        e.preventDefault();
+
+        $active_season = $('#validationCustomActiveSeason').val();
+
+        var formData = {
+            active_season_id: $active_season,
+        };
+
+        // disabled the submit button
+        $("#submitActiveSeasonButton").prop("disabled", true);
+
+        $.ajax({
+                type: "POST",
+                url: "update_active_season_process.php",
+                data: formData,
+                dataType: "json",
+                encode: true
+        }).done(function (data) {
+
+            if (!data.success) {
+                $("#submitActiveSeasonButton").prop("disabled", false); 
+                
+                console.log(data.message);
+                
+            } else {
+                $("#submitActiveSeasonButton").prop("disabled", false); 
+                console.log(data.message);                    
+                                  
+            }
+
+
+        });
+        
+        
+    });
+
+
+
+
+    $("#createUserFormButton").button().click(function(e){
+
+        //stop submit the form, we will post it manually.
+        e.preventDefault();
+
+        $first_name = $('#validationCustom01').val();
+        $last_name = $('#validationCustom02').val();
+        $email = $('#validationCustomEmail').val();
+        $mobile_phone = $('#validationCustomMobile').val();        
+        $pwd = $('#validationCustomPassword').val();
+        $pwd_confirm = $('#validationCustomPasswordConfirm').val();
+
+        var formData = {
+            first_name: $first_name,
+            last_name: $last_name,
+            email: $email,            
+        };
+
+        /*  mobile_phone: $mobile_phone,
+            pwd: $pwd,
+            pwd_confirm: $pwd_confirm,        
+        */
+
+        // disabled the submit button
+        $("#createUserFormButton").prop("disabled", true);
+
+        $.ajax({
+                type: "POST",
+                url: "add_user_process.php",
+                data: formData,
+                dataType: "json",
+                encode: true
+        }).done(function (data) {
+
+            if (!data.success) {
+                
+                $("#createUserFormButton").prop("disabled", false);                
+                console.log(data.message);                
+                
+            } else {
+
+                $("#createUserFormButton").prop("disabled", false); 
+                console.log(data.message);               
+                                  
+            }
+
+        });
+            
+            
+    });
+
+
         
     
 
+        $("#createTeamButton").button().click(function(e){
+            
+            //stop submit the form, we will post it manually.
+            e.preventDefault();
+            
+            $reg_id = $('#validationUser').val();
+            $team_name = $('#validationTeamName').val();
+            $role_id = $('#validationRole').val();
+
+             var formData = {
+                reg_id: $reg_id,
+                team_name: $team_name,
+                role_id: $role_id,            
+            };
+
+            // disabled the submit button
+            $("#createTeamButton").prop("disabled", true);
+
+
+            $.ajax({
+                type: "POST",
+                url: "create_teams_process.php",
+                data: formData,
+                dataType: "json",
+                encode: true
+            }).done(function (data) {
+
+                if (!data.success) {
+                    
+                    $("#createTeamButton").prop("disabled", false);                
+                    console.log(data.message);                
+                    
+                } else {
+
+                    $("#createTeamButton").prop("disabled", false); 
+                    console.log(data.message); 
+                    location.reload();              
+                                      
+                }
+
+            });
+
+        });
 
 
 
 
     
+
+
+
+
+
 
 
 });

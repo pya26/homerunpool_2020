@@ -36,7 +36,7 @@
 </a>
 <div class="collapse" id="collapseTeams" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
     <nav class="sb-sidenav-menu-nested nav">
-        <a class="nav-link" href="layout-static.html">Add Teams</a>
+        <a class="nav-link" href="create_teams.php">Create Teams</a>
         <a class="nav-link" href="layout-sidenav-light.html">Edit Teams</a>
     </nav>
 </div>
@@ -126,7 +126,7 @@
 </a>
 <div class="collapse" id="collapseSeasons" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
     <nav class="sb-sidenav-menu-nested nav">
-        <a class="nav-link" href="layout-static.html">Edit Seasons</a>
+        <a class="nav-link" href="edit_active_season.php">Edit Active Season</a>
     </nav>
 </div>
 

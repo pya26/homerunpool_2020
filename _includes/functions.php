@@ -877,6 +877,24 @@ ORDER BY ru.last_name");
 
 
 
+	function get_all_roles(){
+
+		$dbh = $GLOBALS['dbh'];
+
+		$query = $dbh->prepare("SELECT role_id, role_name FROM lkp_roles");		
+		$query->execute();
+
+		$roles_array = array();
+		while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+			$roles_array[] = ['role_id' => $row['role_id'],'role_name' => $row['role_name']];
+		}
+
+		return $roles_array;
+	}
+
+
+
+
 
 	function get_league_info($lid){
 
