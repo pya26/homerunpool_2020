@@ -270,7 +270,6 @@
             print $row['team_name'];
             print "</a>";
             print "</span>";
-            print "</a>";
 
             $team_id = $row['team_id'];            
 
@@ -312,7 +311,9 @@
               print $trophy_row;
             }
 
-            unset($champ_query);            
+            unset($champ_query); 
+
+             print ' ('.$row['first_name']. ' ' . $row['last_name'].')';           
 
             /**
              * include file to display the rows and columns for the team's tables
