@@ -210,7 +210,7 @@
 			/**
 			 * added first name and last name for 'add_league_team_players.php'
 			 */			
-			$player_db_ids[$row['PlayerID']] = $row['FirstName'] . ' ' . $row['LastName'];
+			$player_db_ids[$row['PlayerID']] = $row['FirstName'] . ' ' . $row['LastName'] . ' (' . $row['TeamAbbr'] . ' - ' . $row['PrimaryPosition'] .')';
 			
 		}
 

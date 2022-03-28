@@ -25,7 +25,7 @@
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <?php
-                                include 'left_nav_admin.php';
+                                include '_includes/left_nav_admin.php';
                             ?>                            
                         </div>
                     </div>
@@ -47,11 +47,11 @@
                         }
 
                     ?>
-                    <!--<div class="container-fluid px-4">
-                        <h1 class="mt-4">Create User</h1>
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4">Cheatsheet</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Create User</li>
+                            <li class="breadcrumb-item active">Cheatsheet</li>
                         </ol>
 
                         <a href="https://getbootstrap.com/docs/5.0/getting-started/introduction/" target="_blank">Bootstrap 5 Documentation</a>
@@ -69,7 +69,7 @@
 
 
 
-					</div>-->
+					</div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">
                     <?php
