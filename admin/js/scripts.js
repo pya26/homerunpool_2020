@@ -461,6 +461,70 @@ $(function() {
 
 
 
+    $("#seed_hrs_form_submit").button().click(function(e){  
+        
+        e.preventDefault();
+
+        $("#seed_hrs_form_submit").prop("disabled", true);
+
+        //var url_string = '?';
+
+        $selected_season = $('#select_season').val();
+
+        /*if($selected_season !== '0'){
+            url_string += 'season=' + $selected_season;
+            console.log(url_string); 
+        } else {
+            url_string += '';
+            console.log(url_string);
+        }*/
+
+        $("#Preloader").show();
+
+
+        var formData = {
+            selected_season: $selected_season,
+        };
+
+
+        $.ajax({
+            type: "POST",
+            url: "seed_hr_tables_process.php",
+            data: formData,
+            dataType: "json",
+            encode: true
+        }).done(function (data) {
+            
+
+            if (!data.success) {
+                
+                $("#seed_hrs_form_submit").prop("disabled", false);
+
+                $("#Preloader").hide();
+
+                console.log('error!');                
+                
+            } else {
+
+                $("#seed_hrs_form_submit").prop("disabled", false); 
+
+                $("#Preloader").hide();
+
+                console.log(data); 
+                //location.reload();              
+                                  
+            }
+
+        });   
+         
+
+
+
+    });
+
+
+
+
     
 
 

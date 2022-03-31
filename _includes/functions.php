@@ -79,7 +79,7 @@
 		$seasons = list_of_seasons();
 
 		$season_select_menu = '<select type="select_season" name="select_season" id="select_season">';
-		$season_select_menu .= '<option selected=""></option>';
+		$season_select_menu .= '<option value="0" selected>-- Select a Season -- </option>';
 		foreach($seasons as $season) {
 			$season_select_menu .= '<option value="'.$season['id'].'">'.$season['slug'].'</option>';
 		}
@@ -215,6 +215,31 @@
 		}
 
 		return $player_db_ids;
+	}
+
+
+
+
+	function get_all_player_ids(){
+
+		$dbh = $GLOBALS['dbh'];
+
+		$stmt = $dbh->prepare("CALL sp_get_all_players");
+		$stmt->execute();
+		$record_count = $stmt->rowCount();
+		
+		if($record_count > 0){
+			$player_db_ids = array();
+			while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {					
+				$player_db_ids[] = $row['PlayerID'];			
+			}
+
+			return $player_db_ids;
+		
+		} else {
+			return 0;
+		}
+		
 	}
 
 
@@ -393,13 +418,25 @@
 		foreach($player_ids_array as $key => $value) {
 
     		$stmt = $dbh->prepare('CALL insert_hrs_february_stub_records(?,?)');
-		    $player_id = $key;
+		    $player_id = $value;
 
 		    $stmt->bindParam(1, $player_id, PDO::PARAM_INT, 11);
 			$stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);
 
-			$stmt->execute();
+			if($stmt->execute() == false){
+				$pdo_error = $stmt->errorInfo();
+				$data['success'] = false;
+				$data['errors'] = $pdo_error[2];
+
+				return $data;
+				break;
+			} else {
+				$data['success'] = true;
+				$data['message'] = 'Success!';
+			}
 		}
+
+		return $data;
 	}
 
 
@@ -412,13 +449,25 @@
 
 		foreach($player_ids_array as $key => $value) {
     		$stmt = $dbh->prepare('CALL insert_hrs_march_stub_records(?,?)');
-		    $player_id = $key;
+		    $player_id = $value;
 
 		    $stmt->bindParam(1, $player_id, PDO::PARAM_INT, 11);
 			$stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);
 
-			$stmt->execute();
+			if($stmt->execute() == false){
+				$pdo_error = $stmt->errorInfo();
+				$data['success'] = false;
+				$data['errors'] = $pdo_error[2];
+
+				return $data;
+				break;
+			} else {
+				$data['success'] = true;
+				$data['message'] = 'Success!';
+			}			
 		}
+
+		return $data;
 	}
 
 
@@ -431,15 +480,27 @@
 
 		foreach($player_ids_array as $key => $value) {
 
-			$player_id = $key;
+			$player_id = $value;
 
     		$stmt = $dbh->prepare('CALL insert_hrs_april_stub_records(:playerid,:seasonid)');		    
 
 		    $stmt->bindParam('playerid', $player_id, PDO::PARAM_INT, 11);
 			$stmt->bindParam('seasonid', $season_id, PDO::PARAM_INT, 11);
 
-			$stmt->execute();
+			if($stmt->execute() == false){
+				$pdo_error = $stmt->errorInfo();
+				$data['success'] = false;
+				$data['errors'] = $pdo_error[2];
+
+				return $data;
+				break;
+			} else {
+				$data['success'] = true;
+				$data['message'] = 'Success!';
+			}
 		}
+
+		return $data;
 	}
 
 
@@ -452,13 +513,25 @@
 
 		foreach($player_ids_array as $key => $value) {
     		$stmt = $dbh->prepare('CALL insert_hrs_may_stub_records(?,?)');
-		    $player_id = $key;
+		    $player_id = $value;
 
 		    $stmt->bindParam(1, $player_id, PDO::PARAM_INT, 11);
 			$stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);
 
-			$stmt->execute();
+			if($stmt->execute() == false){
+				$pdo_error = $stmt->errorInfo();
+				$data['success'] = false;
+				$data['errors'] = $pdo_error[2];
+
+				return $data;
+				break;
+			} else {
+				$data['success'] = true;
+				$data['message'] = 'Success!';
+			}
 		}
+
+		return $data;
 	}
 
 
@@ -471,13 +544,25 @@
 
 		foreach($player_ids_array as $key => $value) {
     		$stmt = $dbh->prepare('CALL insert_hrs_june_stub_records(?,?)');
-		    $player_id = $key;
+		    $player_id = $value;
 
 		    $stmt->bindParam(1, $player_id, PDO::PARAM_INT, 11);
 			$stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);
 
-			$stmt->execute();
+			if($stmt->execute() == false){
+				$pdo_error = $stmt->errorInfo();
+				$data['success'] = false;
+				$data['errors'] = $pdo_error[2];
+
+				return $data;
+				break;
+			} else {
+				$data['success'] = true;
+				$data['message'] = 'Success!';
+			}
 		}
+
+		return $data;
 	}
 
 
@@ -490,13 +575,25 @@
 
 		foreach($player_ids_array as $key => $value) {
     		$stmt = $dbh->prepare('CALL insert_hrs_july_stub_records(?,?)');
-		    $player_id = $key;
+		    $player_id = $value;
 
 		    $stmt->bindParam(1, $player_id, PDO::PARAM_INT, 11);
 			$stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);
 
-			$stmt->execute();
+			if($stmt->execute() == false){
+				$pdo_error = $stmt->errorInfo();
+				$data['success'] = false;
+				$data['errors'] = $pdo_error[2];
+
+				return $data;
+				break;
+			} else {
+				$data['success'] = true;
+				$data['message'] = 'Success!';
+			}
 		}
+
+		return $data;
 	}
 
 
@@ -509,13 +606,25 @@
 
 		foreach($player_ids_array as $key => $value) {
     		$stmt = $dbh->prepare('CALL insert_hrs_august_stub_records(?,?)');
-		    $player_id = $key;
+		    $player_id = $value;
 
 		    $stmt->bindParam(1, $player_id, PDO::PARAM_INT, 11);
 			$stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);
 
-			$stmt->execute();
+			if($stmt->execute() == false){
+				$pdo_error = $stmt->errorInfo();
+				$data['success'] = false;
+				$data['errors'] = $pdo_error[2];
+
+				return $data;
+				break;
+			} else {
+				$data['success'] = true;
+				$data['message'] = 'Success!';
+			}
 		}
+
+		return $data;
 	}
 
 
@@ -528,13 +637,25 @@
 
 		foreach($player_ids_array as $key => $value) {
     		$stmt = $dbh->prepare('CALL insert_hrs_september_stub_records(?,?)');
-		    $player_id = $key;
+		    $player_id = $value;
 
 		    $stmt->bindParam(1, $player_id, PDO::PARAM_INT, 11);
 			$stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);
 
-			$stmt->execute();
+			if($stmt->execute() == false){
+				$pdo_error = $stmt->errorInfo();
+				$data['success'] = false;
+				$data['errors'] = $pdo_error[2];
+
+				return $data;
+				break;
+			} else {
+				$data['success'] = true;
+				$data['message'] = 'Success!';
+			}
 		}
+
+		return $data;
 	}
 
 
@@ -547,13 +668,25 @@
 
 		foreach($player_ids_array as $key => $value) {
     		$stmt = $dbh->prepare('CALL insert_hrs_october_stub_records(?,?)');
-		    $player_id = $key;
+		    $player_id = $value;
 
 		    $stmt->bindParam(1, $player_id, PDO::PARAM_INT, 11);
 			$stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);
 
-			$stmt->execute();
+			if($stmt->execute() == false){
+				$pdo_error = $stmt->errorInfo();
+				$data['success'] = false;
+				$data['errors'] = $pdo_error[2];
+
+				return $data;
+				break;
+			} else {
+				$data['success'] = true;
+				$data['message'] = 'Success!';
+			}
 		}
+
+		return $data;
 	}
 
 
@@ -566,13 +699,25 @@
 
 		foreach($player_ids_array as $key => $value) {
     		$stmt = $dbh->prepare('CALL insert_hrs_november_stub_records(?,?)');
-		    $player_id = $key;
+		    $player_id = $value;
 
 		    $stmt->bindParam(1, $player_id, PDO::PARAM_INT, 11);
 			$stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);
 
-			$stmt->execute();
+			if($stmt->execute() == false){
+				$pdo_error = $stmt->errorInfo();
+				$data['success'] = false;
+				$data['errors'] = $pdo_error[2];
+
+				return $data;
+				break;
+			} else {
+				$data['success'] = true;
+				$data['message'] = 'Success!';
+			}
 		}
+
+		return $data;
 	}
 	/*
 	function insert_monthly_hrs_stub_records($month,$player_id,$season_id){
@@ -662,7 +807,7 @@ ORDER BY ru.first_name, ru.last_name");
 
 		$dbh = $GLOBALS['dbh'];
 
-	    $stmt = $dbh->prepare("SELECT player_id FROM {$tablename} WHERE season_id = {$season_id}");
+	    $stmt = $dbh->prepare("SELECT player_id FROM {$tablename} WHERE season_id = {$season_id} ORDER BY player_id");
 	    $stmt->execute();
 	    $record_count = $stmt->rowCount();
 

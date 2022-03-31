@@ -16,6 +16,7 @@
 <div class="collapse" id="collapseDraft" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
     <nav class="sb-sidenav-menu-nested nav">
         <a class="nav-link" href="set_teams_players.php">Set Team Players</a>
+        <a class="nav-link" href="seed_hr_tables.php">Seed HR Tables</a>
     </nav>
 </div>
 
