@@ -557,10 +557,7 @@ $(function() {
 
             if (!data.success) {
                 
-                /*$("#seed_hrs_form_submit").prop("disabled", false);
-
-                $("#Preloader").hide();*/
-
+                
                 console.log('error!');                
                 
             } else {
@@ -576,40 +573,49 @@ $(function() {
 
                 $("#daily_hr_form_results").html(newHTML.join("<br />"));
                 
-                
-
-                
-                /*$.each( data.homeruns, function( key, value ) {
-
-                     document.getElementById("daily_hr_form_results").textContent = data.homeruns.player_id;
-                   
-                   
-                    
-                });*/
-        
-
-               
-
-                //$('#daily_hr_form_results').html(display_daily_hrs);
-                //$('#daily_hr_form_results').html(data.homeruns);
-                //document.getElementById("display-array").textContent = array.join(", ");
-
-                /*$("#seed_hrs_form_submit").prop("disabled", false); 
-
-                $("#Preloader").hide();
-
-                $("#seed_hr_table_success_msg").show();
-
-                console.log(data); 
-                //location.reload(); */             
+                         
                                   
             }
 
         });
 
-        //console.log($hr_date); 
-
     }); 
+
+
+
+
+    $("#update_il_form_submit").button().click(function(e){ 
+
+        e.preventDefault();
+
+        
+
+        $.ajax({
+            type: "POST",
+            url: "update_il_process.php",
+            dataType: "json",
+            encode: true
+        }).done(function (data) {
+            
+
+            if (!data.success) {
+                
+                
+                console.log('error!');                
+                
+            } else {
+
+                console.log(data);
+
+                
+                
+                         
+                                  
+            }
+
+        });
+
+    });
 
 
 

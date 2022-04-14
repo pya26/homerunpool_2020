@@ -51,7 +51,7 @@
         <a class="nav-link" href="layout-static.html">Add Players</a>
         <a class="nav-link" href="list_players.php">Edit Players</a>
         <a class="nav-link" href="update_daily_hrs.php">Update Homeruns</a>
-        <a class="nav-link" href="layout-sidenav-light.html">Update Disabled List</a>
+        <a class="nav-link" href="update_injured_list.php">Update Injured List</a>
     </nav>
 </div>
 
