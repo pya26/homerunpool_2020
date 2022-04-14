@@ -9,7 +9,7 @@
 
 	//$player_id = $_POST['player_id'];
 
-	$url = "https://api.mysportsfeeds.com/v2.1/pull/mlb/players.json"//?player=".$player_id;//?player=10224
+	$url = "https://api.mysportsfeeds.com/v2.1/pull/mlb/players.json";//?player=".$player_id;//?player=10224
 	$get_players = mysportsfeeds_api_request($url);
 
 
