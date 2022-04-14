@@ -8,7 +8,7 @@
 	$errors = [];
 	$data = [];
 
-	/*
+	
 
 	if(isset($_POST["selected_season"])){
 		
@@ -24,17 +24,16 @@
 		exit();
 
 	}
-	*/
 	
-
+	
+/*
 	$season_id = 16;	
 	$season = get_seasons_by_id($season_id);
 
 	foreach ($season as $key => $value) {
 		$season_name = $value["season_name"];
 	}
-
-
+*/
 
 	// Get array of all player ids in the players atble
 	$all_db_players_array = get_all_player_ids();	
@@ -106,6 +105,11 @@
 	}
 
 
+	// Stop seed process if previous insert fails (5230 players for 2022)
+	if(!$data['success']){
+		echo json_encode($data);
+		exit();
+	}
 
 	//MARCH
 	if(!empty($all_db_players_array) && empty($march_hr_players_array)){	

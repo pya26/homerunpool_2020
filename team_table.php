@@ -54,7 +54,9 @@
 					$lname = str_replace(".","", $lname);
 					$lname = str_replace("'","-", $lname);
 
-					$mlb_player_slug = trim(strtolower($fname.$lname.'-'.$row['MLBID'].'?stats=gamelogs-r-hitting-mlb&year=2021'));
+					//$mlb_player_slug = trim(strtolower($fname.$lname.'-'.$row['MLBID']));//.'?stats=gamelogs-r-hitting-mlb&year=2021'
+					
+					$mlb_player_slug = $row['MLBID'];
 					
 					$player_row .= '<td><a href="https://www.mlb.com/player/'.$mlb_player_slug.'" target="_blank">'.$row['FirstName'][0].'. '.$row['LastName'].'</a></td>';
 

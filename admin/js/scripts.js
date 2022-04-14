@@ -28,6 +28,14 @@ window.addEventListener('DOMContentLoaded', event => {
 
 $(function() {
 
+    /*
+     * Set date format and max date to select for jquery datepicker widget
+     */
+   
+    $(".datepicker").datepicker({
+        orientation: "bottom" // add this for placemenet
+    });
+
 
     //datatable list of all players on main_content.php
     $('#datatablesListPlayers').DataTable();
@@ -510,6 +518,8 @@ $(function() {
 
                 $("#Preloader").hide();
 
+                $("#seed_hr_table_success_msg").show();
+
                 console.log(data); 
                 //location.reload();              
                                   
@@ -521,6 +531,85 @@ $(function() {
 
 
     });
+
+
+
+
+    $("#daily_hr_form_submit").button().click(function(e){  
+            
+        e.preventDefault();
+
+        $hr_date = $('#hr_date').val();
+
+        var formData = {
+            hr_date: $hr_date,
+        };
+        
+
+        $.ajax({
+            type: "POST",
+            url: "update_daily_hrs_process.php",
+            data: formData,
+            dataType: "json",
+            encode: true
+        }).done(function (data) {
+            
+
+            if (!data.success) {
+                
+                /*$("#seed_hrs_form_submit").prop("disabled", false);
+
+                $("#Preloader").hide();*/
+
+                console.log('error!');                
+                
+            } else {
+
+                console.log(data.homeruns);
+
+                var hrs_array = data.homeruns;
+                var newHTML = [];
+
+                $.each(hrs_array, function(index, value) {
+                    newHTML.push(value.player_id + ' ' + value.player_name + ' ' + value.homerun_num);
+                });
+
+                $("#daily_hr_form_results").html(newHTML.join("<br />"));
+                
+                
+
+                
+                /*$.each( data.homeruns, function( key, value ) {
+
+                     document.getElementById("daily_hr_form_results").textContent = data.homeruns.player_id;
+                   
+                   
+                    
+                });*/
+        
+
+               
+
+                //$('#daily_hr_form_results').html(display_daily_hrs);
+                //$('#daily_hr_form_results').html(data.homeruns);
+                //document.getElementById("display-array").textContent = array.join(", ");
+
+                /*$("#seed_hrs_form_submit").prop("disabled", false); 
+
+                $("#Preloader").hide();
+
+                $("#seed_hr_table_success_msg").show();
+
+                console.log(data); 
+                //location.reload(); */             
+                                  
+            }
+
+        });
+
+        //console.log($hr_date); 
+
+    }); 
 
 
 

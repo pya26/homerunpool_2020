@@ -40,7 +40,7 @@
 
 	    <div class="col col-md-9">
 	        <div class="p-3 border bg-light">
-	        	hi
+	        	<div class="alert alert-success alert-dismissible fade hide" id="seed_hr_table_success_msg" role="alert"> A simple success alert with. Give it a click if you like. <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>
 			</div>	        
 	    </div>	    
 
