@@ -10,7 +10,7 @@
   	$api_file = 'injuries.json';
 
 
-  	$url_params = '?position=C,1B,2B,3B,SS,LF,CF,RF,DH,OF';
+  	$url_params = '?position=C,1B,2B,3B,SS,LF,CF,RF,DH,OF,P';
 
   	// set full url to be passed to the curl_request function 
     $url = $GLOBALS['msf_api_v2_base_url'] . $api_file . $url_params;
@@ -34,8 +34,14 @@
 
 
 	$league_id = $GLOBALS['league_id'];
-    $season_id = 14;
 
+	$url = $GLOBALS['msf_api_v2_base_url'] . 'current_season.json?date=' . $date;
+	$season = mysportsfeeds_api_request($url);
+
+	$season_slug = $season->seasons[0]->slug;
+
+	$season_id = get_season_id($season_slug);
+    
     date_default_timezone_set('America/New_York');
 	$thedatetime = date('Y-m-d H:i:s', time());
 	
