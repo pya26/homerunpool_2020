@@ -586,10 +586,14 @@ $(function() {
 
     $("#update_il_form_submit").button().click(function(e){ 
 
-        e.preventDefault();
+        e.preventDefault(); 
 
-        
+        //remove class to hide spinner        
+        $('#il_spinner').removeClass('d-none');
+        //add class to show spinner
+        $('#il_spinner').addClass('d-block');        
 
+           
         $.ajax({
             type: "POST",
             url: "update_il_process.php",
@@ -599,21 +603,39 @@ $(function() {
             
 
             if (!data.success) {
+
+                //remove class to show spinner        
+                $('#il_spinner').removeClass('d-block');
+                //add class to hide spinner
+                $('#il_spinner').addClass('d-none');
+
                 
+                //remove class to hide error message
+                $('#update_il_process_error_msg').removeClass('d-none');
+                //add class to display error message
+                $('#update_il_process_error_msg').addClass('d-block');
+             
                 
                 console.log('error!');                
                 
             } else {
 
-                console.log(data);
+                //remove class to show spinner        
+                $('#il_spinner').removeClass('d-block');
+                //add class to hide spinner
+                $('#il_spinner').addClass('d-none');
 
-                
-                
-                         
+                //remove class to hide success message
+                $('#update_il_process_success_msg').removeClass('d-none');
+                //add class to display success message
+                $('#update_il_process_success_msg').addClass('d-block');
+
+                console.log(data);                       
                                   
             }
 
         });
+        
 
     });
 
