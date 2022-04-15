@@ -658,6 +658,16 @@ $(function() {
                 //add class to display success message
                 $('#update_il_process_success_msg').addClass('d-block');
 
+
+                var injuries_array = data.injuries;
+                var newHTML = [];
+
+                $.each(injuries_array, function(index, value) {
+                    newHTML.push(value.player_id + ' ' + value.player_name + ' [' + value.team  + '] (' + value.position  + ') ' + value.injury_desc  + ' ' + value.playing_probability);
+                });
+
+                $("#ir_list_results").html(newHTML.join("<br />"));
+
                 console.log(data);                       
                                   
             }

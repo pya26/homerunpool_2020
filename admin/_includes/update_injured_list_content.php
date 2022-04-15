@@ -34,6 +34,8 @@
 				  <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
 				</div>
 
+				<div id="ir_list_results"></div>
+
 			</div>	        
 	    </div>	    
 

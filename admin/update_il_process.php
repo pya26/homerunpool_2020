@@ -25,17 +25,18 @@
 	$player_injury_response = mysportsfeeds_api_request($url);
 
 
-	/*print "<pre>";
-	print_r($player_injury_response);
-	print "</pre>";*/
-
 	
+	$injury_array = [];
 	foreach($player_injury_response->players as $key => $value) {
-		//print $value->id . ' -- '. $value->firstName . ' ' . $value->lastName . ' -- ' . $value->currentInjury->description . ' -- ' . $value->currentInjury->playingProbability . '<br />';
-	
+			
 		$player_id = $value->id;
+		$name = $value->firstName . ' ' . $value->lastName;
+		$team = $value->currentTeam->abbreviation;
+		$primary_position = $value->primaryPosition;
 		$injury_desc = $value->currentInjury->description;
 		$playing_probability = $value->currentInjury->playingProbability;
+
+		$injury_array[] = ['player_id' => $player_id, 'player_name' => $name, 'team' => $team, 'position' => $primary_position, 'injury_desc' => $injury_desc, 'playing_probability' => $playing_probability];
 
 		//print  $player_id . ' ('.$value->primaryPosition.')' .' - '. $value->firstName . ' - ' . $value->lastName . ' - ' . $injury_desc . ' - ' . $playing_probability . '<br />';
 		insert_injured_players($player_id,$injury_desc,$playing_probability);
@@ -65,6 +66,7 @@
 	} else {
 	    $data['success'] = true;
 	    $data['message'] = 'Success!';
+	    $data['injuries'] = $injury_array;
 	}
 
 
