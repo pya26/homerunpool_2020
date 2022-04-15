@@ -473,9 +473,15 @@ $(function() {
         
         e.preventDefault();
 
+        //remove class to hide spinner        
+        $('#seed_hr_tables_spinner').removeClass('d-none');
+        //add class to show spinner
+        $('#seed_hr_tables_spinner').addClass('d-block');
+
+        //disable submit button
         $("#seed_hrs_form_submit").prop("disabled", true);
 
-        //var url_string = '?';
+        
 
         $selected_season = $('#select_season').val();
 
@@ -506,22 +512,44 @@ $(function() {
 
             if (!data.success) {
                 
+                //remove class to show spinner        
+                $('#seed_hr_tables_spinner').removeClass('d-block');
+                //add class to hide spinner
+                $('#seed_hr_tables_spinner').addClass('d-none');
+                
+                //remove class to hide error message
+                $('#seed_hr_tables_error_msg').removeClass('d-none');
+                //add class to display error message
+                $('#seed_hr_tables_error_msg').addClass('d-block');
+
+                // enable submit button
                 $("#seed_hrs_form_submit").prop("disabled", false);
 
-                $("#Preloader").hide();
+                
 
                 console.log('error!');                
                 
             } else {
 
+                //remove class to show spinner        
+                $('#seed_hr_tables_spinner').removeClass('d-block');
+                //add class to hide spinner
+                $('#seed_hr_tables_spinner').addClass('d-none');
+
+                //remove class to hide success message
+                $('#seed_hr_tables_success_msg').removeClass('d-none');
+                //add class to display success message
+                $('#seed_hr_tables_success_msg').addClass('d-block');
+
+
+                var month_msg_array = [data.feb_message,data.mar_message,data.apr_message,data.may_message,data.jun_message,data.jul_message,data.aug_message,data.sep_message,data.oct_message,data.nov_message];
+                $("#hr_table_seed_results").html(month_msg_array.join("<br />"));
+
+                // enable submit button
                 $("#seed_hrs_form_submit").prop("disabled", false); 
+                
 
-                $("#Preloader").hide();
-
-                $("#seed_hr_table_success_msg").show();
-
-                console.log(data); 
-                //location.reload();              
+                console.log(data);             
                                   
             }
 

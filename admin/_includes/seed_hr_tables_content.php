@@ -25,12 +25,6 @@
 						
 						print $seed_hrs_form;
 
-
-						$preload_image = '<div style="max-width: 200px">';
-						$preload_image .= '<img src="../images/baseball_loading_2.gif" id="Preloader" style="max-width:100%;display:none;"/>';
-						$preload_image .= '</div>';
-						print $preload_image;
-
 					} else {
 						print "The players table has not been seeded yet. Once it has, you will have the ability to seed the monthly homerun tables";
 					}
@@ -40,7 +34,23 @@
 
 	    <div class="col col-md-9">
 	        <div class="p-3 border bg-light">
-	        	<div class="alert alert-success alert-dismissible fade hide" id="seed_hr_table_success_msg" role="alert"> A simple success alert with. Give it a click if you like. <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>
+	        	
+				<div class="alert alert-success alert-dismissible d-none" id="seed_hr_tables_success_msg" role="alert">
+					The monthly homerun tables have been seeded with all Player IDs. <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div>
+
+				<div class="alert alert-danger alert-dismissible d-none" id="seed_hr_tables_error_msg" role="alert">
+					An error was encountered while seeding the monthly homerun tables. Please review the error logs. <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div>
+
+
+				<div class="d-none" id="seed_hr_tables_spinner">
+					<strong>Loading...</strong>
+					<div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
+				</div>
+
+				<div id="hr_table_seed_results"></div>
+
 			</div>	        
 	    </div>	    
 
