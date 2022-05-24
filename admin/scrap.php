@@ -122,17 +122,17 @@
         $status = 'A';
 
 
-        //if($mlb_image != ''){
+        if($mlb_image != ''){
 
             //print  $first_name .' '. $last_name .' --  '. substr(strrchr(rtrim($mlb_image, '/'), '/'), 1) . ' ('. $mlb_id .')'. '<br />';
 
-            //print $first_name .' '. $last_name .' --  '. $mlb_image . '('. $mlb_id .')'. '<br />';
-        //}
+            print $first_name .' '. $last_name .' --  '. $mlb_image . '('. $mlb_id .')'. '<br />';
+        }
 
-            $stmt = $dbh->prepare("UPDATE players SET  MLBID=:mlbid WHERE PlayerID = :player_id");
+            /*$stmt = $dbh->prepare("UPDATE players SET  MLBID=:mlbid WHERE PlayerID = :player_id");
             $stmt->bindParam('player_id', $player_id, PDO::PARAM_INT);    
             $stmt->bindParam('mlbid', $mlb_id, PDO::PARAM_INT);
-            $stmt->execute();
+            $stmt->execute();*/
 
     }
 

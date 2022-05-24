@@ -16,6 +16,7 @@
     }
 
 	$date = $_POST['hr_date'];
+	//$date = '20220501';
 
 
 	$url = $GLOBALS['msf_api_v2_base_url'] . 'current_season.json?date=' . $date;
@@ -36,6 +37,8 @@
 	//print $year . '<br />';
 	//print $month . '<br />';
 	//print $day . '<br />';
+
+
 
 	switch ($month) {
 		case '01':
