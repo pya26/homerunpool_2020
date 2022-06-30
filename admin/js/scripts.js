@@ -565,7 +565,12 @@ $(function() {
 
     $("#daily_hr_form_submit").button().click(function(e){  
             
-        e.preventDefault();
+        e.preventDefault(); 
+
+        //remove class to hide spinner        
+        $('#il_spinner').removeClass('d-none');
+        //add class to show spinner
+        $('#il_spinner').addClass('d-block');
 
         $hr_date = $('#hr_date').val();
 
@@ -584,11 +589,21 @@ $(function() {
             
 
             if (!data.success) {
+
+                //remove class to show spinner        
+                $('#il_spinner').removeClass('d-block');
+                //add class to hide spinner
+                $('#il_spinner').addClass('d-none');
                 
                 
                 console.log('error!');                
                 
             } else {
+
+                //remove class to show spinner        
+                $('#il_spinner').removeClass('d-block');
+                //add class to hide spinner
+                $('#il_spinner').addClass('d-none');
 
                 console.log(data.homeruns);
 

@@ -22,6 +22,11 @@
 	    <div class="col col-md-9">
 	        <div class="p-3 border bg-light">
 	        	<div class="alert alert-success alert-dismissible fade hide" id="seed_hr_table_success_msg" role="alert"> A simple success alert with. Give it a click if you like. <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>
+	        	
+	        	<div class="d-none" id="il_spinner">
+				  <strong>Loading...</strong>
+				  <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
+				</div>
 	        	<?php
 	        		print '<div id="daily_hr_form_results"></div>';
 	        	?>

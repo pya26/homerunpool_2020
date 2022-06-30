@@ -97,7 +97,7 @@ switch ($month) {
 
 $hr_response = mysportsfeeds_api_request($url_hrs);
 
-
+/*
 foreach ($hr_response->gamelogs as $key => $value) {
 	$playerid =  $value->player->id;
 	$first_name = $value->player->firstName;
@@ -124,6 +124,71 @@ foreach ($hr_response->gamelogs as $key => $value) {
 	   
 	}
 
+}
+*/
+
+foreach ($hr_response->gamelogs as $current_key => $current_array) {
+
+	$playerid =  $current_array->player->id;
+	$first_name = $current_array->player->firstName;
+	$last_name = $current_array->player->lastName;
+	$homeruns = $current_array->stats->batting->homeruns;
+  
+   /* UPDATE QUERY */
+   if($homeruns > 0){
+		
+		/*$stmt = $dbh->prepare("UPDATE " . $table_string . " SET " . $column_name  . " = " .$homeruns ." WHERE player_id = ". $playerid ." AND season_id = " . $season_id . "");
+	    $stmt->execute();
+
+	    unset($stmt);
+
+	    
+	    $sp_statement = "CALL ". $hr_totals_stored_proc . "(?,?)";
+
+	    $stmt = $dbh->prepare($sp_statement);
+	    $stmt->bindParam(1, $playerid, PDO::PARAM_INT, 11);
+	    $stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);
+	    $stmt->execute();
+
+	    unset($stmt);*/
+
+
+
+
+	    // Run another foreach loop to check for duplicate player ID's. This checks for doubleheaders. It will show a player id for each game. If there was a doubleheader that day, then add the homeruns of the player for both games.
+		foreach ($hr_response->gamelogs as $search_key => $search_array) {
+		  if ($search_array->player->id == $current_array->player->id) {
+
+		      if ($search_key != $current_key) {
+
+		        $total_hr = $current_array->stats->batting->homeruns + $search_array->stats->batting->homeruns;
+
+		        /*echo "duplicate found: " . $search_key ."  " . $current_array->player->id  . "  " . $current_array->player->firstName   . "  " . $current_array->player->lastName . $current_array->stats->batting->homeruns . "(" . $total_hr . ")<br>";*/
+		        /* UPDATE QUERY */	        
+			
+					$stmt = $dbh->prepare("UPDATE " . $table_string . " SET " . $column_name  . " = " .$total_hr ." WHERE player_id = ". $playerid ." AND season_id = " . $season_id . "");
+				    $stmt->execute();
+
+				    unset($stmt);
+
+				    
+				    $sp_statement = "CALL ". $hr_totals_stored_proc . "(?,?)";
+
+				    $stmt = $dbh->prepare($sp_statement);
+				    $stmt->bindParam(1, $playerid, PDO::PARAM_INT, 11);
+				    $stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);
+				    $stmt->execute();
+
+				    unset($stmt);		
+
+		      } 
+		  }
+		}
+	   
+	}
+
+	
+  
 }
 
 
