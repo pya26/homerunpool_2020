@@ -1,14 +1,23 @@
 <?php
 
-	$date = date("Ymd",strtotime("-1 days"));	
+	include("../_config/config.php");
+	include("../_config/db_connect.php");
+	include("../_includes/functions.php");
+	    
 
-  include('/home1/homeruo9/public_html/_config/config.php');
-  include('/home1/homeruo9/public_html/_config/db_connect.php');
-  include('/home1/homeruo9/public_html/_includes/functions.php');
-  
+	$errors = [];
+	$data = [];
 
-  include('email_config.php');
-		
+
+
+	if(!is_super_user()){
+        print "Only the Super User is allowed back here!";
+        exit();
+    }
+
+	//$date = $_POST['hr_date'];
+	$date = "20220702";
+
 
 	$url = $GLOBALS['msf_api_v2_base_url'] . 'current_season.json?date=' . $date;
 	$season = mysportsfeeds_api_request($url);
@@ -17,14 +26,40 @@
 
 	$season_id = get_season_id($season_slug);
 
-	$url_hrs = $GLOBALS['msf_api_v2_base_url'] . $season_slug .'/date/' . $date . '/player_gamelogs.json';
+	$url = $GLOBALS['msf_api_v2_base_url'] . 'current_season.json?date=' . $date;
+
+$season = mysportsfeeds_api_request($url);
+
+
+
+$season_slug = $season->seasons[0]->slug;
+
+$season_id = get_season_id($season_slug);
+
+$url_hrs = $GLOBALS['msf_api_v2_base_url'] . $season_slug .'/date/' . $date . '/player_gamelogs.json'; //?player=Semien'
+
+$hr_response = mysportsfeeds_api_request($url_hrs);
+
+//check if more than 1 game was played this day
+
+
+foreach($hr_response->gamelogs as $key => $val){
+   $player_id = $val->player->id;
+   $player_first_name = $val->player->firstName;
+   $player_last_name = $val->player->lastName;
+   $player_hrs = $val->stats->batting->homeruns;
+	    
+   if($player_hrs > 0){
+   
+   	$homerun_array[] = ['player_id' => $player_id, 'firstName' => $player_first_name, 'lastName' => $player_last_name, 'homeruns' => $player_hrs]; 
+   }
+}
 
 	$year = substr($date, 0, 4);
 	$month = substr($date, 4, 2);
 	$day = substr($date, 6, 2);
 
 	$column_name = "day" . ltrim($day, '0');
-
 
 	switch ($month) {
 		case '01':
@@ -89,19 +124,8 @@
 	}
 
 
-	$hr_response = mysportsfeeds_api_request($url_hrs);
-
-	if(empty($hr_response->gamelogs)){
-
-		$subject = 'Update Homerun Cron Job was Unsuccessful';
-		$body = 'The gamelogs api response was empty.';
-
-		$send_mail = mail($to_email, $subject, $body, $headers);		
-		exit();
-	}
 
 
-	
 
 	//echo "<br>find arrays with duplicate value for 'name'<br>";
 	foreach ($hr_response->gamelogs as $current_key => $current_array) {  
@@ -119,12 +143,23 @@
 
 				if ($search_key != $current_key) {
 
+
 					$dh_hrs = $current_array->stats->batting->homeruns + $search_array->stats->batting->homeruns;
 
+
+
 					if($dh_hrs > 0){
-						$dh_hrs_array[] = ['player_id' => $current_array->player->id, 'firstName' => $current_array->player->firstName, 'lastName' => $current_array->player->lastName, 'homeruns' => $dh_hrs];
+					$dh_hrs_array[] = ['player_id' => $current_array->player->id, 'firstName' => $current_array->player->firstName, 'lastName' => $current_array->player->lastName, 'homeruns' => $dh_hrs];
 					}
-					
+
+
+
+				/* UPDATE QUERY */
+
+
+
+
+
 				} 
 			}
 		}
@@ -132,46 +167,68 @@
 	}
 
 
+	$gamelog_hr_array = array_merge($single_game_hrs_array, $dh_hrs_array);
+
 
 
 	
-  
-  //check if doubheader was played today. If so, merge the single game and double header arrays. If not, just return single game array
-  if(count($dh_hrs_array)  > 0){
-  
-    // Call function that will return one unique record for each player that playerd a doubleheader and hit a homerun(s) 
-    $double_header_hrs = unique_multidim_array($dh_hrs_array,'player_id');
 
-    // Build array of player ids from $double_header_hrs array to be removed from $single_game_hrs_array.
-    foreach($double_header_hrs as $key => $value){
-      unset($single_game_hrs_array[$key]);
-    }
+/*
+print "<table border=1>";
+print "<tr style='vertical-align: top;''>";
+print "<td>";
+print_r(count($homerun_array));
+print "</td>";
+print "<td>";
+print_r(count($single_game_hrs_array));
+print "</td>";
+print "<td>";
+print_r(count($dh_hrs_array));
+print "</td>";
+print "<td>";
+print_r(count($gamelog_hr_array));
+print "</td>";
+print "</tr>";
 
-    // Remove records from $single_game_hrs_array that are in $double_header_hrs matching by player_id
-    foreach($single_game_hrs_array as $key => $value){
+print "<tr style='vertical-align: top;'>";
+    print "<td>";
+      
+        print "<pre>";
+        print_r($homerun_array);
+        print "<pre>";
+     
+    print "</td>";
 
-      foreach($double_header_hrs as $key2 => $value2){
+    print "<td>";
+      
+        print "<pre>";
+        print_r($single_game_hrs_array);
+        print "<pre>";
+      
+    print "</td>";
 
-        if($value["player_id"] == $value2["player_id"]){
-          unset($single_game_hrs_array[$key]);
-        }
+    print "<td>";
+      
+        print "<pre>";
+        print_r($dh_hrs_array);
+        print "<pre>";
+      
+    print "</td>";
 
-      } 
-
-    }
-
-    // combine single game array and double header game arrays
-    $gamelog_hr_array = array_merge($single_game_hrs_array, $double_header_hrs);
-
-  } else {
-
-    $gamelog_hr_array = $single_game_hrs_array;
-
-  }
-
-
+    print "<td>";
+      
+        print "<pre>";
+        print_r($gamelog_hr_array);
+        print "<pre>";
+      
+    print "</td>";
+  print "</tr>";
 
 
+print "</table>";
+
+exit();
+*/
   foreach ($gamelog_hr_array as $key => $value) {
 
     $playerid =  $value["player_id"];
@@ -204,35 +261,18 @@
   }
 
 
-
-
-
-
-
-
-
-
-
-
-
-	
-	$yesterday_date_format = strtotime($date);
- 	$yesterday_date_format = date('n/j/Y', $yesterday_date_format);	
-
-	$subject = "Homeruns hit yesterday ".$yesterday_date_format;
-
-	$body = "The following players hit homeruns yesterday on ".$yesterday_date_format.". \r\n\r\n";
-
-	foreach ($homerun_array as $key => $value) {
-
-		$body .= $value['player_id'] .' '. $value['player_name'] . " (". $value['homerun_num'] .")\r\n";
-
+	if (!empty($errors)) {
+	    $data['success'] = false;
+	    $data['errors'] = $errors;
+	} else {
+	    $data['success'] = true;
+	    $data['message'] = 'Success!';
+	    $data['homeruns'] = $homerun_array;
 	}
 
-	$send_mail = mail($to_email, $subject, $body, $headers);
 
 
 
-	
+	echo json_encode($data);
 
 ?>
