@@ -16,7 +16,7 @@
     }
 
 	$date = $_POST['hr_date'];
-	//$date = "20220702";
+	//$date = "20220726";
 
 
 	$url = $GLOBALS['msf_api_v2_base_url'] . 'current_season.json?date=' . $date;
@@ -134,9 +134,11 @@
 
 	}
 
+	var_dump($dh_hrs_array);
+
 
 	//check if doubheader was played today. If so, merge the single game and double header arrays. If not, just return single game array
-  if(count($dh_hrs_array)  > 0){
+  if(isset($dh_hrs_array) && count($dh_hrs_array)  > 0){
   
     // Call function that will return one unique record for each player that playerd a doubleheader and hit a homerun(s) 
     $double_header_hrs = unique_multidim_array($dh_hrs_array,'player_id');
@@ -172,7 +174,7 @@
 
 	
 
-	/*
+/*
 	print "<table border=1>";
 	print "<tr style='vertical-align: top;''>";
 	print "<td>";
@@ -228,6 +230,7 @@
 
 	exit();
 	*/
+	
 	foreach ($gamelog_hr_array as $key => $value) {
 
 		$playerid =  $value["player_id"];

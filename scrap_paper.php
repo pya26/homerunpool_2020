@@ -10,7 +10,7 @@ try {
   }
 
 //$date = date("Ymd",strtotime("-1 days"));
-$date = "20220702";
+$date = "20220726";
 
 $url = $GLOBALS['msf_api_v2_base_url'] . 'current_season.json?date=' . $date;
 
@@ -48,8 +48,8 @@ foreach($hr_response->gamelogs as $key => $val){
 
 
 
-$table_string = 'hrs_june';
-$hr_totals_stored_proc = 'update_june_homerun_totals';
+$table_string = 'hrs_july';
+$hr_totals_stored_proc = 'update_july_homerun_totals';
 $msg = "June";
 $year = substr($date, 0, 4);
 $month = substr($date, 4, 2);
@@ -119,7 +119,7 @@ $gamelog_hr_array = array_merge($single_game_hrs_array, $dh_hrs_array);
   <tr style="vertical-align: top;">
     <td>
       <?php       
-        print_r(count($homerun_array));       
+        print "Original HR Count "; print_r(count($homerun_array));       
       ?>
     </td>
     <td>

@@ -16,7 +16,7 @@
     }
 
 	//$date = $_POST['hr_date'];
-	$date = "20220702";
+	$date = "20220721";
 
 
 	$url = $GLOBALS['msf_api_v2_base_url'] . 'current_season.json?date=' . $date;
@@ -173,7 +173,7 @@ foreach($hr_response->gamelogs as $key => $val){
 
 	
 
-/*
+
 print "<table border=1>";
 print "<tr style='vertical-align: top;''>";
 print "<td>";
@@ -228,7 +228,7 @@ print "<tr style='vertical-align: top;'>";
 print "</table>";
 
 exit();
-*/
+
   foreach ($gamelog_hr_array as $key => $value) {
 
     $playerid =  $value["player_id"];

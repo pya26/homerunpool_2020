@@ -16,7 +16,7 @@
     }
 
 	$date = $_POST['hr_date'];
-	//$date = '20220501';
+	//$date = '20220721';
 
 
 	$url = $GLOBALS['msf_api_v2_base_url'] . 'current_season.json?date=' . $date;
@@ -217,6 +217,11 @@
 
 
 
+/*print "<pre>";
+print_r($gamelog_hr_array);
+print "</pre>";
+exit();
+*/
 
   foreach ($gamelog_hr_array as $key => $value) {
 
