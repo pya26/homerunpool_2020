@@ -1,5 +1,7 @@
 <?php
 
+  //include('top-cache.php');
+
   try {
     include("_config/config.php");
     include("_config/db_connect.php");
@@ -393,3 +395,8 @@
 
   </body>
 </html>
+
+
+<?php
+  //include('bottom-cache.php');
+?>

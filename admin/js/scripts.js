@@ -132,10 +132,12 @@ $(function() {
 
     // update player edits via MySportsFeeds API from edit_player.php
     $("#update_player_msf").button().click(function(e){
-        
+
+
         var formData = {
             player_id: $('#validationPlayerID').val(),
         };
+        
 
         $.ajax({
                 type: "POST",
@@ -144,9 +146,12 @@ $(function() {
                 dataType: "json",
                 encode: true,
             }).done(function (data) {
-            //console.log(data);
-            location.reload();
+            console.log(data);
+            /*location.reload();*/
         });
+
+        e.preventDefault();
+
 
     });
 

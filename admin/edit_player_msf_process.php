@@ -7,9 +7,10 @@
 	$errors = [];
 	$data = [];
 
-	//$player_id = $_POST['player_id'];
+	$player_id = $_POST['player_id'];
+	//$player_id = $_GET['player_id'];
 
-	$url = "https://api.mysportsfeeds.com/v2.1/pull/mlb/players.json";//?player=".$player_id;//?player=10224
+	$url = "https://api.mysportsfeeds.com/v2.1/pull/mlb/players.json?player=".$player_id;
 	$get_players = mysportsfeeds_api_request($url);
 
 

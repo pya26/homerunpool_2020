@@ -16,7 +16,7 @@
     }
 
 	$date = $_POST['hr_date'];
-	//$date = "20220726";
+	//$date = "20220712";
 
 
 	$url = $GLOBALS['msf_api_v2_base_url'] . 'current_season.json?date=' . $date;
@@ -103,8 +103,36 @@
 	}
 
 
+//loop through gamelogs response and build an array of all players that hit a homerun that day. If a player played in a doubleheader, the array will have two array elements for the player. My array ($all_hrs_array) will include all player id that have only hoit a homerun (which could result in duplicate player ids)
+foreach ($hr_response->gamelogs as $key => $value) {
+
+	if($value->stats->batting->homeruns > 0){
+
+		$all_hrs_array[] = ['player_id' =>  $value->player->id, 'firstName' => $value->player->firstName, 'lastName' => $value->player->lastName, 'homeruns' => $value->stats->batting->homeruns];
+	}
+
+}
 
 
+$sumArray2 = [];
+
+foreach ($all_hrs_array as $agentInfo) {
+
+    // create new item in result array if pair 'id'+'name' not exists
+    if (!isset($sumArray2[$agentInfo['player_id']])) {
+        $sumArray2[$agentInfo['player_id']] = $agentInfo;
+    } else {
+        // apply sum to existing element otherwise
+        $sumArray2[$agentInfo['player_id']]['homeruns'] += $agentInfo['homeruns'];
+    }
+}
+
+// optional action to flush keys of array
+$gamelog_hr_array = array_values($sumArray2);
+
+
+
+/*
 
 	//echo "<br>find arrays with duplicate value for 'name'<br>";
 	foreach ($hr_response->gamelogs as $current_key => $current_array) {  
@@ -134,7 +162,7 @@
 
 	}
 
-	var_dump($dh_hrs_array);
+	//var_dump($dh_hrs_array);
 
 
 	//check if doubheader was played today. If so, merge the single game and double header arrays. If not, just return single game array
@@ -170,7 +198,7 @@
 
   }
 
-
+*/
 
 	
 
@@ -178,7 +206,7 @@
 	print "<table border=1>";
 	print "<tr style='vertical-align: top;''>";
 	print "<td>";
-	print_r(count($homerun_array));
+	//print_r(count($homerun_array));
 	print "</td>";
 	print "<td>";
 	print_r(count($single_game_hrs_array));
@@ -195,7 +223,7 @@
 	    print "<td>";
 	      
 	        print "<pre>";
-	        print_r($homerun_array);
+	       // print_r($homerun_array);
 	        print "<pre>";
 	     
 	    print "</td>";

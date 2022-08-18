@@ -16,7 +16,7 @@
     }
 
 	//$date = $_POST['hr_date'];
-	$date = "20220721";
+	$date = "20220713";//20220607, 20220712, 20220514, 20220804, 20220618, 20220713
 
 
 	$url = $GLOBALS['msf_api_v2_base_url'] . 'current_season.json?date=' . $date;
@@ -26,34 +26,13 @@
 
 	$season_id = get_season_id($season_slug);
 
-	$url = $GLOBALS['msf_api_v2_base_url'] . 'current_season.json?date=' . $date;
+	$season_slug = $season->seasons[0]->slug;
 
-$season = mysportsfeeds_api_request($url);
+	$season_id = get_season_id($season_slug);
 
+	$url_hrs = $GLOBALS['msf_api_v2_base_url'] . $season_slug .'/date/' . $date . '/player_gamelogs.json'; //?player=Semien'
 
-
-$season_slug = $season->seasons[0]->slug;
-
-$season_id = get_season_id($season_slug);
-
-$url_hrs = $GLOBALS['msf_api_v2_base_url'] . $season_slug .'/date/' . $date . '/player_gamelogs.json'; //?player=Semien'
-
-$hr_response = mysportsfeeds_api_request($url_hrs);
-
-//check if more than 1 game was played this day
-
-
-foreach($hr_response->gamelogs as $key => $val){
-   $player_id = $val->player->id;
-   $player_first_name = $val->player->firstName;
-   $player_last_name = $val->player->lastName;
-   $player_hrs = $val->stats->batting->homeruns;
-	    
-   if($player_hrs > 0){
-   
-   	$homerun_array[] = ['player_id' => $player_id, 'firstName' => $player_first_name, 'lastName' => $player_last_name, 'homeruns' => $player_hrs]; 
-   }
-}
+	$hr_response = mysportsfeeds_api_request($url_hrs);
 
 	$year = substr($date, 0, 4);
 	$month = substr($date, 4, 2);
@@ -127,6 +106,152 @@ foreach($hr_response->gamelogs as $key => $val){
 
 
 
+//loop through gamelogs response and build an array of all players that hit a homerun that day. If a player played in a doubleheader, the array will have two array elements for the player. My array ($all_hrs_array) will include all player id that have only hoit a homerun (which could result in duplicate player ids)
+foreach ($hr_response->gamelogs as $key => $value) {
+
+	if($value->stats->batting->homeruns > 0){
+
+		$all_hrs_array[] = ['player_id' =>  $value->player->id, 'firstName' => $value->player->firstName, 'lastName' => $value->player->lastName, 'homeruns' => $value->stats->batting->homeruns];
+		
+		//print $key . ' ~ ' . $value->player->id . ' ' . $value->player->firstName . '' . $value->player->lastName. ' -- ' . $value->stats->batting->homeruns. '<br />';
+	}
+
+}
+
+
+/*
+// Get number of duplicates for each 'player_id' in $all_hrs_array.
+$occurences = array_count_values(array_column($all_hrs_array, 'player_id'));
+
+// Build unique array of player_ids that were dupes in $all_hrs_array
+$dh_hrs_player_ids = [];
+foreach($occurences as $key => $value){	
+	if($value > 1){
+		$dh_hrs_player_ids[] = ['player_id' =>  $key];
+	}	
+}
+*/
+
+/*
+//Build array of the players that were in $dh_hrs_player_ids with player_id, firstName, lastName, and total hrs hit in both games
+$hr_count = 0;
+$total_dh_hrs_for_playerids = array();
+foreach ($hr_response->gamelogs as $key => $value) {
+
+	foreach($dh_hrs_player_ids as $key2 => $value2){	
+		
+		if($value->player->id === $value2["player_id"]){
+
+			$hr_count = $value->stats->batting->homeruns;
+			//print $value->player->id . ' -- ' . $value->stats->batting->homeruns .'<br />';
+			$total_dh_hrs_for_playerids[] = ['player_id' =>  $value->player->id, 'homeruns' => $hr_count];
+
+		} 
+	}
+
+}
+*/
+
+
+
+
+
+
+/*
+$sumArray = [];
+
+foreach ($total_dh_hrs_for_playerids as $agentInfo) {
+
+    // create new item in result array if pair 'id'+'name' not exists
+    if (!isset($sumArray[$agentInfo['player_id']])) {
+        $sumArray[$agentInfo['player_id']] = $agentInfo;
+    } else {
+        // apply sum to existing element otherwise
+        $sumArray[$agentInfo['player_id']]['homeruns'] += $agentInfo['homeruns'];
+    }
+}
+
+// optional action to flush keys of array
+$sumArray = array_values($sumArray);
+
+print "<pre>";
+print_r ($sumArray);
+print "</pre>";
+*/
+
+
+
+/* 
+Main idea of algorithm - caching key pairs in result array and further checking existence of them.
+*/
+$sumArray2 = [];
+
+foreach ($all_hrs_array as $agentInfo) {
+
+    // create new item in result array if 'player_id' does not exists
+    if (!isset($sumArray2[$agentInfo['player_id']])) {
+        $sumArray2[$agentInfo['player_id']] = $agentInfo;
+    } else {
+        // apply sum to existing element otherwise
+        $sumArray2[$agentInfo['player_id']]['homeruns'] += $agentInfo['homeruns'];
+    }
+}
+
+// optional action to flush keys of array
+$sumArray2 = array_values($sumArray2);
+
+
+
+/*
+print "<table border=1>";
+	print "<tr style='vertical-align: top;''>";
+	print "<td> ALL HRs for the Day (" . count($all_hrs_array) . ")";
+		print "<pre>";
+		print_r($all_hrs_array);
+		print "</pre>";
+	print "</td>";
+	print "<td> Players that hit HRs in both games of DH (" . count($dh_hrs_player_ids) . ")";
+	 	print "<pre>";
+    print_r($dh_hrs_player_ids);
+    print "</pre>";
+	print "</td>";
+	print "<td> Total HRs for players that hit an HR in both game of DH (" . count($total_dh_hrs_for_playerids) . ")";
+		print "<pre>";
+		print_r($total_dh_hrs_for_playerids);
+		print "</pre>";
+	print "</td>";
+	print "<td> Final Totals (" . count($sumArray2) . ")";
+		print "<pre>";
+		print_r($sumArray2);
+		print "</pre>";
+	print "</td>";
+	print "</tr>";
+	print "</table>";
+*/
+
+
+print "<pre>";
+		print_r($sumArray2);
+		print "</pre>";
+exit();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	//echo "<br>find arrays with duplicate value for 'name'<br>";
 	foreach ($hr_response->gamelogs as $current_key => $current_array) {  
 
@@ -137,128 +262,177 @@ foreach($hr_response->gamelogs as $key => $val){
 		$playerid = $current_array->player->id;
 		$homeruns = $current_array->stats->batting->homeruns;   
 
-
+		$dh_hrs_array = array();
 		foreach ($hr_response->gamelogs as $search_key => $search_array) {
-			if ($search_array->player->id == $current_array->player->id) {
+			
+			if ($search_array->player->id == $current_array->player->id) {				
 
-				if ($search_key != $current_key) {
 
+				if ($search_key == $current_key) {
+					print $search_array->player->id . ' ~~~' . $current_array->player->id . '<br />';
 
 					$dh_hrs = $current_array->stats->batting->homeruns + $search_array->stats->batting->homeruns;
 
-
-
 					if($dh_hrs > 0){
-					$dh_hrs_array[] = ['player_id' => $current_array->player->id, 'firstName' => $current_array->player->firstName, 'lastName' => $current_array->player->lastName, 'homeruns' => $dh_hrs];
+						$dh_hrs_array[] = ['player_id' => $current_array->player->id, 'firstName' => $current_array->player->firstName, 'lastName' => $current_array->player->lastName, 'homeruns' => $dh_hrs];
 					}
 
-
-
-				/* UPDATE QUERY */
-
-
-
-
-
 				} 
+
 			}
 		}
 
 	}
 
 
-	$gamelog_hr_array = array_merge($single_game_hrs_array, $dh_hrs_array);
+	print "<table border=1>";
+	print "<tr style='vertical-align: top;''>";
+	print "<td>";
+	//print_r(count($homerun_array));
+	print "</td>";
+	print "<td>";
+	 	print "<pre>";
+    print_r($single_game_hrs_array);
+    print "</pre>";
+	print "</td>";
+	print "<td>";
+		print "<pre>";
+		print_r($dh_hrs_array);
+		print "</pre>";
+	print "</td>";
+	print "<td>";
+	//print_r(count($gamelog_hr_array));
+	print "</td>";
+	print "</tr>";
+	print "</table>";
+
+	exit();
+
+
+	//check if doubheader was played today. If so, merge the single game and double header arrays. If not, just return single game array
+  if(isset($dh_hrs_array) && count($dh_hrs_array)  > 0){
+  
+    // Call function that will return one unique record for each player that playerd a doubleheader and hit a homerun(s) 
+    $double_header_hrs = unique_multidim_array($dh_hrs_array,'player_id');
+
+    // Build array of player ids from $double_header_hrs array to be removed from $single_game_hrs_array.
+    foreach($double_header_hrs as $key => $value){
+      unset($single_game_hrs_array[$key]);
+    }
+
+    // Remove records from $single_game_hrs_array that are in $double_header_hrs matching by player_id
+    foreach($single_game_hrs_array as $key => $value){
+
+      foreach($double_header_hrs as $key2 => $value2){
+
+        if($value["player_id"] == $value2["player_id"]){
+          unset($single_game_hrs_array[$key]);
+        }
+
+      } 
+
+    }
+
+    // combine single game array and double header game arrays
+    $gamelog_hr_array = array_merge($single_game_hrs_array, $double_header_hrs);
+
+  } else {
+
+    $gamelog_hr_array = $single_game_hrs_array;
+
+  }
 
 
 
 	
 
 
-print "<table border=1>";
-print "<tr style='vertical-align: top;''>";
-print "<td>";
-print_r(count($homerun_array));
-print "</td>";
-print "<td>";
-print_r(count($single_game_hrs_array));
-print "</td>";
-print "<td>";
-print_r(count($dh_hrs_array));
-print "</td>";
-print "<td>";
-print_r(count($gamelog_hr_array));
-print "</td>";
-print "</tr>";
+	print "<table border=1>";
+	print "<tr style='vertical-align: top;''>";
+	print "<td>";
+	//print_r(count($homerun_array));
+	print "</td>";
+	print "<td>";
+	print_r(count($single_game_hrs_array));
+	print "</td>";
+	print "<td>";
+	print_r(count($dh_hrs_array));
+	print "</td>";
+	print "<td>";
+	print_r(count($gamelog_hr_array));
+	print "</td>";
+	print "</tr>";
 
-print "<tr style='vertical-align: top;'>";
-    print "<td>";
-      
-        print "<pre>";
-        print_r($homerun_array);
-        print "<pre>";
-     
-    print "</td>";
+	print "<tr style='vertical-align: top;'>";
+	    print "<td>";
+	      
+	        print "<pre>";
+	       // print_r($homerun_array);
+	        print "<pre>";
+	     
+	    print "</td>";
 
-    print "<td>";
-      
-        print "<pre>";
-        print_r($single_game_hrs_array);
-        print "<pre>";
-      
-    print "</td>";
+	    print "<td>";
+	      
+	        print "<pre>";
+	        print_r($single_game_hrs_array);
+	        print "<pre>";
+	      
+	    print "</td>";
 
-    print "<td>";
-      
-        print "<pre>";
-        print_r($dh_hrs_array);
-        print "<pre>";
-      
-    print "</td>";
+	    print "<td>";
+	      
+	        print "<pre>";
+	        print_r($dh_hrs_array);
+	        print "<pre>";
+	      
+	    print "</td>";
 
-    print "<td>";
-      
-        print "<pre>";
-        print_r($gamelog_hr_array);
-        print "<pre>";
-      
-    print "</td>";
-  print "</tr>";
-
-
-print "</table>";
-
-exit();
-
-  foreach ($gamelog_hr_array as $key => $value) {
-
-    $playerid =  $value["player_id"];
-    $first_name = $value["firstName"];
-    $last_name = $value["lastName"];
-    $homeruns = $value["homeruns"]; 
-
-    if($homeruns > 0){
-
-      $homerun_array[] = ['player_id' => $playerid, 'player_name' => $first_name ." ".$last_name, 'homerun_num' => $homeruns];
-      
-      $stmt = $dbh->prepare("UPDATE " . $table_string . " SET " . $column_name  . " = " .$homeruns ." WHERE player_id = ". $playerid ." AND season_id = " . $season_id . "");
-        $stmt->execute();
-
-        unset($stmt);
-
-        
-        $sp_statement = "CALL ". $hr_totals_stored_proc . "(?,?)";
-
-        $stmt = $dbh->prepare($sp_statement);
-        $stmt->bindParam(1, $playerid, PDO::PARAM_INT, 11);
-        $stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);
-        $stmt->execute();
-
-        unset($stmt);
-       
-    }
+	    print "<td>";
+	      
+	        print "<pre>";
+	        print_r($gamelog_hr_array);
+	        print "<pre>";
+	      
+	    print "</td>";
+	  print "</tr>";
 
 
-  }
+	print "</table>";
+
+	exit();
+	
+	
+	foreach ($gamelog_hr_array as $key => $value) {
+
+		$playerid =  $value["player_id"];
+		$first_name = $value["firstName"];
+		$last_name = $value["lastName"];
+		$homeruns = $value["homeruns"]; 
+
+		if($homeruns > 0){
+
+			$homerun_array[] = ['player_id' => $playerid, 'player_name' => $first_name ." ".$last_name, 'homerun_num' => $homeruns];
+
+			$stmt = $dbh->prepare("UPDATE " . $table_string . " SET " . $column_name  . " = " .$homeruns ." WHERE player_id = ". $playerid ." AND season_id = " . $season_id . "");
+			$stmt->execute();
+
+			unset($stmt);
+
+
+			$sp_statement = "CALL ". $hr_totals_stored_proc . "(?,?)";
+
+			$stmt = $dbh->prepare($sp_statement);
+			$stmt->bindParam(1, $playerid, PDO::PARAM_INT, 11);
+			$stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);
+			$stmt->execute();
+
+			unset($stmt);
+
+		}
+
+
+  	}
 
 
 	if (!empty($errors)) {

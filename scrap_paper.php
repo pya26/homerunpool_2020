@@ -10,7 +10,7 @@ try {
   }
 
 //$date = date("Ymd",strtotime("-1 days"));
-$date = "20220726";
+$date = "20220512";
 
 $url = $GLOBALS['msf_api_v2_base_url'] . 'current_season.json?date=' . $date;
 
@@ -43,6 +43,12 @@ foreach($hr_response->gamelogs as $key => $val){
    $homerun_array[] = ['player_id' => $player_id, 'firstName' => $player_first_name, 'lastName' => $player_last_name, 'homeruns' => $player_hrs]; 
    }
 }
+
+
+print "<pre>";
+print_r($homerun_array);
+print "</pre>";
+exit();
 
 
 
