@@ -10,7 +10,7 @@ try {
   }
 
 //$date = date("Ymd",strtotime("-1 days"));
-$date = "20220512";
+$date = "20220820";
 
 $url = $GLOBALS['msf_api_v2_base_url'] . 'current_season.json?date=' . $date;
 
@@ -45,8 +45,30 @@ foreach($hr_response->gamelogs as $key => $val){
 }
 
 
+var_dump($homerun_array);
+
+exit();
+
+
+$sumArray2 = [];
+
+foreach ($homerun_array as $agentInfo) {
+
+    // create new item in result array if pair 'id'+'name' not exists
+    if (!isset($sumArray2[$agentInfo['player_id']])) {
+        $sumArray2[$agentInfo['player_id']] = $agentInfo;
+    } else {
+        // apply sum to existing element otherwise
+        $sumArray2[$agentInfo['player_id']]['homeruns'] += $agentInfo['homeruns'];
+    }
+}
+
+// optional action to flush keys of array
+$gamelog_hr_array = array_values($sumArray2);
+
+
 print "<pre>";
-print_r($homerun_array);
+print_r($gamelog_hr_array);
 print "</pre>";
 exit();
 

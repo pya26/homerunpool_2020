@@ -267,7 +267,15 @@
           print '<div class="container table-responsive-sm">';
               //print '<a tabindex="1" data-toggle="popover"  data-html="true" data-trigger="focus" title="Team Info" data-placement="bottom" data-content=""';
               //print $row['team_name'];
-            print '<a tabindex="1" data-toggle="popover" id="team_info" data-html="true" data-trigger="focus" title="Team Info" data-placement="bottom" data-content=""';
+            if(strlen(trim($row['logo_image'])) > 0){
+              $logo_path = 'http://localhost/sandbox/homerunpool_2020/images/logos/'.$row['logo_image'];
+              $logo = "<img src='".$logo_path."'";
+            } else {
+              $logo_path = $GLOBALS['base_url'].'images/logos/logoNA.png';
+              $logo = "<img src=".$logo_path.">";
+            }
+            
+            print '<a tabindex="1" data-toggle="popover" id="team_info" data-html="true" data-trigger="focus" title="Team Info" data-placement="bottom" data-content="'.$logo.'"';
             print '<span style="font-size:26px;color:#fff;">';            
             print $row['team_name'];
             print "</a>";

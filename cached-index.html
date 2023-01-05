@@ -1,0 +1,643 @@
+<!DOCTYPE html><html lang="en"><head><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-161217323-1"></script><script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'UA-161217323-1');</script><meta charset="utf-8"><title>Homerun Pool</title><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="http://localhost/sandbox/homerunpool_2020/css/bootstrap.min.css"><script src="http://localhost/sandbox/homerunpool_2020/js/jquery.min.js"></script><script src="http://localhost/sandbox/homerunpool_2020/js/popper.min.js"></script><script src="http://localhost/sandbox/homerunpool_2020/js/bootstrap.min.js"></script><script src="http://localhost/sandbox/homerunpool_2020/js/scripts.js"></script><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous"><link rel="stylesheet" href="http://localhost/sandbox/homerunpool_2020/css/styles.css"><link rel="icon" type="image/png" href="http://localhost/sandbox/homerunpool_2020/images/favicons/favicon.ico"><link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"><script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script><script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script></head><body>
+<script>
+  $(document).ready(function() {
+
+    $('#leaderboard').DataTable({
+      searching: false,
+      paging: false,
+      info: false,
+      order: [[ 9, "desc" ]]
+    });
+
+  });
+</script>
+
+<!-- ------- FORGOT FORM ------- -->
+<div class="modal fade" id="ForgotModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-primary">
+      <div class="modal-header">
+          <h5 class="modal-title" id="loginModalLongTitle">Forgot your password?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+        <div id="error_msg"></div>
+        <form id="forgot_form">
+          <!-- Form Title -->
+          <div class="form-heading text-center">
+            <p class="title-description">We'll email you a link to reset it.</p>
+          </div>
+
+          <div class="form-group">
+            <input type="text" id="email" class="form-control" placeholder="Your E-mail Address" required />
+          </div>
+          <div class="form-group text-center">
+            <button type="submit" class="btn btn-md btn-primary">Send Mail</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- ------- FORGOT FORM ends ------- -->
+
+
+<!-- ------- LOGIN ------- -->
+<div class="modal fade" id="LogInModal" tabindex="-1" role="dialog" aria-labelledby="loginModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-primary">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginModalLongTitle">Please Sign-in</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="login_form">
+          
+          <div class="modal-body">
+            <div id="error_msg"></div>
+
+            <div class="form-group">
+              <label for="email1">Email address</label>
+              <input type="email" class="form-control" id="email_uname" aria-describedby="emailHelp" placeholder="Enter email" required />
+            </div>
+
+            <div class="form-group">
+              <label for="password1">Password</label>
+              <input type="password" class="form-control" id="password1" placeholder="Password" required />
+            </div>
+
+            <!--
+            <div class="row">
+              <div class="col-md-6">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="customCheck1" checked="">
+                    <label class="custom-control-label" for="customCheck1">Remember Me</label>
+                  </div>
+              </div>
+            </div>
+          -->
+
+            <div class="row justify-content-center">
+              <div>
+                  <label><a href="#" class="text-muted" data-toggle="modal" data-target="#ForgotModal" data-dismiss="modal">Forgot Password?</a></label>
+              </div>
+            </div>
+
+            <!--
+            <div class="row justify-content-center">
+              <div>
+                  <label><a href="#" class="text-muted" data-toggle="modal" data-target="#CreateAccountModal" data-dismiss="modal">Create an Account</a></label>
+              </div>
+            </div>
+          -->
+
+          </div>
+          
+          <div class="row justify-content-center">
+            <div class="col-md-6">
+              <button type="submit" class="btn btn-primary btn-block">Sign-in</button>
+            </div>
+          </div>
+          
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ------- LOGIN Ends ------- -->
+
+
+<!-- ------- Create Account ------- -->
+<div class="modal fade" id="CreateAccountModal" tabindex="-1" role="dialog" aria-labelledby="CreateAccountModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-primary">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginModalLongTitle">Create an Account</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="create_account">
+          <div class="modal-body">
+            <div id="error_msg"></div>
+            <div class="form-group">
+              <label for="first_name">First Name</label>
+              <input type="text" class="form-control" id="first_name" placeholder="Enter First Name" required />
+            </div>
+            <div class="form-group">
+              <label for="last_name">Last Name</label>
+              <input type="text" class="form-control" id="last_name" placeholder="Enter Last Name" required />
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="emai" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" required />
+            </div>
+            <div class="form-group">
+              <label for="password1">Password</label>
+              <input type="password" class="form-control" id="password1" placeholder="Enter Password" required />
+            </div>
+          </div>
+          <div class="modal-footer border-top-0 d-flex">
+            <button type="submit" class="btn btn-primary">Create Account</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ------- LOGIN Ends ------- -->
+
+
+
+<nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+  <img src="images/swing_transparent_right_sm.png">&nbsp;&nbsp;&nbsp;
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item"><!--active-->
+        <!--<a class="nav-link" href="#">About <span class="sr-only">(current)</span></a>-->
+      </li>
+      <li class="nav-item">
+        <!--<a class="nav-link" href="#">FAQs</a>-->
+      </li>
+      <!--
+      <li class="nav-item">
+        <a class="nav-link" href="#">Pricing</a>
+      </li>
+    -->
+    </ul>
+    <!--<div id="loginDiv">-->
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item"><a class="nav-link" href="#">Hello Kevin!</a></li><li class="nav-item"><a class="nav-link" href="http://localhost/sandbox/homerunpool_2020/admin/index.php">Front Office</a></li><li class="nav-item"><a class="nav-link" href="logout.php">Logout <i class="fas fa-sign-out-alt"></i></a></li>        <!--<li class="nav-item"><a class="nav-link" href="#">Front Office</a></li>-->       
+      <!--</ul>-->
+    <div>
+  </div>
+</nav>
+
+<!-- style="background: transparent url('images/HRP_TitleGraphic-01.png') no-repeat center center /cover;" -->
+<div class="container-fluid h-100 hr_hitter_heads">
+  <div class="row align-items-center h-100">
+    <div class="col-sm-4 text-center">
+      <img src="images/HomeRunPool-03.png" style="max-width:78%;max-height:78%;"><br /> &nbsp; 
+    </div>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <!-- include leader board-->
+        <div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="container table-responsive-sm">
+        <div style="float:right;">
+            Last Updated: 04/18/2022 3:12:28 pm        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container table-responsive-sm">
+  <h1>2022 Regular Season Leader Board</h1>  
+  <table id="leaderboard" class="table table-sm table-striped table-hover table-bordered border-primary" style="width:100%">
+    <thead>
+      <tr>
+        <th>Team</th>
+        <th>March</th>
+        <th>April</th>
+        <th>May</th>
+        <th>June</th>
+        <th>July</th>
+        <th>August</th>
+        <th>September</th>
+        <th>October</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Derby Virgin</td><td>0</td><td>0</td><td>0</td><td>23</td><td>0</td><td>5</td><td>0</td><td>0</td><td>28</td></tr><tr><td>Ice Breakers</td><td>0</td><td>0</td><td>3</td><td>26</td><td>2</td><td>5</td><td>0</td><td>0</td><td>36</td></tr><tr><td>Emma Shanker</td><td>0</td><td>0</td><td>2</td><td>25</td><td>1</td><td>0</td><td>0</td><td>0</td><td>28</td></tr><tr><td>Mashed Taters</td><td>0</td><td>0</td><td>0</td><td>15</td><td>0</td><td>0</td><td>0</td><td>0</td><td>15</td></tr><tr><td>Saint Leo Sluggers</td><td>0</td><td>0</td><td>0</td><td>22</td><td>2</td><td>1</td><td>0</td><td>0</td><td>25</td></tr><tr><td>Kelly's Heroes</td><td>0</td><td>0</td><td>0</td><td>15</td><td>2</td><td>2</td><td>0</td><td>0</td><td>19</td></tr><tr><td>Montecore's Revenge</td><td>0</td><td>0</td><td>1</td><td>22</td><td>3</td><td>1</td><td>0</td><td>0</td><td>27</td></tr><tr><td>Pity the Fool</td><td>0</td><td>0</td><td>3</td><td>24</td><td>1</td><td>3</td><td>0</td><td>0</td><td>31</td></tr><tr><td>Sand Key Elite</td><td>0</td><td>0</td><td>1</td><td>21</td><td>4</td><td>2</td><td>0</td><td>0</td><td>28</td></tr><tr><td>SB3 Rookie</td><td>0</td><td>0</td><td>0</td><td>22</td><td>0</td><td>2</td><td>0</td><td>0</td><td>24</td></tr><tr><td>Sarasota Swingers</td><td>0</td><td>0</td><td>2</td><td>22</td><td>2</td><td>2</td><td>0</td><td>0</td><td>28</td></tr><tr><td>The Corona Pirates</td><td>0</td><td>0</td><td>1</td><td>16</td><td>1</td><td>1</td><td>0</td><td>0</td><td>19</td></tr><tr><td>The Express</td><td>0</td><td>0</td><td>0</td><td>23</td><td>1</td><td>2</td><td>0</td><td>0</td><td>26</td></tr><tr><td>The Mick</td><td>0</td><td>0</td><td>1</td><td>11</td><td>0</td><td>3</td><td>0</td><td>0</td><td>15</td></tr><tr><td>The Roblox</td><td>0</td><td>0</td><td>0</td><td>19</td><td>2</td><td>1</td><td>0</td><td>0</td><td>22</td></tr><tr><td>Buccos</td><td>0</td><td>0</td><td>1</td><td>22</td><td>0</td><td>2</td><td>0</td><td>0</td><td>25</td></tr>    </tbody>
+  </table>
+</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+
+
+  
+  <div class="row">
+
+    <div class="col-md-4"><div class="container table-responsive-sm"><a tabindex="1" data-toggle="popover" id="team_info" data-html="true" data-trigger="focus" title="Team Info" data-placement="bottom" data-content=""<span style="font-size:26px;color:#fff;">Saint Leo Sluggers</a></span> (Baluta  / Godfrey)
+
+
+
+<table id="team_table" class="table table-striped table-hover table-secondary table-sm" style="width:100%; border-color: #fff;">
+	<thead>
+		<tr>
+			<th>Player</th>
+			<th>Mar</th>
+			<th>Apr</th>
+			<th>May</th>
+			<th>June</th>
+			<th>July</th>
+			<th>Aug</th>
+			<th>Sept</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr><td><a href="https://www.mlb.com/player/665489" target="_blank">V. Guerrero Jr.</a></td><td>0</td><td>0</td><td>0</td><td>8</td><td>1</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/663624" target="_blank">R. Mountcastle</a></td><td>0</td><td>0</td><td>0</td><td>6</td><td>0</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/673357" target="_blank">L. Robert</a></td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/500871" target="_blank">E. Escobar</a></td><td>0</td><td>0</td><td>0</td><td>3</td><td>1</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/608369" target="_blank">C. Seager</a></td><td>0</td><td>0</td><td>0</td><td>4</td><td>0</td><td>1</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/656252" target="_blank">B. Bradley</a></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr class="table-primary"><td>TOTALS</td><td>0</td><td>0</td><td>0</td><td>22</td><td>2</td><td>1</td><td>0</td></tr>	</tbody>
+</table>
+
+</div></div><div class="col-md-4"><div class="container table-responsive-sm"><a tabindex="1" data-toggle="popover" id="team_info" data-html="true" data-trigger="focus" title="Team Info" data-placement="bottom" data-content=""<span style="font-size:26px;color:#fff;">The Roblox</a></span> (Alex Bergren)
+
+
+
+<table id="team_table" class="table table-striped table-hover table-secondary table-sm" style="width:100%; border-color: #fff;">
+	<thead>
+		<tr>
+			<th>Player</th>
+			<th>Mar</th>
+			<th>Apr</th>
+			<th>May</th>
+			<th>June</th>
+			<th>July</th>
+			<th>Aug</th>
+			<th>Sept</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr><td><a href="https://www.mlb.com/player/519317" target="_blank">G. Stanton</a></td><td>0</td><td>0</td><td>0</td><td>4</td><td>1</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/596115" target="_blank">T. Story</a></td><td>0</td><td>0</td><td>0</td><td>2</td><td>0</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/605141" target="_blank">M. Betts</a></td><td>0</td><td>0</td><td>0</td><td>2</td><td>0</td><td>1</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/518934" target="_blank">D. LeMahieu</a></td><td>0</td><td>0</td><td>0</td><td>3</td><td>1</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/641355" target="_blank">C. Bellinger</a></td><td>0</td><td>0</td><td>0</td><td>4</td><td>0</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/650402" target="_blank">G. Torres</a></td><td>0</td><td>0</td><td>0</td><td>4</td><td>0</td><td>0</td><td>0</td></tr><tr class="table-primary"><td>TOTALS</td><td>0</td><td>0</td><td>0</td><td>19</td><td>2</td><td>1</td><td>0</td></tr>	</tbody>
+</table>
+
+</div></div><div class="col-md-4"><div class="container table-responsive-sm"><a tabindex="1" data-toggle="popover" id="team_info" data-html="true" data-trigger="focus" title="Team Info" data-placement="bottom" data-content=""<span style="font-size:26px;color:#fff;">Ice Breakers</a></span><span class="fa-stack" style="color:#df691a; margin-top:-20px;"><i class="fa fa-trophy fa-stack-2x"></i><span class="fa fa-stack-1x"><span style="font-size:12px; color:#fff; margin-top:-7px; display:block;">2004</span></span></span><span class="fa-stack" style="color:#df691a; margin-top:-20px;"><i class="fa fa-trophy fa-stack-2x"></i><span class="fa fa-stack-1x"><span style="font-size:12px; color:#fff; margin-top:-7px; display:block;">2011</span></span></span> (Jeff Bergren)
+
+
+
+<table id="team_table" class="table table-striped table-hover table-secondary table-sm" style="width:100%; border-color: #fff;">
+	<thead>
+		<tr>
+			<th>Player</th>
+			<th>Mar</th>
+			<th>Apr</th>
+			<th>May</th>
+			<th>June</th>
+			<th>July</th>
+			<th>Aug</th>
+			<th>Sept</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr><td><a href="https://www.mlb.com/player/592450" target="_blank">A. Judge</a></td><td>0</td><td>0</td><td>2</td><td>9</td><td>0</td><td>1</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/571970" target="_blank">M. Muncy</a></td><td>0</td><td>0</td><td>0</td><td>2</td><td>0</td><td>1</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/592518" target="_blank">M. Machado</a></td><td>0</td><td>0</td><td>0</td><td>4</td><td>0</td><td>1</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/519203" target="_blank">A. Rizzo</a></td><td>0</td><td>0</td><td>0</td><td>8</td><td>1</td><td>2</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/608324" target="_blank">A. Bregman</a></td><td>0</td><td>0</td><td>0</td><td>3</td><td>0</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/408234" target="_blank">M. Cabrera</a></td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td></tr><tr class="table-primary"><td>TOTALS</td><td>0</td><td>0</td><td>3</td><td>26</td><td>2</td><td>5</td><td>0</td></tr>	</tbody>
+</table>
+
+</div></div></div><div class="row"><div class="col-md-4"><div class="container table-responsive-sm"><a tabindex="1" data-toggle="popover" id="team_info" data-html="true" data-trigger="focus" title="Team Info" data-placement="bottom" data-content=""<span style="font-size:26px;color:#fff;">Mashed Taters</a></span> (Jeff Smith)
+
+
+
+<table id="team_table" class="table table-striped table-hover table-secondary table-sm" style="width:100%; border-color: #fff;">
+	<thead>
+		<tr>
+			<th>Player</th>
+			<th>Mar</th>
+			<th>Apr</th>
+			<th>May</th>
+			<th>June</th>
+			<th>July</th>
+			<th>Aug</th>
+			<th>Sept</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr><td><a href="https://www.mlb.com/player/660271" target="_blank">S. Ohtani</a></td><td>0</td><td>0</td><td>0</td><td>4</td><td>0</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/656555" target="_blank">R. Hoskins</a></td><td>0</td><td>0</td><td>0</td><td>5</td><td>0</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/656305" target="_blank">M. Chapman</a></td><td>0</td><td>0</td><td>0</td><td>3</td><td>0</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/645277" target="_blank">O. Albies</a></td><td>0</td><td>0</td><td>0</td><td>2</td><td>0</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/640457" target="_blank">A. Meadows</a></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/641598" target="_blank">M. Garver</a></td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td></tr><tr class="table-primary"><td>TOTALS</td><td>0</td><td>0</td><td>0</td><td>15</td><td>0</td><td>0</td><td>0</td></tr>	</tbody>
+</table>
+
+</div></div><div class="col-md-4"><div class="container table-responsive-sm"><a tabindex="1" data-toggle="popover" id="team_info" data-html="true" data-trigger="focus" title="Team Info" data-placement="bottom" data-content=""<span style="font-size:26px;color:#fff;">Derby Virgin</a></span> (Bill Taylor)
+
+
+
+<table id="team_table" class="table table-striped table-hover table-secondary table-sm" style="width:100%; border-color: #fff;">
+	<thead>
+		<tr>
+			<th>Player</th>
+			<th>Mar</th>
+			<th>Apr</th>
+			<th>May</th>
+			<th>June</th>
+			<th>July</th>
+			<th>Aug</th>
+			<th>Sept</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr><td><a href="https://www.mlb.com/player/624413" target="_blank">P. Alonso</a></td><td>0</td><td>0</td><td>0</td><td>7</td><td>0</td><td>2</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/608070" target="_blank">J. Ramírez</a></td><td>0</td><td>0</td><td>0</td><td>3</td><td>0</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/592206" target="_blank">N. Castellanos</a></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/607208" target="_blank">T. Turner</a></td><td>0</td><td>0</td><td>0</td><td>4</td><td>0</td><td>1</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/542303" target="_blank">M. Ozuna</a></td><td>0</td><td>0</td><td>0</td><td>3</td><td>0</td><td>1</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/621020" target="_blank">D. Swanson</a></td><td>0</td><td>0</td><td>0</td><td>6</td><td>0</td><td>0</td><td>0</td></tr><tr class="table-primary"><td>TOTALS</td><td>0</td><td>0</td><td>0</td><td>23</td><td>0</td><td>5</td><td>0</td></tr>	</tbody>
+</table>
+
+</div></div><div class="col-md-4"><div class="container table-responsive-sm"><a tabindex="1" data-toggle="popover" id="team_info" data-html="true" data-trigger="focus" title="Team Info" data-placement="bottom" data-content=""<span style="font-size:26px;color:#fff;">Kelly's Heroes</a></span> (Jim Kelly)
+
+
+
+<table id="team_table" class="table table-striped table-hover table-secondary table-sm" style="width:100%; border-color: #fff;">
+	<thead>
+		<tr>
+			<th>Player</th>
+			<th>Mar</th>
+			<th>Apr</th>
+			<th>May</th>
+			<th>June</th>
+			<th>July</th>
+			<th>Aug</th>
+			<th>Sept</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr><td><a href="https://www.mlb.com/player/646240" target="_blank">R. Devers</a></td><td>0</td><td>0</td><td>0</td><td>5</td><td>0</td><td>1</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/518692" target="_blank">F. Freeman</a></td><td>0</td><td>0</td><td>0</td><td>4</td><td>1</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/666915" target="_blank">B. Dalbec</a></td><td>0</td><td>0</td><td>0</td><td>2</td><td>0</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/593428" target="_blank">X. Bogaerts</a></td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/677551" target="_blank">W. Franco</a></td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/573262" target="_blank">M. Yastrzemski</a></td><td>0</td><td>0</td><td>0</td><td>3</td><td>0</td><td>0</td><td>0</td></tr><tr class="table-primary"><td>TOTALS</td><td>0</td><td>0</td><td>0</td><td>15</td><td>2</td><td>2</td><td>0</td></tr>	</tbody>
+</table>
+
+</div></div></div><div class="row"><div class="col-md-4"><div class="container table-responsive-sm"><a tabindex="1" data-toggle="popover" id="team_info" data-html="true" data-trigger="focus" title="Team Info" data-placement="bottom" data-content=""<span style="font-size:26px;color:#fff;">Sand Key Elite</a></span> (Jim Charpentier)
+
+
+
+<table id="team_table" class="table table-striped table-hover table-secondary table-sm" style="width:100%; border-color: #fff;">
+	<thead>
+		<tr>
+			<th>Player</th>
+			<th>Mar</th>
+			<th>Apr</th>
+			<th>May</th>
+			<th>June</th>
+			<th>July</th>
+			<th>Aug</th>
+			<th>Sept</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr><td><a href="https://www.mlb.com/player/621566" target="_blank">M. Olson</a></td><td>0</td><td>0</td><td>0</td><td>4</td><td>0</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/502671" target="_blank">P. Goldschmidt</a></td><td>0</td><td>0</td><td>0</td><td>5</td><td>0</td><td>1</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/571448" target="_blank">N. Arenado</a></td><td>0</td><td>0</td><td>1</td><td>5</td><td>2</td><td>1</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/514888" target="_blank">J. Altuve</a></td><td>0</td><td>0</td><td>0</td><td>3</td><td>1</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/592885" target="_blank">C. Yelich</a></td><td>0</td><td>0</td><td>0</td><td>2</td><td>1</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/596142" target="_blank">G. Sánchez</a></td><td>0</td><td>0</td><td>0</td><td>2</td><td>0</td><td>0</td><td>0</td></tr><tr class="table-primary"><td>TOTALS</td><td>0</td><td>0</td><td>1</td><td>21</td><td>4</td><td>2</td><td>0</td></tr>	</tbody>
+</table>
+
+</div></div><div class="col-md-4"><div class="container table-responsive-sm"><a tabindex="1" data-toggle="popover" id="team_info" data-html="true" data-trigger="focus" title="Team Info" data-placement="bottom" data-content=""<span style="font-size:26px;color:#fff;">The Express</a></span><span class="fa-stack" style="color:#df691a; margin-top:-20px;"><i class="fa fa-trophy fa-stack-2x"></i><span class="fa fa-stack-1x"><span style="font-size:12px; color:#fff; margin-top:-7px; display:block;">2016</span></span></span><span class="fa-stack" style="color:#df691a; margin-top:-20px;"><i class="fa fa-trophy fa-stack-2x"></i><span class="fa fa-stack-1x"><span style="font-size:12px; color:#fff; margin-top:-7px; display:block;">2019</span></span></span> (Kevin Phillips)
+
+
+
+<table id="team_table" class="table table-striped table-hover table-secondary table-sm" style="width:100%; border-color: #fff;">
+	<thead>
+		<tr>
+			<th>Player</th>
+			<th>Mar</th>
+			<th>Apr</th>
+			<th>May</th>
+			<th>June</th>
+			<th>July</th>
+			<th>Aug</th>
+			<th>Sept</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr><td><a href="https://www.mlb.com/player/521692" target="_blank">S. Perez</a></td><td>0</td><td>0</td><td>0</td><td>5</td><td>0</td><td>1</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/543760" target="_blank">M. Semien</a></td><td>0</td><td>0</td><td>0</td><td>6</td><td>0</td><td>1</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/594807" target="_blank">A. Duvall</a></td><td>0</td><td>0</td><td>0</td><td>6</td><td>0</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/458015" target="_blank">J. Votto</a></td><td>0</td><td>0</td><td>0</td><td>3</td><td>0</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/572287" target="_blank">M. Zunino</a></td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/593871" target="_blank">J. Polanco</a></td><td>0</td><td>0</td><td>0</td><td>2</td><td>1</td><td>0</td><td>0</td></tr><tr class="table-primary"><td>TOTALS</td><td>0</td><td>0</td><td>0</td><td>23</td><td>1</td><td>2</td><td>0</td></tr>	</tbody>
+</table>
+
+</div></div><div class="col-md-4"><div class="container table-responsive-sm"><a tabindex="1" data-toggle="popover" id="team_info" data-html="true" data-trigger="focus" title="Team Info" data-placement="bottom" data-content=""<span style="font-size:26px;color:#fff;">Montecore's Revenge</a></span> (Jason Linkes)
+
+
+
+<table id="team_table" class="table table-striped table-hover table-secondary table-sm" style="width:100%; border-color: #fff;">
+	<thead>
+		<tr>
+			<th>Player</th>
+			<th>Mar</th>
+			<th>Apr</th>
+			<th>May</th>
+			<th>June</th>
+			<th>July</th>
+			<th>Aug</th>
+			<th>Sept</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr><td><a href="https://www.mlb.com/player/614177" target="_blank">F. Reyes</a></td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/663586" target="_blank">A. Riley</a></td><td>0</td><td>0</td><td>0</td><td>6</td><td>1</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/543068" target="_blank">C. Cron</a></td><td>0</td><td>0</td><td>1</td><td>4</td><td>0</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/621043" target="_blank">C. Correa</a></td><td>0</td><td>0</td><td>0</td><td>4</td><td>0</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/669720" target="_blank">A. Hays</a></td><td>0</td><td>0</td><td>0</td><td>5</td><td>0</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/666185" target="_blank">D. Carlson</a></td><td>0</td><td>0</td><td>0</td><td>2</td><td>1</td><td>1</td><td>0</td></tr><tr class="table-primary"><td>TOTALS</td><td>0</td><td>0</td><td>1</td><td>22</td><td>3</td><td>1</td><td>0</td></tr>	</tbody>
+</table>
+
+</div></div></div><div class="row"><div class="col-md-4"><div class="container table-responsive-sm"><a tabindex="1" data-toggle="popover" id="team_info" data-html="true" data-trigger="focus" title="Team Info" data-placement="bottom" data-content=""<span style="font-size:26px;color:#fff;">Buccos</a></span><span class="fa-stack" style="color:#df691a; margin-top:-20px;"><a tabindex="1" data-toggle="popover"  data-html="true" data-trigger="focus" title="Injury Report" data-placement="bottom" data-content="Teoscar Hernández&nbsp;&nbsp;&nbsp;OUT&nbsp;&nbsp;&nbsp;(oblique)<br />Mike Trout&nbsp;&nbsp;&nbsp;DOUBTFUL&nbsp;&nbsp;&nbsp;(hand)<br />">&nbsp;<i class="fa fa-ambulance"></i></a></span> (Harry Biddle)
+
+
+
+<table id="team_table" class="table table-striped table-hover table-secondary table-sm" style="width:100%; border-color: #fff;">
+	<thead>
+		<tr>
+			<th>Player</th>
+			<th>Mar</th>
+			<th>Apr</th>
+			<th>May</th>
+			<th>June</th>
+			<th>July</th>
+			<th>Aug</th>
+			<th>Sept</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr class="injured_yellow"><td><a href="https://www.mlb.com/player/545361" target="_blank">M. Trout</a></td><td>0</td><td>0</td><td>1</td><td>7</td><td>0</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/593934" target="_blank">M. Sanó</a></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr class="injured_yellow"><td><a href="https://www.mlb.com/player/606192" target="_blank">T. Hernández</a></td><td>0</td><td>0</td><td>0</td><td>5</td><td>0</td><td>1</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/664023" target="_blank">I. Happ</a></td><td>0</td><td>0</td><td>0</td><td>3</td><td>0</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/474832" target="_blank">B. Belt</a></td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/642715" target="_blank">W. Adames</a></td><td>0</td><td>0</td><td>0</td><td>6</td><td>0</td><td>1</td><td>0</td></tr><tr class="table-primary"><td>TOTALS</td><td>0</td><td>0</td><td>1</td><td>22</td><td>0</td><td>2</td><td>0</td></tr>	</tbody>
+</table>
+
+</div></div><div class="col-md-4"><div class="container table-responsive-sm"><a tabindex="1" data-toggle="popover" id="team_info" data-html="true" data-trigger="focus" title="Team Info" data-placement="bottom" data-content=""<span style="font-size:26px;color:#fff;">The Corona Pirates</a></span> (Patrick Gallagher)
+
+
+
+<table id="team_table" class="table table-striped table-hover table-secondary table-sm" style="width:100%; border-color: #fff;">
+	<thead>
+		<tr>
+			<th>Player</th>
+			<th>Mar</th>
+			<th>Apr</th>
+			<th>May</th>
+			<th>June</th>
+			<th>July</th>
+			<th>Aug</th>
+			<th>Sept</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr><td><a href="https://www.mlb.com/player/608336" target="_blank">J. Gallo</a></td><td>0</td><td>0</td><td>0</td><td>4</td><td>0</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/664040" target="_blank">B. Lowe</a></td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/665120" target="_blank">J. Walsh</a></td><td>0</td><td>0</td><td>0</td><td>3</td><td>0</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/666182" target="_blank">B. Bichette</a></td><td>0</td><td>0</td><td>1</td><td>4</td><td>0</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/519058" target="_blank">M. Moustakas</a></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/668804" target="_blank">B. Reynolds</a></td><td>0</td><td>0</td><td>0</td><td>5</td><td>0</td><td>1</td><td>0</td></tr><tr class="table-primary"><td>TOTALS</td><td>0</td><td>0</td><td>1</td><td>16</td><td>1</td><td>1</td><td>0</td></tr>	</tbody>
+</table>
+
+</div></div><div class="col-md-4"><div class="container table-responsive-sm"><a tabindex="1" data-toggle="popover" id="team_info" data-html="true" data-trigger="focus" title="Team Info" data-placement="bottom" data-content=""<span style="font-size:26px;color:#fff;">Emma Shanker</a></span><span class="fa-stack" style="color:#df691a; margin-top:-20px;"><a tabindex="1" data-toggle="popover"  data-html="true" data-trigger="focus" title="Injury Report" data-placement="bottom" data-content="Javier Báez&nbsp;&nbsp;&nbsp;OUT&nbsp;&nbsp;&nbsp;(thumb)<br />">&nbsp;<i class="fa fa-ambulance"></i></a></span><span class="fa-stack" style="color:#df691a; margin-top:-20px;"><i class="fa fa-trophy fa-stack-2x"></i><span class="fa fa-stack-1x"><span style="font-size:12px; color:#fff; margin-top:-7px; display:block;">2021</span></span></span> (Adrian Padilla)
+
+
+
+<table id="team_table" class="table table-striped table-hover table-secondary table-sm" style="width:100%; border-color: #fff;">
+	<thead>
+		<tr>
+			<th>Player</th>
+			<th>Mar</th>
+			<th>Apr</th>
+			<th>May</th>
+			<th>June</th>
+			<th>July</th>
+			<th>Aug</th>
+			<th>Sept</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr><td><a href="https://www.mlb.com/player/656941" target="_blank">K. Schwarber</a></td><td>0</td><td>0</td><td>2</td><td>9</td><td>0</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/641933" target="_blank">T. O'Neill</a></td><td>0</td><td>0</td><td>0</td><td>2</td><td>0</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/663656" target="_blank">K. Tucker</a></td><td>0</td><td>0</td><td>0</td><td>5</td><td>1</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/605137" target="_blank">J. Bell</a></td><td>0</td><td>0</td><td>0</td><td>6</td><td>0</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/673548" target="_blank">S. Suzuki</a></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr class="injured_yellow"><td><a href="https://www.mlb.com/player/595879" target="_blank">J. Báez</a></td><td>0</td><td>0</td><td>0</td><td>3</td><td>0</td><td>0</td><td>0</td></tr><tr class="table-primary"><td>TOTALS</td><td>0</td><td>0</td><td>2</td><td>25</td><td>1</td><td>0</td><td>0</td></tr>	</tbody>
+</table>
+
+</div></div></div><div class="row"><div class="col-md-4"><div class="container table-responsive-sm"><a tabindex="1" data-toggle="popover" id="team_info" data-html="true" data-trigger="focus" title="Team Info" data-placement="bottom" data-content=""<span style="font-size:26px;color:#fff;">Pity the Fool</a></span><span class="fa-stack" style="color:#df691a; margin-top:-20px;"><i class="fa fa-trophy fa-stack-2x"></i><span class="fa fa-stack-1x"><span style="font-size:12px; color:#fff; margin-top:-7px; display:block;">2012</span></span></span><span class="fa-stack" style="color:#df691a; margin-top:-20px;"><i class="fa fa-trophy fa-stack-2x"></i><span class="fa fa-stack-1x"><span style="font-size:12px; color:#fff; margin-top:-7px; display:block;">2014</span></span></span><span class="fa-stack" style="color:#df691a; margin-top:-20px;"><i class="fa fa-trophy fa-stack-2x"></i><span class="fa fa-stack-1x"><span style="font-size:12px; color:#fff; margin-top:-7px; display:block;">2017</span></span></span> (Anthony Demarco)
+
+
+
+<table id="team_table" class="table table-striped table-hover table-secondary table-sm" style="width:100%; border-color: #fff;">
+	<thead>
+		<tr>
+			<th>Player</th>
+			<th>Mar</th>
+			<th>Apr</th>
+			<th>May</th>
+			<th>June</th>
+			<th>July</th>
+			<th>Aug</th>
+			<th>Sept</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr><td><a href="https://www.mlb.com/player/547180" target="_blank">B. Harper</a></td><td>0</td><td>0</td><td>1</td><td>5</td><td>0</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/660670" target="_blank">R. Acuña Jr.</a></td><td>0</td><td>0</td><td>0</td><td>5</td><td>0</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/547989" target="_blank">J. Abreu</a></td><td>0</td><td>0</td><td>0</td><td>4</td><td>0</td><td>2</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/502110" target="_blank">J. Martinez</a></td><td>0</td><td>0</td><td>1</td><td>3</td><td>0</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/669257" target="_blank">W. Smith</a></td><td>0</td><td>0</td><td>0</td><td>5</td><td>1</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/545341" target="_blank">R. Grichuk</a></td><td>0</td><td>0</td><td>1</td><td>2</td><td>0</td><td>1</td><td>0</td></tr><tr class="table-primary"><td>TOTALS</td><td>0</td><td>0</td><td>3</td><td>24</td><td>1</td><td>3</td><td>0</td></tr>	</tbody>
+</table>
+
+</div></div><div class="col-md-4"><div class="container table-responsive-sm"><a tabindex="1" data-toggle="popover" id="team_info" data-html="true" data-trigger="focus" title="Team Info" data-placement="bottom" data-content=""<span style="font-size:26px;color:#fff;">The Mick</a></span><span class="fa-stack" style="color:#df691a; margin-top:-20px;"><a tabindex="1" data-toggle="popover"  data-html="true" data-trigger="focus" title="Injury Report" data-placement="bottom" data-content="Mitch Haniger&nbsp;&nbsp;&nbsp;OUT&nbsp;&nbsp;&nbsp;(illness)<br />">&nbsp;<i class="fa fa-ambulance"></i></a></span><span class="fa-stack" style="color:#df691a; margin-top:-20px;"><i class="fa fa-trophy fa-stack-2x"></i><span class="fa fa-stack-1x"><span style="font-size:12px; color:#fff; margin-top:-7px; display:block;">2013</span></span></span> (Steve Bergren)
+
+
+
+<table id="team_table" class="table table-striped table-hover table-secondary table-sm" style="width:100%; border-color: #fff;">
+	<thead>
+		<tr>
+			<th>Player</th>
+			<th>Mar</th>
+			<th>Apr</th>
+			<th>May</th>
+			<th>June</th>
+			<th>July</th>
+			<th>Aug</th>
+			<th>Sept</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr><td><a href="https://www.mlb.com/player/543807" target="_blank">G. Springer</a></td><td>0</td><td>0</td><td>0</td><td>4</td><td>0</td><td>0</td><td>0</td></tr><tr class="injured_yellow"><td><a href="https://www.mlb.com/player/571745" target="_blank">M. Haniger</a></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/518626" target="_blank">J. Donaldson</a></td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/596019" target="_blank">F. Lindor</a></td><td>0</td><td>0</td><td>0</td><td>3</td><td>0</td><td>2</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/621550" target="_blank">P. Wisdom</a></td><td>0</td><td>0</td><td>1</td><td>3</td><td>0</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/518735" target="_blank">Y. Grandal</a></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr class="table-primary"><td>TOTALS</td><td>0</td><td>0</td><td>1</td><td>11</td><td>0</td><td>3</td><td>0</td></tr>	</tbody>
+</table>
+
+</div></div><div class="col-md-4"><div class="container table-responsive-sm"><a tabindex="1" data-toggle="popover" id="team_info" data-html="true" data-trigger="focus" title="Team Info" data-placement="bottom" data-content=""<span style="font-size:26px;color:#fff;">Sarasota Swingers</a></span><span class="fa-stack" style="color:#df691a; margin-top:-20px;"><a tabindex="1" data-toggle="popover"  data-html="true" data-trigger="focus" title="Injury Report" data-placement="bottom" data-content="Byron Buxton&nbsp;&nbsp;&nbsp;OUT&nbsp;&nbsp;&nbsp;(knee)<br />">&nbsp;<i class="fa fa-ambulance"></i></a></span> (Steve Johnson)
+
+
+
+<table id="team_table" class="table table-striped table-hover table-secondary table-sm" style="width:100%; border-color: #fff;">
+	<thead>
+		<tr>
+			<th>Player</th>
+			<th>Mar</th>
+			<th>Apr</th>
+			<th>May</th>
+			<th>June</th>
+			<th>July</th>
+			<th>Aug</th>
+			<th>Sept</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr><td><a href="https://www.mlb.com/player/665742" target="_blank">J. Soto</a></td><td>0</td><td>0</td><td>0</td><td>5</td><td>1</td><td>1</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/592178" target="_blank">K. Bryant</a></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr class="injured_yellow"><td><a href="https://www.mlb.com/player/621439" target="_blank">B. Buxton</a></td><td>0</td><td>0</td><td>1</td><td>8</td><td>0</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/624585" target="_blank">J. Soler</a></td><td>0</td><td>0</td><td>1</td><td>2</td><td>0</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/572228" target="_blank">L. Voit</a></td><td>0</td><td>0</td><td>0</td><td>6</td><td>1</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/656775" target="_blank">C. Mullins</a></td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td></tr><tr class="table-primary"><td>TOTALS</td><td>0</td><td>0</td><td>2</td><td>22</td><td>2</td><td>2</td><td>0</td></tr>	</tbody>
+</table>
+
+</div></div></div><div class="row"><div class="col-md-4"><div class="container table-responsive-sm"><a tabindex="1" data-toggle="popover" id="team_info" data-html="true" data-trigger="focus" title="Team Info" data-placement="bottom" data-content=""<span style="font-size:26px;color:#fff;">SB3 Rookie</a></span><span class="fa-stack" style="color:#df691a; margin-top:-20px;"><a tabindex="1" data-toggle="popover"  data-html="true" data-trigger="focus" title="Injury Report" data-placement="bottom" data-content="Yordan Alvarez&nbsp;&nbsp;&nbsp;PROBABLE&nbsp;&nbsp;&nbsp;(illness)<br />">&nbsp;<i class="fa fa-ambulance"></i></a></span> (Jim Lewis)
+
+
+
+<table id="team_table" class="table table-striped table-hover table-secondary table-sm" style="width:100%; border-color: #fff;">
+	<thead>
+		<tr>
+			<th>Player</th>
+			<th>Mar</th>
+			<th>Apr</th>
+			<th>May</th>
+			<th>June</th>
+			<th>July</th>
+			<th>Aug</th>
+			<th>Sept</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr><td><a href="https://www.mlb.com/player/650391" target="_blank">E. Jiménez</a></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr class="injured_yellow"><td><a href="https://www.mlb.com/player/670541" target="_blank">Y. Alvarez</a></td><td>0</td><td>0</td><td>0</td><td>8</td><td>0</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/694182" target="_blank">N. Cruz</a></td><td>0</td><td>0</td><td>0</td><td>3</td><td>0</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/592669" target="_blank">H. Renfroe</a></td><td>0</td><td>0</td><td>0</td><td>4</td><td>0</td><td>0</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/553993" target="_blank">E. Suárez</a></td><td>0</td><td>0</td><td>0</td><td>4</td><td>0</td><td>2</td><td>0</td></tr><tr><td><a href="https://www.mlb.com/player/668227" target="_blank">R. Arozarena</a></td><td>0</td><td>0</td><td>0</td><td>3</td><td>0</td><td>0</td><td>0</td></tr><tr class="table-primary"><td>TOTALS</td><td>0</td><td>0</td><td>0</td><td>22</td><td>0</td><td>2</td><td>0</td></tr>	</tbody>
+</table>
+
+</div></div>  </div>
+</div>
+
+<!-- Footer -->
+<footer class="page-footer font-small special-color-dark pt-4">
+
+  <!-- Footer Elements -->
+  <div class="container-fluid">
+
+    <!-- Social buttons -->
+    <!--
+    <ul class="list-unstyled list-inline text-center">
+      <li class="list-inline-item">
+        <a class="btn-floating btn-fb mx-1">
+          <i class="fab fa-facebook-f"> </i>
+        </a>
+      </li>
+      <li class="list-inline-item">
+        <a class="btn-floating btn-tw mx-1">
+          <i class="fab fa-twitter"> </i>
+        </a>
+      </li>
+      <li class="list-inline-item">
+        <a class="btn-floating mx-1">
+          <i class="fas fa-baseball-ball"></i>
+        </a>
+      </li>
+    </ul>
+  -->
+    <!-- Social buttons -->
+
+  </div>
+  <!-- Footer Elements -->
+
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-3">&copy; 2022 Copyright:
+    <a href="https://www.homerunpool.com"> homerunpool.com</a>
+  </div>
+  <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
+
+
+<!-- START Bootstrap-Cookie-Alert -->
+<!--
+<div class="alert text-center cookiealert" role="alert">
+    This site uses cookies to provide you with a great user experience. By continuing to use this website, you consent to the use of cookies in accordance with our <a href="#">Cookie Policy</a>
+
+    <button type="button" class="btn btn-primary btn-sm acceptcookies" aria-label="Close">
+        I agree
+    </button>
+</div>
+-->
+
+<!-- Include cookiealert script -->
+<!--
+<script src="https://cdn.jsdelivr.net/gh/Wruczek/Bootstrap-Cookie-Alert@gh-pages/cookiealert.js"></script>
+-->
+
+  </body>
+</html>
+
+

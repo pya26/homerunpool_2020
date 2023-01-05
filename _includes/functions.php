@@ -1360,7 +1360,7 @@ ORDER BY ru.first_name, ru.last_name");
 
 		$dbh = $GLOBALS['dbh'];
 
-		$league_teams = $dbh->prepare("SELECT lt.team_id, t.team_name, r.first_name, r.last_name FROM league_teams lt LEFT JOIN teams t ON t.team_id = lt.team_id LEFT JOIN registered_users r ON r.reg_id = t.reg_id WHERE lt.league_id=:leagueid AND lt.season_id=:seasonid AND lt.status_id = 'A' ORDER BY lt.sort ASC");
+		$league_teams = $dbh->prepare("SELECT lt.team_id, t.team_name, t.logo_image, r.first_name, r.last_name FROM league_teams lt LEFT JOIN teams t ON t.team_id = lt.team_id LEFT JOIN registered_users r ON r.reg_id = t.reg_id WHERE lt.league_id=:leagueid AND lt.season_id=:seasonid AND lt.status_id = 'A' ORDER BY lt.sort ASC");
 	    $league_teams->bindParam("leagueid", $league_id, PDO::PARAM_INT, 11);
 	    $league_teams->bindParam("seasonid", $season_id, PDO::PARAM_INT, 11);
 	    $league_teams->execute();
