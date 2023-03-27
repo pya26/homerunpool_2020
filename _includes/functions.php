@@ -1176,6 +1176,7 @@ ORDER BY ru.first_name, ru.last_name");
 		                        $login_session_array = array('msg_code' => 0,'reg_id' => $_SESSION['reg_id'], 'super_user' => $_SESSION['super_user'], 'first_name' => $_SESSION['firstname'], 'last_name' => $_SESSION['lastname']);
 		                        echo json_encode($login_session_array);
 
+
 		                    /*} else {
 		                        $emailPwdErr = 'Either email or password is incorrect.';
 
@@ -1372,6 +1373,8 @@ ORDER BY ru.first_name, ru.last_name");
 
 		$dbh = $GLOBALS['dbh'];
 
+		$league_teams_array = array();
+
 		$league_teams = $dbh->prepare("SELECT lt.league_teams_id, lt.team_id, lt.sort, t.team_name, r.first_name, r.last_name FROM league_teams lt LEFT JOIN teams t ON t.team_id = lt.team_id LEFT JOIN registered_users r ON r.reg_id = t.reg_id WHERE lt.league_id=:leagueid AND lt.season_id=:seasonid ORDER BY lt.sort ASC");
 	    $league_teams->bindParam("leagueid", $league_id, PDO::PARAM_INT, 11);
 	    $league_teams->bindParam("seasonid", $season_id, PDO::PARAM_INT, 11);
@@ -1407,6 +1410,8 @@ ORDER BY ru.first_name, ru.last_name");
 	function get_league_team_players_draft($league_id,$season_id,$team_id){
 
 		$dbh = $GLOBALS['dbh'];
+
+		$team_players_array = array();
 
 		$team_players_query = $dbh->prepare('SELECT ltp.*, p.PlayerID, p.FirstName, p.LastName FROM league_team_players ltp LEFT JOIN players p ON p.PlayerID = ltp.player_id WHERE ltp.league_id=:leagueid AND ltp.season_id=:seasonid AND ltp.team_id=:teamid ORDER BY ltp.sort');           
         $team_players_query->bindParam("leagueid", $league_id, PDO::PARAM_INT, 11);
@@ -1444,6 +1449,8 @@ ORDER BY ru.first_name, ru.last_name");
 	function get_last_updated_date($league_id,$season_id){
 
 		$dbh = $GLOBALS['dbh'];
+
+		$last_date = '';
 
 		$stmt = $dbh->prepare('CALL get_last_updated_date(:leagueid,:seasonid)');
 	    $stmt->bindParam('leagueid', $league_id, PDO::PARAM_INT);

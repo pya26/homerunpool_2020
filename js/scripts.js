@@ -67,12 +67,16 @@ $("#date").datepicker({
 		var email = $('#email_uname').val();
 		var pwd = $('#password1').val();
 
+		console.log(pwd);
+
 		$.ajax(
 			'login_process.php?email=' + email + '&pwd=' + pwd,
 			{
 				success: function(data) {
 
-					var jsonData = JSON.parse(data);					
+					var jsonData = JSON.parse(data);	
+
+					console.log(jsonData);				
 
 					if(jsonData.msg_code == 0){	
 

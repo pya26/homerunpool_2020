@@ -31,7 +31,10 @@
 		}
 	}
 
+
 	unset($stmt);
+
+
 	
 
 	echo json_encode($data);
