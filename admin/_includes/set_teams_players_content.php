@@ -219,12 +219,13 @@
 						    							foreach ($team_players as $key2 => $value2) {
 															print '<tr>';
 																print '<td>';
-																	print $value2["FirstName"].' '.$value2["LastName"];																
+																	print $value2["FirstName"].' '.$value2["LastName"] . " (" . $value2["TeamAbbr"] . ")";																
 																print '</td>';
 																print '<td>&nbsp;&nbsp;</td>';
 																print '<td>&nbsp;&nbsp;</td>';																
-																print '<td style="text-align:right;">';														
-																	print '<a href="delete_league_team_player_process.php?ltp_id='.$value2["league_team_player_id"].'&league_id='.$league_id.'&season_id='.$season_id.'&class=0" class="btn btn-outline-danger btn-sm" data-id="'.$value2["league_team_player_id"].'" id="deleteTeamPlayer" role="button">Delete player</a>';
+																print '<td style="text-align:right;">';	
+																	print '<a href="edit_player_msf_process.php?player_id='.$value2["player_id"].'&league_id='.$league_id.'&season_id='.$season_id.'&class=0" class="btn btn-outline-danger btn-sm" data-id="'.$value2["league_team_player_id"].'" id="deleteTeamPlayer" role="button">Update</a>';													
+																	print '<a href="delete_league_team_player_process.php?ltp_id='.$value2["league_team_player_id"].'&league_id='.$league_id.'&season_id='.$season_id.'&class=0" class="btn btn-outline-danger btn-sm" data-id="'.$value2["league_team_player_id"].'" id="deleteTeamPlayer" role="button">Delete</a>';
 																print '</td>';
 															print '</tr>';
 						    							}

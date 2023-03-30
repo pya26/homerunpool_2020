@@ -410,6 +410,14 @@
 
 
 
+	function update_players($player_info_response){
+
+
+	}
+
+
+
+
 
 	function insert_hrs_february_stub_records($player_ids_array,$season_id){
 
@@ -1413,14 +1421,14 @@ ORDER BY ru.first_name, ru.last_name");
 
 		$team_players_array = array();
 
-		$team_players_query = $dbh->prepare('SELECT ltp.*, p.PlayerID, p.FirstName, p.LastName FROM league_team_players ltp LEFT JOIN players p ON p.PlayerID = ltp.player_id WHERE ltp.league_id=:leagueid AND ltp.season_id=:seasonid AND ltp.team_id=:teamid ORDER BY ltp.sort');           
+		$team_players_query = $dbh->prepare('SELECT ltp.*, p.PlayerID, p.FirstName, p.LastName, p.TeamAbbr FROM league_team_players ltp LEFT JOIN players p ON p.PlayerID = ltp.player_id WHERE ltp.league_id=:leagueid AND ltp.season_id=:seasonid AND ltp.team_id=:teamid ORDER BY ltp.sort');           
         $team_players_query->bindParam("leagueid", $league_id, PDO::PARAM_INT, 11);
         $team_players_query->bindParam("seasonid", $season_id, PDO::PARAM_INT, 11);
         $team_players_query->bindParam("teamid", $team_id, PDO::PARAM_INT, 11);
         $team_players_query->execute();
 
         while ($row = $team_players_query->fetch(PDO::FETCH_ASSOC)) {			
-        	$team_players_array[] =  ['league_team_player_id' => $row['league_team_player_id'], 'player_id' => $row['PlayerID'], 'FirstName' => $row['FirstName'], 'LastName' => $row['LastName']];
+        	$team_players_array[] =  ['league_team_player_id' => $row['league_team_player_id'], 'player_id' => $row['PlayerID'], 'FirstName' => $row['FirstName'], 'LastName' => $row['LastName'], "TeamAbbr" => $row['TeamAbbr']];
 		}
 
         return $team_players_array;

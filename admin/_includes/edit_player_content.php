@@ -5,7 +5,6 @@
         $playerid = $_GET["player_id"];
         $player = get_player_by_id($playerid);
 
-        //var_dump($player);
 
     } else {
         print '<div class="alert alert-danger alert-dismissible fade show" role="alert"> No Access! The Player ID was not passed to this page. <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
@@ -221,6 +220,7 @@
             </select>
         </div>
         <div class="col-12">
+            <?php print '<input type="hidden" id="player_id" value="'.$playerid.'">'; ?>
             <button type="submit" class="btn btn-primary" id="update_player_manual">Update (save) Manual Changes</button>
             <button type="submit" class="btn btn-secondary" id="update_player_msf">Update from MSF</button>
         </div>

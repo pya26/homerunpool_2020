@@ -9,8 +9,8 @@
   	$api_file = 'players.json';
 
 
-  	//$url_params = '?player=10561';
-  	$url_params = '?team=bos';
+  	//$url_params = '?player=10297';
+  	$url_params = '?team=atl,det';
 
   	// set full url to be passed to the curl_request function 
     $url = $GLOBALS['msf_api_v2_base_url'] . $api_file . $url_params;

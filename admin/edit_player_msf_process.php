@@ -7,10 +7,29 @@
 	$errors = [];
 	$data = [];
 
-	$player_id = $_POST['player_id'];
-	//$player_id = $_GET['player_id'];
+	// set file name of api
+  	$api_file = 'players.json';
 
-	$url = "https://api.mysportsfeeds.com/v2.1/pull/mlb/players.json?player=".$player_id;
+  	if(isset($_GET["player_id"]) && isset($_GET["league_id"]) && isset($_GET["season_id"])){
+  		$player_id = $_GET["player_id"];
+  		$league_id = $_GET["league_id"];
+		$season_id = $_GET["season_id"];
+  	} else {
+  		exit();
+  	}
+
+  	
+	
+
+  	
+
+
+  	$url_params = '?player=' . $player_id;
+
+  	// set full url to be passed to the curl_request function 
+    $url = $GLOBALS['msf_api_v2_base_url'] . $api_file . $url_params;
+
+
 	$get_players = mysportsfeeds_api_request($url);
 
 
@@ -122,6 +141,28 @@
 
 		$status = 'A';
 
+
+		/*print $player_id . "<br />";
+		print $first_name . "<br />";
+		print $last_name . "<br />";
+		print $position . "<br />";
+		print $jersey_num . "<br />";
+		print $team_id . "<br />";
+		print $team_abbr . "<br />";
+		print $height . "<br />";
+		print $weight . "<br />";
+		print $dob . "<br />";
+		print $age . "<br />";
+		print $birth_city . "<br />";
+		print $birth_country . "<br />";
+		print $high_school . "<br />";
+		print $college . "<br />";
+		print $bats . "<br />";
+		print $throw_hand . "<br />";
+		print $mlb_image . "<br />";
+		print $mlb_id . "<br />";
+		print $status . "<br />";*/
+
 	}
 
 
@@ -133,6 +174,7 @@
 	    $data['message'] = 'Success!';
 	}
 
+	
 	$stmt = $dbh->prepare("UPDATE players SET FirstName=:first_name, LastName=:last_name, PrimaryPosition=:position, JerseyNumber=:jersey_num, TeamID=:team_id, TeamAbbr=:team_abbr, Height=:height, Weight=:weight, DOB=:dob,Age=:age, BirthCity=:birth_city, BirthCountry=:birth_country, HighSchool=:high_school, College=:college, Bats=:bats, Throws=:throws, MLBImage=:mlb_image, MLBID=:mlbid, status_id=:status	WHERE PlayerID = :player_id");
 	$stmt->bindParam('player_id', $player_id, PDO::PARAM_INT);
 	$stmt->bindParam('first_name', $first_name, PDO::PARAM_STR, 30);
@@ -155,7 +197,14 @@
 	$stmt->bindParam('mlbid', $mlb_id, PDO::PARAM_INT);
 	$stmt->bindParam('status', $status, PDO::PARAM_STR,1);
 	$stmt->execute();
+	
 
 
-	echo json_encode($data);
+	//echo json_encode($data);
+
+	header("Location: set_teams_players.php?league_id=".$league_id."&season_id=".$season_id."&class=0");
+	
+	exit();
+
+
 	
