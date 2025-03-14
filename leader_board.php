@@ -10,7 +10,7 @@
   </div>
 </div>
 <?php
-  $stmt = $dbh->prepare("SELECT t.team_id, t.team_name FROM teams t LEFT JOIN league_teams lt ON lt.team_id = t.team_id WHERE t.status_id = 'A' AND lt.league_id = ?  AND lt.season_id = ? AND lt.status_id = 'A'");
+  $stmt = $dbh->prepare("SELECT t.team_id, t.team_name FROM teams t LEFT JOIN league_teams lt ON lt.team_id = t.team_id WHERE t.status_id = 'A' AND lt.league_id = ?  AND lt.season_id = ? AND lt.status_id = 'A' ORDER BY lt.sort");
   $stmt->bindParam(1, $league_id, PDO::PARAM_INT, 11);
   $stmt->bindParam(2, $season_id, PDO::PARAM_INT, 11);
   $stmt->execute();
