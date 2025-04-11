@@ -27,8 +27,8 @@ $header .= '<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5
 $header .= '<link rel="stylesheet" href="'.$GLOBALS['base_url'].'css/styles.css">';
 $header .= '<link rel="icon" type="image/png" href="'.$GLOBALS['base_url'].'images/favicons/favicon.ico">';
 
-//$header .= '<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>';
-//$header .= '<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">';
+$header .= '<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>';
+$header .= '<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">';
 
 $header .= '<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">';
 $header .= '<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>';

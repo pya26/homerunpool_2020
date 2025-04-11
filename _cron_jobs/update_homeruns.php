@@ -30,60 +30,86 @@
 		case '01':
 	        $table_string = 'hrs_january';
 	        $hr_totals_stored_proc = 'update_january_homerun_totals';
+			$msg = 'January';
+			$monthName = 'January';
+    		$monthNum = 1;
 	        break;
 	    case '02':
 	    	$table_string = 'hrs_february';
 	        $hr_totals_stored_proc = 'update_february_homerun_totals';
-	        $msg = "February";
+	        $msg = 'February';
+			$monthName = 'February';
+    		$monthNum = 2;
 	        break;
 	    case '03':
 	        $table_string = 'hrs_march';
 	        $hr_totals_stored_proc = 'update_march_homerun_totals';
-	        $msg = "March";
+	        $msg = 'March';
+			$monthName = 'March';
+    		$monthNum = 3;
 	        break;
 	    case '04':
 	    	$table_string = 'hrs_april';
 	        $hr_totals_stored_proc = 'update_april_homerun_totals';
-	        $msg = "April";
+	        $msg = 'April';
+			$monthName = 'April';
+    		$monthNum = 4;
 	        break;
 	    case '05':
 	    	$table_string = 'hrs_may';
 	        $hr_totals_stored_proc = 'update_may_homerun_totals';
-	        $msg = "May";
+	        $msg = 'May';
+			$monthName = 'May';
+    		$monthNum = 5;
 	        break;
 	    case '06':
 	    	$table_string = 'hrs_june';
 	        $hr_totals_stored_proc = 'update_june_homerun_totals';
-	        $msg = "June";
+	        $msg = 'June';
+			$monthName = 'June';
+    		$monthNum = 6;
 	        break;
 	    case '07':
 	    	$table_string = 'hrs_july';
 	        $hr_totals_stored_proc = 'update_july_homerun_totals';
-	        $msg = "July";
+	        $msg = 'July';
+			$monthName = 'July';
+    		$monthNum = 7;
 	        break;
 	    case '08':
 	    	$table_string = 'hrs_august';
 	        $hr_totals_stored_proc = 'update_august_homerun_totals';
-	        $msg = "August";
+	        $msg = 'August';
+			$monthName = 'August';
+    		$monthNum = 8;
 	        break;
 	    case '09':
 	    	$table_string = 'hrs_september';
 	        $hr_totals_stored_proc = 'update_september_homerun_totals';
-	        $msg = "September";
+	        $msg = 'September';
+			$monthName = 'September';
+    		$monthNum = 9;
 	        break;
 	    case '10':
 	    	$table_string = 'hrs_october';
 	        $hr_totals_stored_proc = 'update_october_homerun_totals';
-	        $msg = "October";
+	        $msg = 'October';
+			$monthName = 'October';
+    		$monthNum = 10;
 	        break;
 	    case '11':
 	    	$table_string = 'hrs_november';
 	        $hr_totals_stored_proc = 'update_november_homerun_totals';
-	        $msg = "November";
+	        $msg = 'November';
+			$monthName = 'November';
+    		$monthNum = 11;
 	        break;
 	    case '12':
 	        $table_string = 'hrs_december';
 	        $hr_totals_stored_proc = 'update_december_homerun_totals';
+			$msg = 'December';
+			$monthName = 'December';
+    		$monthNum = 12;
 	    default:
 	    	$msg = "default message";
 	}
@@ -230,6 +256,45 @@ $gamelog_hr_array = array_values($sumArray2);
 
 
   }
+
+
+
+  /**
+   * Update monthly_hr_totals table
+   */
+  $upsert_statement = "INSERT INTO monthly_hr_totals (
+        player_id,
+        team_id,
+        league_id,
+        season_id,
+        month,
+        month_num,
+        total_hrs
+      )
+      SELECT
+        ltp.player_id,
+        ltp.team_id,
+        ltp.league_id,
+        ltp.season_id,
+        :month AS month,
+        :month_num AS month_num,
+        h.total AS total_hrs
+      FROM league_team_players ltp
+      JOIN {$hrsTable} h 
+        ON h.player_id = ltp.player_id 
+        AND h.season_id = ltp.season_id
+      WHERE ltp.season_id = :season_id
+      ON DUPLICATE KEY UPDATE 
+        total_hrs = VALUES(total_hrs)";
+  	
+	$stmt = $dbh->prepare($upsert_statement);
+	$stmt->execute([
+		':month' => $monthName,
+        ':month_num' => $monthNum,
+        ':season_id' => $season_id,
+	]);
+
+	unset($stmt);
 
 
 
