@@ -2,7 +2,7 @@
 
 
 	$from_email = "support@homerunpool.com";
-	$to_email = "pya2626@gmail.com";
+	$to_email = "pya2626@gmail.com, jlinkes@amgresources.com";
 
 	$headers = "Reply-To: The Sender <".$from_email.">\r\n";
 	$headers .= "Return-Path: The Sender <".$from_email.">\r\n";
