@@ -14,6 +14,7 @@
                             p.FirstName,
                             p.LastName,
                             p.PrimaryPosition,
+                            p.MLBID,
 
                             CASE 
                                 WHEN mht.month IN ('March', 'April') THEN 'March/April'
@@ -63,6 +64,7 @@
                           p.FirstName,
                           p.LastName,
                           p.PrimaryPosition,
+                          p.MLBID,
 
                           ip.injury_desc,
                           ip.playing_probability,
@@ -128,8 +130,30 @@
   
     // Initialize player
     if (!isset($teams[$teamId]['players'][$playerId])) {
+
+        /* Start Build MLB.com URL */
+          if (strpos($row['FirstName'], '.') !== false) {
+             $fname = str_replace(".","-", $row['FirstName']);
+          } else {
+            $fname = $row['FirstName'] . '-';
+          }
+
+          $lname_array_to_search = array(' Jr',' Jr.');
+          $lname = str_replace($lname_array_to_search,"-jr", $row['LastName']);
+          $lname = str_replace(".","", $lname);
+          $lname = str_replace("'","-", $lname);
+
+          $mlb_player_slug = trim(strtolower($fname.$lname.'-'.$row['MLBID']));
+
+        /* End Build MLB.com URL*/
+
+
+
       $teams[$teamId]['players'][$playerId] = [
         'name' => substr($row['FirstName'], 0, 1) .'.' . ' ' . $row['LastName'],
+        
+        'mlb_url' => $mlb_player_slug,
+
         'position' => $row['PrimaryPosition'],
         'injury' => $row['injury_desc'] ?? '',
         'probability' => $row['playing_probability'] ?? '',

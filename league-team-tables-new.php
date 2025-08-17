@@ -77,7 +77,7 @@
             $isInjured = !empty($player['injury']);
             
             $team_table .= $isInjured ? "<tr class='injured_yellow'>" : '<tr>';
-            $team_table .= '<td>'.$player['name'].'</td>';            
+            $team_table .= '<td><a href="https://www.mlb.com/player/'.$player['mlb_url'].'" target="_blank">'.$player['name'].'</a></td>';            
             foreach ($player['monthly_hrs'] as $month => $hrs) {
                 $team_table .= '<td>'.$hrs.'</td>';
             }
