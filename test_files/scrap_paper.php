@@ -13,13 +13,22 @@
 
 
 	
-	$email = "pya2626@gmail.com";
+	// set file name of api
+  	$api_file = 'players.json';
 
-	$mung = get_reg_user_by_email($email);
+  	$url_params = '?player=mike-trout';	
 
 
+  	// set full url to be passed to the curl_request function 
+    $url = $GLOBALS['msf_api_v2_base_url'] . $api_file . $url_params;
 
-    print_r($mung->rowCount());
+    $players = mysportsfeeds_api_request($url);
+
+    print "<pre>";
+    print_r($players);
+    print "</pre>";
+
+    
 
 ?>
 

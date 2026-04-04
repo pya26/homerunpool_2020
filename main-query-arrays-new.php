@@ -143,7 +143,7 @@
           $lname = str_replace(".","", $lname);
           $lname = str_replace("'","-", $lname);
 
-          $mlb_player_slug = trim(strtolower($fname.$lname.'-'.$row['MLBID']));
+          $mlb_player_slug = trim(strtolower($row['MLBID']));//$fname.$lname.'-'.
 
         /* End Build MLB.com URL*/
 

@@ -24,6 +24,9 @@
   if(isset($_GET['position'])){
     $position = $_GET['position'];
   }
+  if(isset($_GET['player_name'])){
+    $player_name = $_GET['player_name'];
+  }
 
   // set file name of api
   $api_file = 'players.json';
@@ -46,7 +49,11 @@
     $url_params .= 'rosterstatus=' . $rosterstatus . '&';
   }
   if(isset($position)){
-    $url_params .= 'position=' . $position;
+    $url_params .= 'position=' . $position  . '&';
+  }
+
+  if(isset($player_name)){
+    $url_params .= 'player=' . $player_name;
   }
 
   
@@ -55,9 +62,11 @@
   $url = $GLOBALS['msf_api_v2_base_url'] . $api_file . $url_params;
 
 
+
   // call the API function to request all players info that was selected (season,statuses, positions)  and set variable for the response. I named the response variable
   // $player_info_response even though it will return all player info, but I'm only using it to build an array of the ID's to pass into another API call
   $player_info_response = mysportsfeeds_api_request($url);
+
 
   // create an array of only the player id's from the players api response
   $player_api_ids = array();
